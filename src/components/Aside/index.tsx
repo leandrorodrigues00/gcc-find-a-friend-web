@@ -1,6 +1,7 @@
 import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
-
+import { LocationContext } from '@/context/LocationContext'
+import { useContext } from 'react'
 import { Select } from '../Select'
 
 import {
@@ -78,6 +79,9 @@ const independencyOptions = [
 ]
 
 export function Aside() {
+  const { statesList, citiesList } = useContext(LocationContext)
+
+  console.log(statesList)
   function handleSearchPets() {
     // TO DO
   }
@@ -92,8 +96,8 @@ export function Aside() {
         <div>
           <img src={logo} alt="" />
           <HeaderInput>
-            <Select name={''} options={[]} />
-            <Select name={''} options={[]} />
+            <Select name={''} options={statesList} value="SP" />
+            <Select name={''} options={citiesList} />
             <button>
               <img src={search} alt="ícone de lupa" />
             </button>
