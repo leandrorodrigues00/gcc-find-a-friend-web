@@ -9,19 +9,15 @@ import logo from '../../assets/icons/logo.svg'
 import Dogs from '../../assets/images/heroDogs.svg'
 import search from '../../assets/icons/search.svg'
 import { Select } from '@/components/Select'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { useNavigate } from 'react-router-dom'
-
-interface StatesProps {
-  id: number
-  sigla: string
-  nome: string
-  regiao: {
-    id: number
-    sigla: string
-    nome: string
-  }
-}
+import { LocationContext } from '@/context/LocationContext'
 
 interface CitiesProps {
   name: string
@@ -36,7 +32,6 @@ interface SelectInfosProps {
 const API_BASE_URL = 'http://localhost:3333'
 
 export function Home() {
-  const [statesList, setStatesList] = useState<SelectInfosProps[]>([])
   const [citiesList, setCitiesList] = useState<SelectInfosProps[]>([])
   const [isFetching, setIsFetching] = useState(false)
   const [formValues, setFormValues] = useState({
@@ -45,24 +40,7 @@ export function Home() {
   })
   const navigate = useNavigate()
 
-  useEffect(() => {
-    async function getStatesData() {
-      try {
-        const data = await fetch(`${API_BASE_URL}/location/states`)
-        const { states }: { states: StatesProps[] } = await data.json()
-
-        const stateInfo = states.map(({ sigla }) => ({
-          value: sigla,
-          label: sigla,
-        }))
-        setStatesList(stateInfo)
-      } catch (error) {
-        // TODO toast
-        console.error(error)
-      }
-    }
-    getStatesData()
-  }, [])
+  const { statesList } = useContext(LocationContext)
 
   useEffect(() => {
     if (formValues.state) {
