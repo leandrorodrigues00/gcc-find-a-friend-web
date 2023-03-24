@@ -12,6 +12,7 @@ export const AsideHeader = styled.div`
 
   img {
     width: 45px;
+    height: 46px;
   }
 
   & > div {
@@ -26,20 +27,11 @@ export const HeaderInput = styled.div`
   display: flex;
   gap: 12px;
 
-  input {
-    width: 203px;
-    height: 60px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    padding: 21px 16px;
-    border-radius: 15px;
-    background: transparent;
-    border: 1px solid #f15156;
-    outline: none;
-
-    &::placeholder {
-      color: #f2f2f2;
+  > div {
+    > div {
+      img {
+        width: 16px;
+      }
     }
   }
 

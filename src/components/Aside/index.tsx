@@ -1,7 +1,6 @@
-import { Select } from '@/components/Select'
-
-import logo from '@/assets/icons/logo.svg'
+import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
+import { Select } from '../Select'
 
 import {
   Container,
@@ -92,7 +91,8 @@ export function Aside() {
         <div>
           <img src={logo} alt="" />
           <HeaderInput>
-            <input type="text" placeholder="Insira uma cidade" />
+            <Select name={''} options={[]} />
+            <Select name={''} options={[]} />
             <button>
               <img src={search} alt="ícone de lupa" />
             </button>

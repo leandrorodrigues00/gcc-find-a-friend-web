@@ -137,7 +137,6 @@ export function Home() {
             <span>Busque um amigo:</span>
             <Select
               options={statesList}
-              label={''}
               name="states"
               onChange={(stateValue: ChangeEvent<HTMLInputElement>) =>
                 handleChangeState(stateValue.target.value)
@@ -145,7 +144,6 @@ export function Home() {
             />
             <Select
               options={citiesList}
-              label={''}
               name={'cities'}
               disabled={!formValues.state || isFetching}
               onChange={(cityValue: ChangeEvent<HTMLInputElement>) =>
