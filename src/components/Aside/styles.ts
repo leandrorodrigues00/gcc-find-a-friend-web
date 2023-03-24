@@ -16,7 +16,7 @@ export const AsideHeader = styled.div`
   }
 
   & > div {
-    padding: 81px 56px 26px;
+    padding: 81px 48px 26px;
     display: flex;
     flex-direction: column;
     gap: 26px;
@@ -27,8 +27,28 @@ export const HeaderInput = styled.div`
   display: flex;
   gap: 12px;
 
+  > div:nth-child(1) {
+    max-width: 67px;
+    width: 100%;
+
+    img {
+      width: 12px;
+      right: 8px;
+      top: 47%;
+    }
+  }
+
+  > div:nth-child(2) {
+    max-width: 145px;
+    width: 100%;
+
+    select {
+      padding-right: 39px;
+    }
+  }
+
   > div {
-    > div {
+    div {
       img {
         width: 16px;
       }

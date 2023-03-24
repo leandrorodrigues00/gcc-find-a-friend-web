@@ -17,7 +17,7 @@ type SelectProps = ComponentProps<typeof FilterInput> & {
   }[]
 }
 
-export function Select({ label, name, options, ...rest }: SelectProps) {
+export function Select({ label, name, options, value, ...rest }: SelectProps) {
   return (
     <Filter>
       {label && <FilterLabel htmlFor={name}>{label}</FilterLabel>}
@@ -29,7 +29,11 @@ export function Select({ label, name, options, ...rest }: SelectProps) {
           </FilterInputOption>
           {options.map((option) => {
             return (
-              <FilterInputOption key={option.value} value={option.value}>
+              <FilterInputOption
+                key={option.value}
+                value={option.value}
+                selected={option.value === value}
+              >
                 {option.label}
               </FilterInputOption>
             )

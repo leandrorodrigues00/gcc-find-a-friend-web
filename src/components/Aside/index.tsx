@@ -2,6 +2,7 @@ import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
 import { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Select } from '../Select'
 
 import {
@@ -81,7 +82,10 @@ const independencyOptions = [
 export function Aside() {
   const { statesList, citiesList } = useContext(LocationContext)
 
-  console.log(statesList)
+  const location = useLocation()
+  const state = new URLSearchParams(location.search).get('state')
+  const city = new URLSearchParams(location.search).get('city')
+
   function handleSearchPets() {
     // TO DO
   }
@@ -96,8 +100,8 @@ export function Aside() {
         <div>
           <img src={logo} alt="" />
           <HeaderInput>
-            <Select name={''} options={statesList} value="SP" />
-            <Select name={''} options={citiesList} />
+            <Select name={''} options={statesList} value={state} />
+            <Select name={''} options={citiesList} value={city} />
             <button>
               <img src={search} alt="ícone de lupa" />
             </button>

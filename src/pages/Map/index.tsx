@@ -4,7 +4,6 @@ import { Card } from '~/Card'
 import chevron from '@/assets/icons/chevron-bottom-blue.svg'
 import dog from '@/assets/images/dog.png'
 
-import { useLocation } from 'react-router-dom'
 import {
   Container,
   Content,
@@ -15,11 +14,6 @@ import {
 } from './styles'
 
 export function Map() {
-  const location = useLocation()
-  const state = new URLSearchParams(location.search).get('state')
-  const city = new URLSearchParams(location.search).get('city')
-
-  console.log(state, city)
   function handleFilterByPetType() {
     // TO DO
   }
