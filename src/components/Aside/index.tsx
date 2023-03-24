@@ -1,5 +1,6 @@
 import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
+
 import { Select } from '../Select'
 
 import {
