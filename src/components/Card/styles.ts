@@ -14,6 +14,7 @@ export const Container = styled.div`
 
   &:hover {
     background-color: #0d3b66;
+    cursor: pointer;
 
     div {
       background-color: #0d3b66;

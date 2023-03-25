@@ -14,6 +14,7 @@ import {
 } from './styles'
 import { useContext } from 'react'
 import { LocationContext } from '@/context/LocationContext'
+import { Link } from 'react-router-dom'
 
 export function Map() {
   const { filteredAnimalsCity } = useContext(LocationContext)
@@ -52,12 +53,13 @@ export function Map() {
         <Display>
           {filteredAnimalsCity && filteredAnimalsCity?.length > 0 ? (
             filteredAnimalsCity.map((animal) => (
-              <Card
-                key={animal.id}
-                path={animal.photo_url}
-                type={animal.type}
-                name={animal.name}
-              />
+              <Link key={animal.id} to={`/pet-details/${animal.id}`}>
+                <Card
+                  path={animal.photo_url}
+                  type={animal.type}
+                  name={animal.name}
+                />
+              </Link>
             ))
           ) : (
             <>
