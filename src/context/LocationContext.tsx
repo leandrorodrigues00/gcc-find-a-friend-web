@@ -1,3 +1,4 @@
+import { PetsProps } from '@/components/Aside'
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
 
 interface SelectInfosProps {
@@ -13,11 +14,13 @@ interface LocationContextType {
   statesList: SelectInfosProps[]
   citiesList: SelectInfosProps[]
   isFetching: boolean
+  filteredAnimalsCity?: PetsProps[]
   formValues: {
     state: string
     city: string
   }
   setFormValues: React.Dispatch<React.SetStateAction<LocationFormValues>>
+  setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsProps[]>>
 }
 
 interface CartContextProviderProps {
@@ -52,6 +55,10 @@ export function LocationProvider({ children }: CartContextProviderProps) {
     city: '',
   })
 
+  const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<PetsProps[]>(
+    [],
+  )
+
   useEffect(() => {
     async function getStatesData() {
       try {
@@ -77,12 +84,12 @@ export function LocationProvider({ children }: CartContextProviderProps) {
         setIsFetching(true)
         try {
           const data = await fetch(
-            `${API_BASE_URL}/location/citys/${formValues.state}`
+            `${API_BASE_URL}/location/citys/${formValues.state}`,
           )
           if (!data.ok) {
             throw new Error(
               // TODO toast
-              `Failed to fetch cities (${data.status} ${data.statusText})`
+              `Failed to fetch cities (${data.status} ${data.statusText})`,
             )
           }
           const { citys }: { citys: CitiesProps[] } = await data.json()
@@ -104,7 +111,15 @@ export function LocationProvider({ children }: CartContextProviderProps) {
 
   return (
     <LocationContext.Provider
-      value={{ statesList, citiesList, setFormValues, formValues, isFetching }}
+      value={{
+        statesList,
+        citiesList,
+        setFormValues,
+        formValues,
+        isFetching,
+        filteredAnimalsCity,
+        setFilteredAnimalsCity,
+      }}
     >
       {children}
     </LocationContext.Provider>

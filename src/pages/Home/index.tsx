@@ -26,7 +26,7 @@ export function Home() {
         state: stateValue,
       }))
     },
-    [setFormValues]
+    [setFormValues],
   )
 
   const handleChangeCity = useCallback(
@@ -36,7 +36,7 @@ export function Home() {
         city: cityValue,
       }))
     },
-    [setFormValues]
+    [setFormValues],
   )
 
   useEffect(() => {
@@ -85,6 +85,7 @@ export function Home() {
               options={citiesList}
               name="citiesListHome"
               disabled={!formValues.state || isFetching}
+              value={formValues.city}
               onChange={(cityValue: ChangeEvent<HTMLInputElement>) =>
                 handleChangeCity(cityValue.target.value)
               }

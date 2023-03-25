@@ -1,8 +1,7 @@
 import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
-import { ChangeEvent, useCallback, useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
 import { Select } from '../Select'
 
 import {
@@ -79,15 +78,36 @@ const independencyOptions = [
   },
 ]
 
+export interface PetsProps {
+  id: string
+  name: string
+  description: string
+  city: string
+  age: string
+  energy: string
+  size: string
+  independence: string
+  type: string
+  photo: string
+  orgId: string
+  photo_url: string
+}
+
+const API_BASE_URL = 'http://localhost:3333'
+
 export function Aside() {
-  const { statesList, citiesList, setFormValues } = useContext(LocationContext)
+  const {
+    statesList,
+    citiesList,
+    setFormValues,
+    formValues,
+    setFilteredAnimalsCity,
+  } = useContext(LocationContext)
 
-  const location = useLocation()
-  const state = new URLSearchParams(location.search).get('state')
-  const city = new URLSearchParams(location.search).get('city')
-
-  function handleSearchPets() {
-    // TO DO
+  async function handleSearchPets() {
+    const data = await fetch(`${API_BASE_URL}/pets/${formValues.city}`)
+    const { pets }: { pets: PetsProps[] } = await data.json()
+    setFilteredAnimalsCity(pets)
   }
 
   function handleChangeSearchFilters() {
@@ -108,6 +128,15 @@ export function Aside() {
     }))
   }, [])
 
+  useEffect(() => {
+    if (citiesList && citiesList.length > 0) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        city: citiesList[0].label,
+      }))
+    }
+  }, [formValues.state, citiesList, setFormValues])
+
   return (
     <Container>
       <AsideHeader>
@@ -117,7 +146,7 @@ export function Aside() {
             <Select
               name={''}
               options={statesList}
-              value={state}
+              value={formValues.state}
               onChange={(stateValue: ChangeEvent<HTMLInputElement>) =>
                 handleChangeState(stateValue.target.value)
               }
@@ -125,12 +154,12 @@ export function Aside() {
             <Select
               name={''}
               options={citiesList}
-              value={city}
+              value={formValues.city}
               onChange={(cityValue: ChangeEvent<HTMLInputElement>) =>
                 handleChangeCity(cityValue.target.value)
               }
             />
-            <button>
+            <button onClick={handleSearchPets}>
               <img src={search} alt="ícone de lupa" />
             </button>
           </HeaderInput>
