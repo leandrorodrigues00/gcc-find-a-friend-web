@@ -9,7 +9,7 @@ import logo from '../../assets/icons/logo.svg'
 import Dogs from '../../assets/images/heroDogs.svg'
 import search from '../../assets/icons/search.svg'
 import { Select } from '@/components/Select'
-import { ChangeEvent, useCallback, useContext } from 'react'
+import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LocationContext } from '@/context/LocationContext'
 
@@ -19,19 +19,34 @@ export function Home() {
   const { statesList, citiesList, setFormValues, formValues, isFetching } =
     useContext(LocationContext)
 
-  const handleChangeState = useCallback((stateValue: string) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      state: stateValue,
-    }))
-  }, [])
+  const handleChangeState = useCallback(
+    (stateValue: string) => {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        state: stateValue,
+      }))
+    },
+    [setFormValues]
+  )
 
-  const handleChangeCity = useCallback((cityValue: string) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      city: cityValue,
-    }))
-  }, [])
+  const handleChangeCity = useCallback(
+    (cityValue: string) => {
+      setFormValues((prevState) => ({
+        ...prevState,
+        city: cityValue,
+      }))
+    },
+    [setFormValues]
+  )
+
+  useEffect(() => {
+    if (citiesList && citiesList.length > 0) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        city: citiesList[0].label,
+      }))
+    }
+  }, [formValues.state, citiesList, setFormValues])
 
   function handleSearchPets() {
     navigate(`/map?state=${formValues.state}&city=${formValues.city}`)

@@ -101,6 +101,7 @@ export function LocationProvider({ children }: CartContextProviderProps) {
       getCitiesData()
     }
   }, [formValues.state])
+
   return (
     <LocationContext.Provider
       value={{ statesList, citiesList, setFormValues, formValues, isFetching }}

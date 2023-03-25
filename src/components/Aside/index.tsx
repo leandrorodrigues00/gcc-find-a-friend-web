@@ -1,7 +1,7 @@
 import logo from '@/assets/icons/logoMap.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
-import { useContext } from 'react'
+import { ChangeEvent, useCallback, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Select } from '../Select'
 
@@ -80,7 +80,7 @@ const independencyOptions = [
 ]
 
 export function Aside() {
-  const { statesList, citiesList } = useContext(LocationContext)
+  const { statesList, citiesList, setFormValues } = useContext(LocationContext)
 
   const location = useLocation()
   const state = new URLSearchParams(location.search).get('state')
@@ -94,14 +94,42 @@ export function Aside() {
     // TO DO
   }
 
+  const handleChangeState = useCallback((stateValue: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      state: stateValue,
+    }))
+  }, [])
+
+  const handleChangeCity = useCallback((cityValue: string) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      city: cityValue,
+    }))
+  }, [])
+
   return (
     <Container>
       <AsideHeader>
         <div>
           <img src={logo} alt="" />
           <HeaderInput>
-            <Select name={''} options={statesList} value={state} />
-            <Select name={''} options={citiesList} value={city} />
+            <Select
+              name={''}
+              options={statesList}
+              value={state}
+              onChange={(stateValue: ChangeEvent<HTMLInputElement>) =>
+                handleChangeState(stateValue.target.value)
+              }
+            />
+            <Select
+              name={''}
+              options={citiesList}
+              value={city}
+              onChange={(cityValue: ChangeEvent<HTMLInputElement>) =>
+                handleChangeCity(cityValue.target.value)
+              }
+            />
             <button>
               <img src={search} alt="ícone de lupa" />
             </button>
