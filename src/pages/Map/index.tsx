@@ -12,8 +12,12 @@ import {
   HeaderSelect,
   Display,
 } from './styles'
+import { useContext } from 'react'
+import { LocationContext } from '@/context/LocationContext'
 
 export function Map() {
+  const { filteredAnimalsCity } = useContext(LocationContext)
+  console.log(filteredAnimalsCity)
   function handleFilterByPetType() {
     // TO DO
   }
@@ -25,7 +29,16 @@ export function Map() {
       <Content>
         <Header>
           <p>
-            Encontre <span>324 amigos</span> na sua cidade
+            Encontre{' '}
+            <span>
+              {filteredAnimalsCity && filteredAnimalsCity?.length > 0 ? (
+                filteredAnimalsCity?.length
+              ) : (
+                <span>324</span>
+              )}{' '}
+              amigos
+            </span>{' '}
+            na sua cidade
           </p>
           <SelectWrapper>
             <HeaderSelect name="size" id="size">
@@ -37,14 +50,27 @@ export function Map() {
           </SelectWrapper>
         </Header>
         <Display>
-          <Card path={dog} type="dog" name="Alfredo" />
-          <Card path={dog} type="cat" name="Tobia" />
-          <Card path={dog} type="dog" name="Alfredo" />
-          <Card path={dog} type="cat" name="Tobia" />
-          <Card path={dog} type="dog" name="Alfredo" />
-          <Card path={dog} type="cat" name="Tobia" />
-          <Card path={dog} type="dog" name="Alfredo" />
-          <Card path={dog} type="cat" name="Tobia" />
+          {filteredAnimalsCity && filteredAnimalsCity?.length > 0 ? (
+            filteredAnimalsCity.map((animal) => (
+              <Card
+                key={animal.id}
+                path={animal.photo_url}
+                type={animal.type}
+                name={animal.name}
+              />
+            ))
+          ) : (
+            <>
+              <Card path={dog} type="dog" name="Alfredo" />
+              <Card path={dog} type="cat" name="Tobia" />
+              <Card path={dog} type="dog" name="Alfredo" />
+              <Card path={dog} type="cat" name="Tobia" />
+              <Card path={dog} type="dog" name="Alfredo" />
+              <Card path={dog} type="cat" name="Tobia" />
+              <Card path={dog} type="dog" name="Alfredo" />
+              <Card path={dog} type="cat" name="Tobia" />
+            </>
+          )}
         </Display>
       </Content>
     </Container>
