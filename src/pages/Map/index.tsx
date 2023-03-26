@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 
 export function Map() {
   const { filteredAnimalsCity } = useContext(LocationContext)
-  console.log(filteredAnimalsCity)
+
   function handleFilterByPetType() {
     // TO DO
   }

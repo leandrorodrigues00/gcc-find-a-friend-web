@@ -1,4 +1,4 @@
-import logo from '@/assets/icons/logoMap.svg'
+import logo from '@/assets/icons/logo-mapPage.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
 import { ChangeEvent, useCallback, useContext, useEffect } from 'react'

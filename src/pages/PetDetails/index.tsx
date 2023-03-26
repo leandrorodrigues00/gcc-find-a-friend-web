@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { Container, InnerContainer } from './styles'
 
-import logoMap from '../../assets/icons/logoMap.svg'
+import logoMap from '../../assets/icons/logo-mapPage.svg'
 
 import chevronLeft from '../../assets/icons/chevron-left.svg'
 import { CardPetDetails } from '@/components/CardPetDetails'
