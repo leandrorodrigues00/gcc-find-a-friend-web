@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useNavigate, useParams } from 'react-router-dom'
 import { Container, InnerContainer } from './styles'
 
@@ -31,8 +32,16 @@ export interface PetDetailsProps {
   photo_url: string
 }
 
+export interface AdoptionRequirementsProps {
+  title: string
+}
+
 export function PetDetails() {
   const [petInfos, setPetInfos] = useState<PetDetailsProps | null>(null)
+  const [adoptionRequirements, setAdoptionRequirements] = useState<
+    AdoptionRequirementsProps[]
+  >([])
+
   const navigate = useNavigate()
   const { id } = useParams()
 
@@ -42,8 +51,19 @@ export function PetDetails() {
     setPetInfos(pet)
   }
 
+  async function handleGetAdoptionRequirements() {
+    const data = await fetch(`${API_BASE_URL}/pets/adoption-requirements/${id}`)
+    const {
+      adoption_requirements,
+    }: { adoption_requirements: Array<AdoptionRequirementsProps> } =
+      await data.json()
+
+    setAdoptionRequirements(adoption_requirements)
+  }
+
   useEffect(() => {
     handleGetPetData()
+    handleGetAdoptionRequirements()
   }, [])
 
   function handleNavigatePreviousPage() {
@@ -63,7 +83,12 @@ export function PetDetails() {
       <InnerContainer>
         <p>Seu novo amigo</p>
 
-        {petInfos && <CardPetDetails petInfos={petInfos} />}
+        {petInfos && (
+          <CardPetDetails
+            petInfos={petInfos}
+            adoptionRequirements={adoptionRequirements}
+          />
+        )}
       </InnerContainer>
     </Container>
   )

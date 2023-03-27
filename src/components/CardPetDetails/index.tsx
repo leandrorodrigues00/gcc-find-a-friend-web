@@ -22,17 +22,20 @@ import {
   whatsappIconWhite,
   alerta,
 } from '../../assets/icons/index'
-import { PetDetailsProps } from '@/pages/PetDetails'
+import { AdoptionRequirementsProps, PetDetailsProps } from '@/pages/PetDetails'
 
-export function CardPetDetails({ petInfos }: { petInfos: PetDetailsProps }) {
-  console.log(petInfos.age)
+export function CardPetDetails({
+  petInfos,
+  adoptionRequirements,
+}: {
+  petInfos: PetDetailsProps
+  adoptionRequirements: AdoptionRequirementsProps[]
+}) {
+  console.log(adoptionRequirements)
   return (
     <Container>
       <header>
-        <img
-          src="https://s3-alpha-sig.figma.com/img/bbef/f7f9/328b9f2cca850bdf6f5be689b99c9a40?Expires=1680480000&Signature=OVZ5ZESgPLH4vXTEgBKNMwIb4ZcDska26Htm-Z-7WMnQwhSxd7ttbEVEGpnbZJ7yTzzByNoAQ1qDCiFGRdfrYM2iChIr5r3MRfFWdjQd8k3LOi58UYrE7lwpC49DCUCQNGAyIXjAQ5ZhgdLdw3AOdCHUrXDhQV3L7EMigc72VEvGqjEJn5ILpqcijMuPS4-ZGK6TerTODInH0CLGH2zdepKN5oCX67~V~hOCNBoNSFcFYqpa0HSs4qVCTn3DXzhDr5lbYRx9C0DZzjgLUNze-VCzpWXpKtakz0R1VJ8m9BnK0QxlqtYZ7owtb3dLzgB8c6H4TCNHdJtvAa5lVMLL1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-          alt=""
-        />
+        <img src={petInfos.photo_url} alt={`Foto do pet: ${petInfos.name}`} />
       </header>
       <div>
         <ul>
@@ -77,11 +80,8 @@ export function CardPetDetails({ petInfos }: { petInfos: PetDetailsProps }) {
 
       <InnerContent>
         <header>
-          <h1>Alfredo</h1>
-          <p>
-            Eu sou um lindo doguinho de 3 anos, um jovem bricalhão que adora
-            fazer companhia, uma bagunça mas também ama uma soneca.
-          </p>
+          <h1>{petInfos.name}</h1>
+          <p>{petInfos.description}</p>
         </header>
 
         <PetFeatures>
@@ -126,12 +126,14 @@ export function CardPetDetails({ petInfos }: { petInfos: PetDetailsProps }) {
           <div>
             <img src={logoDetails} alt="" />
             <div>
-              <p>Seu Cãopanheiro</p>
-              <p>Rua do meio, 123 , Boa viagem, Recife - PE </p>
+              <p>{petInfos.org.nome}</p>
+              <p>
+                {petInfos.org.address} - {petInfos.city}{' '}
+              </p>
 
               <WhatsAppIcon>
                 <img src={whatsappIcon} alt="" />
-                <p>81 1234.4567</p>
+                <p>{petInfos.org.whatsappNumber}</p>
               </WhatsAppIcon>
             </div>
           </div>
