@@ -110,9 +110,9 @@ export function Aside() {
     setFilteredAnimalsCity(pets)
   }
 
-  function handleChangeSearchFilters() {
-    // TO DO
-  }
+  // function handleChangeSearchFilters() {
+  //   // TO DO
+  // }
 
   const handleChangeState = useCallback((stateValue: string) => {
     setFormValues((prevValues) => ({

@@ -11,18 +11,21 @@ import {
   WhatsAppIcon,
 } from './styles'
 
-import fullEnergy from '../../assets/icons/full-energy.svg'
-import noEnergy from '../../assets/icons/no-energy.svg'
-import maximize from '../../assets/icons/maximize.svg'
-import fullEclipse from '../../assets/icons/full-eclipse.svg'
-import emptyEclipse from '../../assets/icons/empty-clipse.svg'
-import logoDetails from '../../assets/icons/logo-detailsPage.svg'
-import whatsappIcon from '../../assets/icons/whatsapp-icon.svg'
-import whatsappIconWhite from '../../assets/icons/Whatsapp-Icon-White.svg'
+import {
+  fullEnergy,
+  noEnergy,
+  maximize,
+  fullEclipse,
+  emptyEclipse,
+  logoDetails,
+  whatsappIcon,
+  whatsappIconWhite,
+  alerta,
+} from '../../assets/icons/index'
+import { PetDetailsProps } from '@/pages/PetDetails'
 
-import alerta from '../../assets/icons/alerta.svg'
-
-export function CardPetDetails() {
+export function CardPetDetails({ petInfos }: { petInfos: PetDetailsProps }) {
+  console.log(petInfos.age)
   return (
     <Container>
       <header>
