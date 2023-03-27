@@ -16,26 +16,26 @@ export const Container = styled.div`
     max-height: 51.25rem;
 
     padding: 2rem 1.5rem;
-  }
 
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: #f4d35e;
-    width: 48px;
-    height: 48px;
-    border-radius: 15px;
+    > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background-color: #f4d35e;
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+    }
   }
 `
 
 export const InnerContainer = styled.div`
   max-width: 44rem;
   width: 100%;
-  margin: 2.5rem auto 0;
+  margin: 2.5rem auto;
 
-  p {
+  > p {
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 28px;
