@@ -37,8 +37,15 @@ export interface AdoptionRequirementsProps {
   id: string
 }
 
+export interface PetGalleryProps {
+  id: string
+  image: string
+  photo_url: string
+}
+
 export function PetDetails() {
   const [petInfos, setPetInfos] = useState<PetDetailsProps | null>(null)
+  const [petGallery, setPetGallery] = useState<PetGalleryProps[] | null>(null)
   const [adoptionRequirements, setAdoptionRequirements] = useState<
     AdoptionRequirementsProps[]
   >([])
@@ -62,9 +69,17 @@ export function PetDetails() {
     setAdoptionRequirements(adoption_requirements)
   }
 
+  async function handleGetPetGallery() {
+    const data = await fetch(`${API_BASE_URL}/pets/gallery/${id}`)
+    const { pet_gallery }: { pet_gallery: Array<PetGalleryProps> } =
+      await data.json()
+    setPetGallery(pet_gallery)
+  }
+
   useEffect(() => {
     handleGetPetData()
     handleGetAdoptionRequirements()
+    handleGetPetGallery()
   }, [])
 
   function handleNavigatePreviousPage() {
@@ -84,10 +99,11 @@ export function PetDetails() {
       <InnerContainer>
         <p>Seu novo amigo</p>
 
-        {petInfos && (
+        {petInfos && petGallery && (
           <CardPetDetails
             petInfos={petInfos}
             adoptionRequirements={adoptionRequirements}
+            petGallery={petGallery}
           />
         )}
       </InnerContainer>

@@ -3,11 +3,12 @@ import styled from 'styled-components'
 export const Container = styled.div`
   max-width: 280px;
   width: 100%;
+  max-height: 300px;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
 
-  padding: 3px;
   border-radius: 20px;
   background-color: #ffffff;
   overflow: hidden;
@@ -58,6 +59,7 @@ export const PetImage = styled.div`
 
   img {
     width: 100%;
+    height: 12.5rem;
   }
 `
 

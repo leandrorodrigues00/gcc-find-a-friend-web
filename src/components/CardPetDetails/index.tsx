@@ -23,7 +23,12 @@ import {
   alerta,
 } from '../../assets/icons/index'
 
-import { AdoptionRequirementsProps, PetDetailsProps } from '@/pages/PetDetails'
+import {
+  AdoptionRequirementsProps,
+  PetDetailsProps,
+  PetGalleryProps,
+} from '@/pages/PetDetails'
+import { useState } from 'react'
 
 type SizeToNumIcons = {
   small: number
@@ -34,10 +39,17 @@ type SizeToNumIcons = {
 export function CardPetDetails({
   petInfos,
   adoptionRequirements,
+  petGallery,
 }: {
   petInfos: PetDetailsProps
   adoptionRequirements: AdoptionRequirementsProps[]
+  petGallery: PetGalleryProps[]
 }) {
+  const [selectedImage, setSelectedImage] = useState(petInfos.photo_url)
+
+  function handleImageClick(photoUrl: string) {
+    setSelectedImage(photoUrl)
+  }
   const renderEnergyIcons = () => {
     return Array.from({ length: 5 }).map((_, i) => (
       <img key={i} src={i < petInfos.energy ? fullEnergy : noEnergy} alt="" />
@@ -88,46 +100,18 @@ export function CardPetDetails({
   return (
     <Container>
       <header>
-        <img src={petInfos.photo_url} alt={`Foto do pet: ${petInfos.name}`} />
+        <img src={selectedImage} alt={`Foto do pet: ${petInfos.name}`} />
       </header>
       <div>
         <ul>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
-          <li>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/3606/22f8/63943566bc4093442ee7132c1e2dbb5d?Expires=1681084800&Signature=H7NbCh4ieValSvC36CsG9eNnc2iu54Gl20CAGeDwzpemy1CqqhA~stEFmpKxeAOilg7A-wYjYJr3C6B4PmmncPC~Lmyb6ytVM-WrK2trUCjf5PuwR5zb9sp7xMG-a4HZ~oBl-CQ5jL3K259rWKD9c4r4muQk5lpKJS7TD1axkEX1irtqGnBJ8J2yIqBZ3-SN~ON8NpHE5kfLKreh7~u1AcA5mhXQ1Jkd4zbpHVNZNiseuIu8RByWdqw47P5BOS5VJX3Hv8ZELH-NhPcQayrLsxs~yMjumSvFXUfH9P2xPQAVeWcy~sZ8N0hmpIatTW~ywhivllO55jelnXeHhldisw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              alt=""
-            />
-          </li>
+          {petGallery.map((photo) => (
+            <li
+              key={photo.id}
+              onClick={() => handleImageClick(photo.photo_url)}
+            >
+              <img src={photo.photo_url} alt={photo.image} />
+            </li>
+          ))}
         </ul>
       </div>
 

@@ -24,11 +24,19 @@ export const Container = styled.div`
       justify-content: center;
       list-style: none;
 
-      img {
-        max-width: 80px;
-        max-height: 80px;
-        border-radius: 15px;
-        width: 100%;
+      li {
+        img {
+          max-width: 5rem;
+          max-height: 5rem;
+          height: 100%;
+          width: 100%;
+          border-radius: 15px;
+          width: 100%;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

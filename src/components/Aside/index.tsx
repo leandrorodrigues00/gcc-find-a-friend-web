@@ -1,7 +1,7 @@
 import logo from '@/assets/icons/logo-mapPage.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
-import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
+import { ChangeEvent, useCallback, useContext } from 'react'
 import { Select } from '../Select'
 
 import {
@@ -127,15 +127,6 @@ export function Aside() {
       city: cityValue,
     }))
   }, [])
-
-  useEffect(() => {
-    if (citiesList && citiesList.length > 0) {
-      setFormValues((prevValues) => ({
-        ...prevValues,
-        city: citiesList[0].label,
-      }))
-    }
-  }, [formValues.state, citiesList, setFormValues])
 
   return (
     <Container>
