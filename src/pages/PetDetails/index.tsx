@@ -34,6 +34,7 @@ export interface PetDetailsProps {
 
 export interface AdoptionRequirementsProps {
   title: string
+  id: string
 }
 
 export function PetDetails() {

@@ -22,7 +22,14 @@ import {
   whatsappIconWhite,
   alerta,
 } from '../../assets/icons/index'
+
 import { AdoptionRequirementsProps, PetDetailsProps } from '@/pages/PetDetails'
+
+type SizeToNumIcons = {
+  small: number
+  medium: number
+  big: number
+}
 
 export function CardPetDetails({
   petInfos,
@@ -31,7 +38,53 @@ export function CardPetDetails({
   petInfos: PetDetailsProps
   adoptionRequirements: AdoptionRequirementsProps[]
 }) {
-  console.log(adoptionRequirements)
+  const renderEnergyIcons = () => {
+    return Array.from({ length: 5 }).map((_, i) => (
+      <img key={i} src={i < petInfos.energy ? fullEnergy : noEnergy} alt="" />
+    ))
+  }
+
+  const renderEnergyText = () => {
+    if (petInfos.energy <= 2) {
+      return <p>Pouca Energia</p>
+    } else if (petInfos.energy >= 3) {
+      return <p>muita energia</p>
+    } else {
+      return null
+    }
+  }
+
+  const sizeToNumIcons: SizeToNumIcons = {
+    small: 1,
+    medium: 2,
+    big: 3,
+  }
+
+  const renderSizeIcons = () => {
+    const numIcons = sizeToNumIcons[petInfos.size as keyof SizeToNumIcons]
+    const icons = []
+    for (let i = 0; i < 3; i++) {
+      if (i < numIcons) {
+        icons.push(<img key={i} src={fullEclipse} alt="" />)
+      } else {
+        icons.push(<img key={i} src={emptyEclipse} alt="" />)
+      }
+    }
+    return icons
+  }
+
+  const renderSizeText = () => {
+    if (petInfos.size === 'small') {
+      return <p>Pequenino</p>
+    } else if (petInfos.size === 'medium') {
+      return <p>Médio</p>
+    } else if (petInfos.size === 'big') {
+      return <p>Grande</p>
+    } else {
+      return null
+    }
+  }
+
   return (
     <Container>
       <header>
@@ -86,14 +139,8 @@ export function CardPetDetails({
 
         <PetFeatures>
           <div>
-            <EnergyFeatureImage>
-              <img src={fullEnergy} alt="" />
-              <img src={fullEnergy} alt="" />
-              <img src={fullEnergy} alt="" />
-              <img src={fullEnergy} alt="" />
-              <img src={noEnergy} alt="" />
-            </EnergyFeatureImage>
-            <p>muita energia</p>
+            <EnergyFeatureImage>{renderEnergyIcons()}</EnergyFeatureImage>
+            {renderEnergyText()}
           </div>
 
           <div>
@@ -104,12 +151,8 @@ export function CardPetDetails({
           </div>
 
           <div>
-            <SizeFeatureImage>
-              <img src={fullEclipse} alt="" />
-              <img src={emptyEclipse} alt="" />
-              <img src={emptyEclipse} alt="" />
-            </SizeFeatureImage>
-            <p>Pequenino</p>
+            <SizeFeatureImage>{renderSizeIcons()}</SizeFeatureImage>
+            {renderSizeText()}
           </div>
         </PetFeatures>
 
@@ -143,22 +186,12 @@ export function CardPetDetails({
           <p>Requisitos para adoção</p>
 
           <ul>
-            <li>
-              <img src={alerta} alt="" />
-              <p> Local grande para o animal correr e brincar.</p>
-            </li>
-            <li>
-              <img src={alerta} alt="" />
-              <p>Proibido apartamento</p>
-            </li>
-            <li>
-              <img src={alerta} alt="" />
-              <p>Ambiente frio, pois possui muito pelo.</p>
-            </li>
-            <li>
-              <img src={alerta} alt="" />
-              <p>Cão com intolerância a lactose.</p>
-            </li>
+            {adoptionRequirements.map((requirement) => (
+              <li key={requirement.id}>
+                <img src={alerta} alt="" />
+                <p>{requirement.title}</p>
+              </li>
+            ))}
           </ul>
         </AdoptionRequirementsContainer>
 
