@@ -179,10 +179,9 @@ export function CardPetDetails({
           </ul>
         </AdoptionRequirementsContainer>
 
-        <ContactButton>
+        <ContactButton href={`https://wa.me/${petInfos.org.whatsappNumber}`}>
           <img src={whatsappIconWhite} alt="" />
-
-          <span>Entrar em contato</span>
+          Entrar em contato
         </ContactButton>
       </InnerContent>
     </Container>

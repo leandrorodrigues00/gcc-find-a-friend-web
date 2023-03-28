@@ -213,7 +213,7 @@ export const AdoptionRequirementsContainer = styled.div`
   }
 `
 
-export const ContactButton = styled.button`
+export const ContactButton = styled.a`
   margin-top: 3.125rem;
   width: 100%;
   border: 0;
