@@ -43,9 +43,19 @@ export interface PetGalleryProps {
   photo_url: string
 }
 
+export interface CoordinatesMapProps {
+  latitude: string
+  longitude: string
+}
+
 export function PetDetails() {
   const [petInfos, setPetInfos] = useState<PetDetailsProps | null>(null)
   const [petGallery, setPetGallery] = useState<PetGalleryProps[] | null>(null)
+  const [orgCoordinates, setOrgCoordinates] = useState<CoordinatesMapProps>({
+    latitude: '',
+    longitude: '',
+  })
+
   const [adoptionRequirements, setAdoptionRequirements] = useState<
     AdoptionRequirementsProps[]
   >([])
@@ -56,6 +66,18 @@ export function PetDetails() {
   async function handleGetPetData() {
     const data = await fetch(`${API_BASE_URL}/pets/show/${id}`)
     const { pet }: { pet: PetDetailsProps } = await data.json()
+
+    const orgCep = pet.org?.cep
+
+    if (orgCep) {
+      const coordinatesData = await fetch(
+        `${API_BASE_URL}/location/coordinates/${orgCep}`,
+      )
+      const { coordinates }: { coordinates: CoordinatesMapProps } =
+        await coordinatesData.json()
+      setOrgCoordinates(coordinates)
+    }
+
     setPetInfos(pet)
   }
 
@@ -104,6 +126,7 @@ export function PetDetails() {
             petInfos={petInfos}
             adoptionRequirements={adoptionRequirements}
             petGallery={petGallery}
+            orgCoordinates={orgCoordinates}
           />
         )}
       </InnerContainer>

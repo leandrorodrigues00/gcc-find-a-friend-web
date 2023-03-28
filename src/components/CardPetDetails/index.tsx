@@ -25,6 +25,7 @@ import {
 
 import {
   AdoptionRequirementsProps,
+  CoordinatesMapProps,
   PetDetailsProps,
   PetGalleryProps,
 } from '@/pages/PetDetails'
@@ -40,10 +41,12 @@ export function CardPetDetails({
   petInfos,
   adoptionRequirements,
   petGallery,
+  orgCoordinates,
 }: {
   petInfos: PetDetailsProps
   adoptionRequirements: AdoptionRequirementsProps[]
   petGallery: PetGalleryProps[]
+  orgCoordinates: CoordinatesMapProps
 }) {
   const [selectedImage, setSelectedImage] = useState(petInfos.photo_url)
 
