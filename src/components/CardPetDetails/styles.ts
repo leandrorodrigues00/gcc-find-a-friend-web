@@ -102,14 +102,15 @@ export const SizeFeatureImage = styled.div`
 
 export const MapContainer = styled.div`
   margin-top: 4.375rem;
+
   background: #0d3b66;
   border-radius: 25px 25px 20px 20px;
 
-  img {
-    width: 100%;
-    max-height: 14.187rem;
-    height: 100%;
-    border-radius: 1.25rem;
+  > div {
+    > div {
+      height: 227px;
+      border-radius: 23px;
+    }
   }
 
   p {

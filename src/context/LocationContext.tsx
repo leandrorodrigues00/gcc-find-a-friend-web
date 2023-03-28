@@ -10,6 +10,12 @@ interface LocationFormValues {
   state: string
   city: string
 }
+
+export interface CoordinatesMapProps {
+  latitude: string
+  longitude: string
+}
+
 interface LocationContextType {
   statesList: SelectInfosProps[]
   citiesList: SelectInfosProps[]
@@ -19,8 +25,10 @@ interface LocationContextType {
     state: string
     city: string
   }
+  orgCoordinates: CoordinatesMapProps
   setFormValues: React.Dispatch<React.SetStateAction<LocationFormValues>>
   setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsProps[]>>
+  setOrgCoordinates: React.Dispatch<React.SetStateAction<CoordinatesMapProps>>
 }
 
 interface CartContextProviderProps {
@@ -53,6 +61,11 @@ export function LocationProvider({ children }: CartContextProviderProps) {
   const [formValues, setFormValues] = useState({
     state: '',
     city: '',
+  })
+
+  const [orgCoordinates, setOrgCoordinates] = useState<CoordinatesMapProps>({
+    latitude: '',
+    longitude: '',
   })
 
   const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<PetsProps[]>(
@@ -119,6 +132,8 @@ export function LocationProvider({ children }: CartContextProviderProps) {
         isFetching,
         filteredAnimalsCity,
         setFilteredAnimalsCity,
+        orgCoordinates,
+        setOrgCoordinates,
       }}
     >
       {children}

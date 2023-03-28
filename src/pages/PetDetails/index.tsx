@@ -6,7 +6,8 @@ import logoMap from '../../assets/icons/logo-mapPage.svg'
 
 import chevronLeft from '../../assets/icons/chevron-left.svg'
 import { CardPetDetails } from '@/components/CardPetDetails'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { LocationContext } from '@/context/LocationContext'
 
 const API_BASE_URL = 'http://localhost:3333'
 
@@ -43,25 +44,16 @@ export interface PetGalleryProps {
   photo_url: string
 }
 
-export interface CoordinatesMapProps {
-  latitude: string
-  longitude: string
-}
-
 export function PetDetails() {
   const [petInfos, setPetInfos] = useState<PetDetailsProps | null>(null)
   const [petGallery, setPetGallery] = useState<PetGalleryProps[] | null>(null)
-  const [orgCoordinates, setOrgCoordinates] = useState<CoordinatesMapProps>({
-    latitude: '',
-    longitude: '',
-  })
-
   const [adoptionRequirements, setAdoptionRequirements] = useState<
     AdoptionRequirementsProps[]
   >([])
 
   const navigate = useNavigate()
   const { id } = useParams()
+  const { setOrgCoordinates } = useContext(LocationContext)
 
   async function handleGetPetData() {
     const data = await fetch(`${API_BASE_URL}/pets/show/${id}`)
@@ -73,8 +65,7 @@ export function PetDetails() {
       const coordinatesData = await fetch(
         `${API_BASE_URL}/location/coordinates/${orgCep}`,
       )
-      const { coordinates }: { coordinates: CoordinatesMapProps } =
-        await coordinatesData.json()
+      const { coordinates } = await coordinatesData.json()
       setOrgCoordinates(coordinates)
     }
 
@@ -126,7 +117,6 @@ export function PetDetails() {
             petInfos={petInfos}
             adoptionRequirements={adoptionRequirements}
             petGallery={petGallery}
-            orgCoordinates={orgCoordinates}
           />
         )}
       </InnerContainer>
