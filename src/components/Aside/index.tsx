@@ -93,8 +93,6 @@ export interface PetsProps {
   photo_url: string
 }
 
-const API_BASE_URL = 'http://localhost:3333'
-
 export function Aside() {
   const {
     statesList,
@@ -105,7 +103,9 @@ export function Aside() {
   } = useContext(LocationContext)
 
   async function handleSearchPets() {
-    const data = await fetch(`${API_BASE_URL}/pets/${formValues.city}`)
+    const data = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/pets/${formValues.city}`,
+    )
     const { pets }: { pets: PetsProps[] } = await data.json()
     setFilteredAnimalsCity(pets)
   }

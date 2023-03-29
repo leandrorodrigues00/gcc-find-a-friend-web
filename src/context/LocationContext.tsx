@@ -45,14 +45,13 @@ interface StatesProps {
     nome: string
   }
 }
+
 interface CitiesProps {
   name: string
   code: string
 }
 
 export const LocationContext = createContext({} as LocationContextType)
-
-const API_BASE_URL = 'http://localhost:3333'
 
 export function LocationProvider({ children }: CartContextProviderProps) {
   const [statesList, setStatesList] = useState<SelectInfosProps[]>([])
@@ -62,12 +61,10 @@ export function LocationProvider({ children }: CartContextProviderProps) {
     state: '',
     city: '',
   })
-
   const [orgCoordinates, setOrgCoordinates] = useState<CoordinatesMapProps>({
     latitude: '',
     longitude: '',
   })
-
   const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<PetsProps[]>(
     [],
   )
@@ -75,7 +72,9 @@ export function LocationProvider({ children }: CartContextProviderProps) {
   useEffect(() => {
     async function getStatesData() {
       try {
-        const data = await fetch(`${API_BASE_URL}/location/states`)
+        const data = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/location/states`,
+        )
         const { states }: { states: StatesProps[] } = await data.json()
 
         const stateInfo = states.map(({ sigla }) => ({
@@ -97,7 +96,9 @@ export function LocationProvider({ children }: CartContextProviderProps) {
         setIsFetching(true)
         try {
           const data = await fetch(
-            `${API_BASE_URL}/location/citys/${formValues.state}`,
+            `${import.meta.env.VITE_API_BASE_URL}/location/citys/${
+              formValues.state
+            }`,
           )
           if (!data.ok) {
             throw new Error(

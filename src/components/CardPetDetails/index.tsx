@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   AddressContainer,
   AdoptionRequirementsContainer,
@@ -46,21 +47,23 @@ export function CardPetDetails({
   adoptionRequirements: AdoptionRequirementsProps[]
   petGallery: PetGalleryProps[]
 }) {
-  const [selectedImage, setSelectedImage] = useState(petInfos.photo_url)
+  const { name, description, photo_url, energy, size, org, city } = petInfos
+  const [selectedImage, setSelectedImage] = useState(photo_url)
 
   function handleImageClick(photoUrl: string) {
     setSelectedImage(photoUrl)
   }
+
   const renderEnergyIcons = () => {
     return Array.from({ length: 5 }).map((_, i) => (
-      <img key={i} src={i < petInfos.energy ? fullEnergy : noEnergy} alt="" />
+      <img key={i} src={i < energy ? fullEnergy : noEnergy} alt="" />
     ))
   }
 
   const renderEnergyText = () => {
-    if (petInfos.energy <= 2) {
+    if (energy <= 2) {
       return <p>Pouca Energia</p>
-    } else if (petInfos.energy >= 3) {
+    } else if (energy >= 3) {
       return <p>muita energia</p>
     } else {
       return null
@@ -74,7 +77,7 @@ export function CardPetDetails({
   }
 
   const renderSizeIcons = () => {
-    const numIcons = sizeToNumIcons[petInfos.size as keyof SizeToNumIcons]
+    const numIcons = sizeToNumIcons[size as keyof SizeToNumIcons]
     const icons = []
     for (let i = 0; i < 3; i++) {
       if (i < numIcons) {
@@ -87,11 +90,11 @@ export function CardPetDetails({
   }
 
   const renderSizeText = () => {
-    if (petInfos.size === 'small') {
+    if (size === 'small') {
       return <p>Pequenino</p>
-    } else if (petInfos.size === 'medium') {
+    } else if (size === 'medium') {
       return <p>Médio</p>
-    } else if (petInfos.size === 'big') {
+    } else if (size === 'big') {
       return <p>Grande</p>
     } else {
       return null
@@ -101,7 +104,7 @@ export function CardPetDetails({
   return (
     <Container>
       <header>
-        <img src={selectedImage} alt={`Foto do pet: ${petInfos.name}`} />
+        <img src={selectedImage} alt={`Foto do pet: ${name}`} />
       </header>
       <div>
         <ul>
@@ -118,8 +121,8 @@ export function CardPetDetails({
 
       <InnerContent>
         <header>
-          <h1>{petInfos.name}</h1>
-          <p>{petInfos.description}</p>
+          <h1>{name}</h1>
+          <p>{description}</p>
         </header>
 
         <PetFeatures>
@@ -153,14 +156,14 @@ export function CardPetDetails({
           <div>
             <img src={logoDetails} alt="" />
             <div>
-              <p>{petInfos.org.nome}</p>
+              <p>{org.nome}</p>
               <p>
-                {petInfos.org.address} - {petInfos.city}{' '}
+                {org.address} - {city}{' '}
               </p>
 
               <WhatsAppIcon>
                 <img src={whatsappIcon} alt="" />
-                <p>{petInfos.org.whatsappNumber}</p>
+                <p>{org.whatsappNumber}</p>
               </WhatsAppIcon>
             </div>
           </div>
@@ -179,7 +182,7 @@ export function CardPetDetails({
           </ul>
         </AdoptionRequirementsContainer>
 
-        <ContactButton href={`https://wa.me/${petInfos.org.whatsappNumber}`}>
+        <ContactButton href={`https://wa.me/${org.whatsappNumber}`}>
           <img src={whatsappIconWhite} alt="" />
           Entrar em contato
         </ContactButton>

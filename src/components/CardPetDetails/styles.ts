@@ -214,6 +214,7 @@ export const AdoptionRequirementsContainer = styled.div`
 `
 
 export const ContactButton = styled.a`
+  text-decoration: none;
   margin-top: 3.125rem;
   width: 100%;
   border: 0;
