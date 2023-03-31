@@ -1,7 +1,8 @@
 import logo from '@/assets/icons/logo-mapPage.svg'
 import search from '@/assets/icons/search.svg'
 import { LocationContext } from '@/context/LocationContext'
-import { ChangeEvent, useCallback, useContext } from 'react'
+import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Select } from '../Select'
 
 import {
@@ -94,6 +95,8 @@ export interface PetsProps {
 }
 
 export function Aside() {
+  const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/pets`
+
   const {
     statesList,
     citiesList,
@@ -102,10 +105,12 @@ export function Aside() {
     setFilteredAnimalsCity,
   } = useContext(LocationContext)
 
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const cityParams = params.get('city')
+
   async function handleSearchPets() {
-    const data = await fetch(
-      `${import.meta.env.VITE_API_BASE_URL}/pets/${formValues.city}`,
-    )
+    const data = await fetch(`${apiUrl}/${formValues.city}`)
     const { pets }: { pets: PetsProps[] } = await data.json()
     setFilteredAnimalsCity(pets)
   }
@@ -114,19 +119,43 @@ export function Aside() {
   //   // TO DO
   // }
 
-  const handleChangeState = useCallback((stateValue: string) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      state: stateValue,
-    }))
-  }, [])
+  const handleChangeState = useCallback(
+    (stateValue: string) => {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        state: stateValue,
+      }))
+    },
+    [setFormValues],
+  )
 
-  const handleChangeCity = useCallback((cityValue: string) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      city: cityValue,
-    }))
-  }, [])
+  const handleChangeCity = useCallback(
+    (cityValue: string) => {
+      setFormValues((prevState) => ({
+        ...prevState,
+        city: cityValue,
+      }))
+    },
+    [setFormValues],
+  )
+
+  useEffect(() => {
+    if (citiesList?.length > 0) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        city: citiesList[0].label,
+      }))
+    }
+  }, [formValues.state, citiesList, setFormValues])
+
+  useEffect(() => {
+    if (cityParams) {
+      setFormValues((prevState) => ({
+        ...prevState,
+        city: cityParams,
+      }))
+    }
+  }, [cityParams, setFormValues])
 
   return (
     <Container>

@@ -1,41 +1,8 @@
 import { PetsProps } from '@/components/Aside'
+import { API_BASE_URL } from '@/config'
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
 
-interface SelectInfosProps {
-  value: string | number
-  label: string
-}
-
-interface LocationFormValues {
-  state: string
-  city: string
-}
-
-export interface CoordinatesMapProps {
-  latitude: string
-  longitude: string
-}
-
-interface LocationContextType {
-  statesList: SelectInfosProps[]
-  citiesList: SelectInfosProps[]
-  isFetching: boolean
-  filteredAnimalsCity?: PetsProps[]
-  formValues: {
-    state: string
-    city: string
-  }
-  orgCoordinates: CoordinatesMapProps
-  setFormValues: React.Dispatch<React.SetStateAction<LocationFormValues>>
-  setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsProps[]>>
-  setOrgCoordinates: React.Dispatch<React.SetStateAction<CoordinatesMapProps>>
-}
-
-interface CartContextProviderProps {
-  children: ReactNode
-}
-
-interface StatesProps {
+interface StatesApiProps {
   id: number
   sigla: string
   nome: string
@@ -46,9 +13,52 @@ interface StatesProps {
   }
 }
 
-interface CitiesProps {
+interface StatesApiResponse {
+  states: StatesApiProps[]
+}
+
+interface CitiesApiProps {
   name: string
   code: string
+}
+
+interface CitiesApiResponse {
+  citys: CitiesApiProps[]
+}
+
+interface SelectInfosProps {
+  value: string
+  label: string
+}
+
+interface LocationFormValues {
+  state: string
+  city: string
+}
+
+interface CoordinatesMapProps {
+  latitude: string
+  longitude: string
+}
+
+interface LocationContextType {
+  statesList: SelectInfosProps[]
+  citiesList: SelectInfosProps[]
+  isFetching: boolean
+  formValues: {
+    state: string
+    city: string
+  }
+  filteredAnimalsCity?: PetsProps[]
+
+  orgCoordinates: CoordinatesMapProps
+  setFormValues: React.Dispatch<React.SetStateAction<LocationFormValues>>
+  setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsProps[]>>
+  setOrgCoordinates: React.Dispatch<React.SetStateAction<CoordinatesMapProps>>
+}
+
+interface CartContextProviderProps {
+  children: ReactNode
 }
 
 export const LocationContext = createContext({} as LocationContextType)
@@ -69,57 +79,65 @@ export function LocationProvider({ children }: CartContextProviderProps) {
     [],
   )
 
-  useEffect(() => {
-    async function getStatesData() {
-      try {
-        const data = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/location/states`,
-        )
-        const { states }: { states: StatesProps[] } = await data.json()
+  async function fetchData<T>(url: string): Promise<T | null> {
+    try {
+      const response = await fetch(url)
 
-        const stateInfo = states.map(({ sigla }) => ({
-          value: sigla,
-          label: sigla,
-        }))
-        setStatesList(stateInfo)
-      } catch (error) {
-        // TODO toast
-        console.error(error)
+      if (response.ok) {
+        const json = await response.json()
+        return json
+      } else {
+        throw new Error(
+          `Error fetching data from URL ${url}. Response status: ${response.status}`,
+        )
       }
+    } catch (error) {
+      if (error instanceof Error)
+        console.error(
+          `Error fetching data from URL ${url}. Message: ${error.message}`,
+        )
+      return null
     }
-    getStatesData()
+  }
+
+  useEffect(() => {
+    async function handleStateData() {
+      const data = await fetchData<StatesApiResponse>(
+        `${API_BASE_URL}/location/states`,
+      )
+      if (!data) return
+
+      const stateInfo = data.states.map(({ sigla }) => ({
+        value: sigla,
+        label: sigla,
+      }))
+
+      setStatesList(stateInfo)
+    }
+    handleStateData()
   }, [])
 
   useEffect(() => {
     if (formValues.state) {
-      async function getCitiesData() {
+      async function handleCitiesData() {
         setIsFetching(true)
-        try {
-          const data = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/location/citys/${
-              formValues.state
-            }`,
-          )
-          if (!data.ok) {
-            throw new Error(
-              // TODO toast
-              `Failed to fetch cities (${data.status} ${data.statusText})`,
-            )
-          }
-          const { citys }: { citys: CitiesProps[] } = await data.json()
+        const data = await fetchData<CitiesApiResponse>(
+          `${API_BASE_URL}/location/citys/${formValues.state}`,
+        )
 
-          const citysInfo = citys.map(({ name }) => ({
-            value: name,
-            label: name,
-          }))
+        setIsFetching(false)
 
-          setCitiesList(citysInfo)
-          setIsFetching(false)
-        } catch (error) {
-          console.error(error)
-        }
+        if (!data) return
+
+        const CityInfo = data.citys.map(({ name }) => ({
+          value: name,
+          label: name,
+        }))
+
+        setCitiesList(CityInfo)
       }
-      getCitiesData()
+
+      handleCitiesData()
     }
   }, [formValues.state])
 
