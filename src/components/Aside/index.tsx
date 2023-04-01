@@ -13,6 +13,7 @@ import {
   ContentHeader,
   ContentFilters,
 } from './styles'
+import { API_BASE_URL } from '@/config'
 
 const ageOptions = [
   {
@@ -79,30 +80,33 @@ const independencyOptions = [
   },
 ]
 
-export interface PetsProps {
+export interface PetsApiProps {
   id: string
   name: string
   description: string
   city: string
   age: string
   energy: string
-  size: string
-  independence: string
+  size: 'small' | 'medium' | 'big'
+  independence: 'low' | 'medium' | 'high'
   type: 'dog' | 'cat'
   photo: string
   orgId: string
   photo_url: string
 }
 
-export function Aside() {
-  const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/pets`
+export interface PetsApiResponse {
+  pets: PetsApiProps[]
+}
 
+export function Aside() {
   const {
     statesList,
     citiesList,
     setFormValues,
     formValues,
     setFilteredAnimalsCity,
+    fetchData,
   } = useContext(LocationContext)
 
   const location = useLocation()
@@ -110,9 +114,11 @@ export function Aside() {
   const cityParams = params.get('city')
 
   async function handleSearchPets() {
-    const data = await fetch(`${apiUrl}/${formValues.city}`)
-    const { pets }: { pets: PetsProps[] } = await data.json()
-    setFilteredAnimalsCity(pets)
+    const data = await fetchData<PetsApiResponse>(
+      `${API_BASE_URL}/pets/${formValues.city}`,
+    )
+    if (!data) return
+    setFilteredAnimalsCity(data.pets)
   }
 
   // function handleChangeSearchFilters() {
@@ -146,7 +152,7 @@ export function Aside() {
         city: citiesList[0].label,
       }))
     }
-  }, [formValues.state, citiesList, setFormValues])
+  }, [citiesList, setFormValues])
 
   useEffect(() => {
     if (cityParams) {
@@ -155,6 +161,7 @@ export function Aside() {
         city: cityParams,
       }))
     }
+    handleSearchPets()
   }, [cityParams, setFormValues])
 
   return (
@@ -180,7 +187,7 @@ export function Aside() {
               }
             />
             <button onClick={handleSearchPets}>
-              <img src={search} alt="ícone de lupa" />
+              <img src={search} alt="Botão para busca de pets" />
             </button>
           </HeaderInput>
         </div>

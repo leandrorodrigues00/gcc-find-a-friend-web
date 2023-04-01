@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   flex: 1;
   background-color: #fdeced;
-  padding: 154px 32px 50px;
+  padding: 9.625rem 2rem 3.125rem;
 
   height: 100vh;
   overflow-y: scroll;
@@ -17,11 +17,11 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 46px;
+  margin-bottom: 2.875rem;
 
   p {
-    font-size: 20px;
-    line-height: 34px;
+    font-size: 1.25rem;
+    line-height: 2.125rem;
     font-weight: 400;
     color: #0d3b66;
   }
@@ -35,29 +35,29 @@ export const SelectWrapper = styled.div`
 
   & > img {
     position: absolute;
-    right: 18px;
+    right: 1.125rem;
     top: 50%;
     transform: translateY(-50%);
   }
 `
 
 export const HeaderSelect = styled.select`
-  width: 210px;
-  height: 48px;
-  padding: 14px 18px;
+  width: 13.125rem;
+  height: 3rem;
+  padding: 0.875rem 1.125rem;
   border: none;
-  border-radius: 15px;
+  border-radius: 14.992px;
   background-color: #fbe1e2;
   outline: none;
   appearance: none;
 
   font-family: Nunito;
-  font-size: 16px;
+  font-size: 1rem;
   color: #0d3b66;
 `
 
 export const Display = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  grid-gap: 32px;
+  grid-template-columns: repeat(3, minmax(17.5rem, 1fr));
+  grid-gap: 2rem;
 `

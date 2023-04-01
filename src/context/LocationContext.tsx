@@ -1,6 +1,7 @@
-import { PetsProps } from '@/components/Aside'
-import { API_BASE_URL } from '@/config'
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import { API_BASE_URL } from '@/config'
+import { PetsApiProps } from '@/components/Aside'
+import { CoordinatesMapProps } from '@/pages/PetDetails'
 
 interface StatesApiProps {
   id: number
@@ -31,30 +32,25 @@ interface SelectInfosProps {
   label: string
 }
 
-interface LocationFormValues {
+interface FormValues {
   state: string
   city: string
-}
-
-interface CoordinatesMapProps {
-  latitude: string
-  longitude: string
 }
 
 interface LocationContextType {
   statesList: SelectInfosProps[]
   citiesList: SelectInfosProps[]
   isFetching: boolean
-  formValues: {
-    state: string
-    city: string
-  }
-  filteredAnimalsCity?: PetsProps[]
+  formValues: FormValues
+  filteredAnimalsCity?: PetsApiProps[]
 
-  orgCoordinates: CoordinatesMapProps
-  setFormValues: React.Dispatch<React.SetStateAction<LocationFormValues>>
-  setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsProps[]>>
-  setOrgCoordinates: React.Dispatch<React.SetStateAction<CoordinatesMapProps>>
+  orgCoordinates: CoordinatesMapProps | null
+  setFormValues: React.Dispatch<React.SetStateAction<FormValues>>
+  setFilteredAnimalsCity: React.Dispatch<React.SetStateAction<PetsApiProps[]>>
+  setOrgCoordinates: React.Dispatch<
+    React.SetStateAction<CoordinatesMapProps | null>
+  >
+  fetchData: <T>(url: string) => Promise<T | null>
 }
 
 interface CartContextProviderProps {
@@ -71,13 +67,11 @@ export function LocationProvider({ children }: CartContextProviderProps) {
     state: '',
     city: '',
   })
-  const [orgCoordinates, setOrgCoordinates] = useState<CoordinatesMapProps>({
-    latitude: '',
-    longitude: '',
-  })
-  const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<PetsProps[]>(
-    [],
-  )
+  const [orgCoordinates, setOrgCoordinates] =
+    useState<CoordinatesMapProps | null>(null)
+  const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<
+    PetsApiProps[]
+  >([])
 
   async function fetchData<T>(url: string): Promise<T | null> {
     try {
@@ -153,6 +147,7 @@ export function LocationProvider({ children }: CartContextProviderProps) {
         setFilteredAnimalsCity,
         orgCoordinates,
         setOrgCoordinates,
+        fetchData,
       }}
     >
       {children}

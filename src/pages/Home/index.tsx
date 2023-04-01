@@ -1,3 +1,13 @@
+import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { Select } from '@/components/Select'
+import { LocationContext } from '@/context/LocationContext'
+
+import logo from '../../assets/icons/logo.svg'
+import Dogs from '../../assets/images/heroDogs.svg'
+import search from '../../assets/icons/search.svg'
+
 import {
   Container,
   FooterHero,
@@ -5,13 +15,6 @@ import {
   Introduction,
   SelectInputs,
 } from './styles'
-import logo from '../../assets/icons/logo.svg'
-import Dogs from '../../assets/images/heroDogs.svg'
-import search from '../../assets/icons/search.svg'
-import { Select } from '@/components/Select'
-import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { LocationContext } from '@/context/LocationContext'
 
 export function Home() {
   const navigate = useNavigate()
@@ -49,7 +52,8 @@ export function Home() {
   }, [formValues.state, citiesList, setFormValues])
 
   function handleSearchPets() {
-    navigate(`/map?state=${formValues.state}&city=${formValues.city}`)
+    const { state, city } = formValues
+    navigate(`/map?state=${state}&city=${city}`)
   }
 
   return (

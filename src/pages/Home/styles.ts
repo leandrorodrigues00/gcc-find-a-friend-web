@@ -33,7 +33,7 @@ export const FooterHero = styled.footer`
   justify-content: space-between;
 
   p {
-    max-width: 407px;
+    max-width: 25.437rem;
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 2.125rem;
@@ -54,8 +54,8 @@ export const SelectInputs = styled.div`
     width: 17.5rem;
 
     select {
-      height: 72px;
-      margin-bottom: 9px;
+      height: 4.5rem;
+      margin-bottom: 0.562rem;
     }
 
     img {
@@ -67,8 +67,8 @@ export const SelectInputs = styled.div`
     width: 8.125rem;
 
     select {
-      height: 72px;
-      margin-bottom: 9px;
+      height: 4.5rem;
+      margin-bottom: 0.562rem;
     }
 
     img {
@@ -78,12 +78,12 @@ export const SelectInputs = styled.div`
 
   span {
     line-height: 2.125rem;
-    margin-right: 1.4375rem;
+    margin-right: 1.437rem;
   }
 
   button {
     all: unset;
-    padding: 22px;
+    padding: 1.375rem;
     border-radius: 20px;
     background: #f4d35e;
     margin-left: 2rem;

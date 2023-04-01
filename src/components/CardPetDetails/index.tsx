@@ -1,16 +1,12 @@
 /* eslint-disable camelcase */
+import { useState } from 'react'
+
 import {
-  AddressContainer,
-  AdoptionRequirementsContainer,
-  ContactButton,
-  Container,
-  EnergyFeatureImage,
-  InnerContent,
-  MapContainer,
-  PetFeatures,
-  SizeFeatureImage,
-  WhatsAppIcon,
-} from './styles'
+  AdoptionRequirementsProps,
+  PetDetailsProps,
+  PetGalleryProps,
+} from '@/pages/PetDetails'
+import { MapOrg } from '../MapOrg'
 
 import {
   fullEnergy,
@@ -25,12 +21,17 @@ import {
 } from '../../assets/icons/index'
 
 import {
-  AdoptionRequirementsProps,
-  PetDetailsProps,
-  PetGalleryProps,
-} from '@/pages/PetDetails'
-import { useState } from 'react'
-import { MapOrg } from '../MapOrg'
+  AddressContainer,
+  AdoptionRequirementsContainer,
+  ContactButton,
+  Container,
+  EnergyFeatureImage,
+  InnerContent,
+  MapContainer,
+  PetFeatures,
+  SizeFeatureImage,
+  WhatsAppIcon,
+} from './styles'
 
 type SizeToNumIcons = {
   small: number

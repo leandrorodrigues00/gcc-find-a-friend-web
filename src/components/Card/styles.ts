@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  max-width: 280px;
+  max-width: 17.5rem;
   width: 100%;
-  max-height: 300px;
+  max-height: 18.75rem;
   height: 100%;
   display: flex;
   align-items: center;
@@ -28,14 +28,14 @@ export const Container = styled.div`
 `
 
 export const TypeIcon = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-top: -30px;
-  padding: 2px;
+  margin-top: -1.875rem;
+  padding: 0.125rem;
   border-radius: 10px;
   overflow: hidden;
   background-color: #ffffff;
@@ -50,7 +50,7 @@ export const TypeIcon = styled.div`
   }
 
   img {
-    width: 15px;
+    width: 0.937rem;
   }
 `
 
@@ -64,9 +64,9 @@ export const PetImage = styled.div`
 `
 
 export const Name = styled.p`
-  font-size: 18px;
-  line-height: 21.6px;
+  font-size: 1.125rem;
+  line-height: 1.35rem;
   font-weight: 700;
-  margin: 8px auto 17px;
+  margin: 0.5rem auto 1.062rem;
   color: #0d3b66;
 `

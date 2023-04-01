@@ -8,9 +8,10 @@ import { LocationContext } from '@/context/LocationContext'
 
 import logoMap from '../../assets/icons/logo-mapPage.svg'
 import chevronLeft from '../../assets/icons/chevron-left.svg'
+import { API_BASE_URL } from '@/config'
 
 export interface PetDetailsProps {
-  id: number
+  id: string
   name: string
   description: string
   city: string
@@ -31,15 +32,38 @@ export interface PetDetailsProps {
   photo_url: string
 }
 
+interface PetDetailsApiResponse {
+  pet: PetDetailsProps
+}
+
+export interface CoordinatesMapProps {
+  latitude: string
+  longitude: string
+}
+
+interface CoordinatesMapApiResponse {
+  coordinates: CoordinatesMapProps
+}
+
 export interface AdoptionRequirementsProps {
   title: string
   id: string
+  petId: string
+}
+
+interface AdoptionRequirementsApiResponse {
+  adoption_requirements: AdoptionRequirementsProps[]
 }
 
 export interface PetGalleryProps {
   id: string
   image: string
+  petId: string
   photo_url: string
+}
+
+interface PetGalleryApiResponse {
+  pet_gallery: PetGalleryProps[]
 }
 
 export function PetDetails() {
@@ -51,95 +75,52 @@ export function PetDetails() {
 
   const navigate = useNavigate()
   const { id } = useParams()
-  const { setOrgCoordinates } = useContext(LocationContext)
+  const { setOrgCoordinates, fetchData } = useContext(LocationContext)
 
   useEffect(() => {
-    async function handleGetPetData() {
-      try {
-        const data = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/pets/show/${id}`,
-        )
+    async function handlePetData() {
+      const data = await fetchData<PetDetailsApiResponse>(
+        `${API_BASE_URL}/pets/show/${id}`,
+      )
+      if (!data) return
+      setPetInfos(data.pet)
 
-        if (!data.ok) {
-          throw new Error(
-            `Failed to fetch pet data. Status code: ${data.status}`,
-          )
-        }
-
-        const { pet }: { pet: PetDetailsProps } = await data.json()
-
-        const orgCep = pet.org?.cep
-
-        if (orgCep) {
-          const coordinatesData = await fetch(
-            `${
-              import.meta.env.VITE_API_BASE_URL
-            }/location/coordinates/${orgCep}`,
-          )
-
-          if (!coordinatesData.ok) {
-            throw new Error(
-              `Failed to fetch organization coordinates. Status code: ${coordinatesData.status}`,
-            )
-          }
-
-          const { coordinates } = await coordinatesData.json()
-          setOrgCoordinates(coordinates)
-        }
-
-        setPetInfos(pet)
-      } catch (error) {
-        console.error(error)
-      }
+      fetchCoordinatesMap(data.pet.org.cep)
     }
 
-    async function handleGetAdoptionRequirements() {
-      try {
-        const data = await fetch(
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }/pets/adoption-requirements/${id}`,
-        )
+    async function fetchCoordinatesMap(cep: string) {
+      const data = await fetchData<CoordinatesMapApiResponse>(
+        `${API_BASE_URL}/location/coordinates/${cep}`,
+      )
+      if (!data) return
 
-        if (!data.ok) {
-          throw new Error('Failed to fetch adoption requirements')
-        }
-
-        const {
-          adoption_requirements,
-        }: { adoption_requirements: Array<AdoptionRequirementsProps> } =
-          await data.json()
-        setAdoptionRequirements(adoption_requirements)
-      } catch (error) {
-        console.error(error)
-      }
+      setOrgCoordinates(data.coordinates)
     }
 
-    async function handleGetPetGallery() {
-      try {
-        const data = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/pets/gallery/${id}`,
-        )
+    async function fetchAdoptionRequirements() {
+      const data = await fetchData<AdoptionRequirementsApiResponse>(
+        `${API_BASE_URL}/pets/adoption-requirements/${id}`,
+      )
+      if (!data) return
 
-        if (!data.ok) {
-          throw new Error('Failed to fetch pet gallery data')
-        }
-
-        const { pet_gallery }: { pet_gallery: Array<PetGalleryProps> } =
-          await data.json()
-        setPetGallery(pet_gallery)
-      } catch (error) {
-        console.error(error)
-        setPetGallery([])
-      }
+      setAdoptionRequirements(data.adoption_requirements)
     }
 
-    handleGetPetData()
-    handleGetAdoptionRequirements()
-    handleGetPetGallery()
-  }, [id, setOrgCoordinates])
+    async function fetchPetGallery() {
+      const data = await fetchData<PetGalleryApiResponse>(
+        `${API_BASE_URL}/pets/gallery/${id}`,
+      )
+      if (!data) return
 
-  function handleNavigatePreviousPage() {
+      setPetGallery(data.pet_gallery)
+    }
+
+    handlePetData()
+    fetchAdoptionRequirements()
+    fetchPetGallery()
+  }, [id])
+
+  function handleGoBackToMap() {
     navigate('/map')
   }
 
@@ -148,7 +129,7 @@ export function PetDetails() {
       <aside>
         <img src={logoMap} alt="" />
 
-        <button onClick={handleNavigatePreviousPage}>
+        <button onClick={handleGoBackToMap}>
           <img src={chevronLeft} alt="Back to previous page" />
         </button>
       </aside>

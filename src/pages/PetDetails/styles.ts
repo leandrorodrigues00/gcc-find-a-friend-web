@@ -23,8 +23,8 @@ export const Container = styled.div`
       justify-content: center;
       border: none;
       background-color: #f4d35e;
-      width: 48px;
-      height: 48px;
+      width: 3rem;
+      height: 3rem;
       border-radius: 15px;
     }
   }
@@ -38,7 +38,7 @@ export const InnerContainer = styled.div`
   > p {
     font-weight: 600;
     font-size: 1.125rem;
-    line-height: 28px;
+    line-height: 1.75rem;
     text-align: center;
     color: #8fa7b3;
     margin-bottom: 2.5rem;

@@ -72,7 +72,7 @@ export const PetFeatures = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 1.25rem;
+    border-radius: 20px;
     border: 2px solid rgba(13, 59, 102, 0.1);
     padding: 1.625rem;
     margin-top: 2.6875rem;
@@ -108,7 +108,7 @@ export const MapContainer = styled.div`
 
   > div {
     > div {
-      height: 227px;
+      height: 14.187rem;
       border-radius: 23px;
     }
   }
@@ -145,7 +145,7 @@ export const AddressContainer = styled.div`
       p:nth-child(2) {
         font-weight: 500;
         line-height: 128%;
-        margin-top: 5px;
+        margin-top: 0.312rem;
       }
     }
 
@@ -161,7 +161,7 @@ export const WhatsAppIcon = styled.div`
   margin-top: 1.437rem;
 
   gap: 0.687rem;
-  padding: 13px 35px 13px 27px;
+  padding: 0.812rem 2.187rem 0.812rem 1.687rem;
   background: #f3f5f7;
   border-radius: 10px;
   max-width: 13.562rem;
@@ -221,7 +221,7 @@ export const ContactButton = styled.a`
   border-radius: 20px;
   background: #3cdc8c;
   color: white;
-  padding: 1.1875rem 0;
+  padding: 1.187rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
