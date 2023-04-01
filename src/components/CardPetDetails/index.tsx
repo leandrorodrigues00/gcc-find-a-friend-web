@@ -183,7 +183,10 @@ export function CardPetDetails({
           </ul>
         </AdoptionRequirementsContainer>
 
-        <ContactButton href={`https://wa.me/${org.whatsappNumber}`}>
+        <ContactButton
+          href={`https://wa.me/${org.whatsappNumber}`}
+          target="_blank"
+        >
           <img src={whatsappIconWhite} alt="" />
           Entrar em contato
         </ContactButton>

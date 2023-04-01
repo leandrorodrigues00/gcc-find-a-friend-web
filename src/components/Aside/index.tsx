@@ -106,6 +106,7 @@ export function Aside() {
     setFormValues,
     formValues,
     setFilteredAnimalsCity,
+    filteredAnimalsCity,
     fetchData,
   } = useContext(LocationContext)
 
@@ -117,6 +118,7 @@ export function Aside() {
     const data = await fetchData<PetsApiResponse>(
       `${API_BASE_URL}/pets/${formValues.city}`,
     )
+
     if (!data) return
     setFilteredAnimalsCity(data.pets)
   }
@@ -161,6 +163,11 @@ export function Aside() {
         city: cityParams,
       }))
     }
+
+    if (filteredAnimalsCity && filteredAnimalsCity.length > 0) {
+      return setFilteredAnimalsCity(filteredAnimalsCity)
+    }
+
     handleSearchPets()
   }, [cityParams, setFormValues])
 
