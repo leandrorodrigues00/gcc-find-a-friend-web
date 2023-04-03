@@ -114,3 +114,7 @@ export const Button = styled.button`
   padding: 19px auto;
   border: none;
 `
+
+export const ErrorMessage = styled.p`
+  color: #e44449;
+`
