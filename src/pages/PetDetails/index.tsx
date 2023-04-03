@@ -120,7 +120,7 @@ export function PetDetails() {
     fetchPetGallery()
   }, [id])
 
-  function handleGoBackToMap() {
+  function handleNavigateBackToMap() {
     navigate('/map')
   }
 
@@ -129,7 +129,7 @@ export function PetDetails() {
       <aside>
         <img src={logoMap} alt="" />
 
-        <button onClick={handleGoBackToMap}>
+        <button onClick={handleNavigateBackToMap}>
           <img src={chevronLeft} alt="Back to previous page" />
         </button>
       </aside>

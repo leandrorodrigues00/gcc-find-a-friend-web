@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import { API_BASE_URL } from '@/config'
+
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
 
 import {
@@ -14,14 +17,13 @@ import {
   Button,
   ErrorMessage,
 } from './styles'
-import { API_BASE_URL } from '@/config'
+import { useNavigate } from 'react-router-dom'
 
 export function Login() {
   const schemaLogin = z.object({
     email: z.string().email({ message: 'E-mail incorreto' }),
     password: z.string().min(5, { message: 'Minimo de 5 digitos para senha' }),
   })
-
   type LoginForm = z.infer<typeof schemaLogin>
 
   const {
@@ -32,6 +34,8 @@ export function Login() {
   } = useForm<LoginForm>({
     resolver: zodResolver(schemaLogin),
   })
+
+  const navigate = useNavigate()
 
   async function sendLoginRequest(data: LoginForm) {
     const apiUrl = `${API_BASE_URL}/auth/sessions`
@@ -80,7 +84,7 @@ export function Login() {
   }
 
   function handleRegisterOrganization() {
-    // TO DO
+    navigate('/Register')
   }
 
   return (
@@ -127,7 +131,11 @@ export function Login() {
                 Login
               </Button>
               <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
-              <Button type="button" onClick={() => {}} className="secondary">
+              <Button
+                type="button"
+                onClick={handleRegisterOrganization}
+                className="secondary"
+              >
                 Cadastrar minha organização
               </Button>
             </Buttons>
