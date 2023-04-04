@@ -20,23 +20,25 @@ export function Register() {
   const schemaRegister = z
     .object({
       name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
-      email: z.string().email({ message: 'Endereço de e-mail inválidoo' }),
-      cep: z.string().regex(/^\d{5}-\d{3}$/, 'CEP incorreto'),
+      email: z.string().email({ message: 'insira um e-mail válido' }),
+      cep: z
+        .string()
+        .regex(/^\d{5}-\d{3}$/, 'insira um CEP válido no formato: 12345-678'),
       address: z
         .string()
         .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
       contact: z
         .string()
         .regex(
-          /^\+55\d{10}$/,
-          'Insira um número de contato válido, começando com +55',
+          /^\+55\d{11}$/,
+          'Insira um numero valido, com código internaciona e DDD, ex: +5511987654321',
         ),
       password: z
         .string()
-        .min(6, 'Por favor, insira uma senha com pelo menos 6caracteres'),
+        .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
       confirmPassword: z
         .string()
-        .min(6, 'Por favor, insira uma senha com pelo menos 6caracteres'),
+        .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: 'As senhas não coincidem',
