@@ -46,6 +46,7 @@ export const FormWrapper = styled.div`
   height: 661px;
   display: block;
   overflow-y: auto;
+  padding-right: 10px;
 
   h1 {
     font-size: 54px;
@@ -60,17 +61,20 @@ export const FormWrapper = styled.div`
 export const InputWrapper = styled.div`
   display: flex;
   width: 100%;
-
   background-color: #f5f8fa;
   border: 1px solid #d3e2e5;
   border-radius: 10px;
   padding: 18px;
+
+  .no-margin {
+    margin-bottom: 0;
+  }
 `
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 
   label {
     font-size: 16px;
@@ -91,6 +95,10 @@ export const Form = styled.form`
 
   img {
     cursor: pointer;
+  }
+
+  > div {
+    margin-bottom: 32px;
   }
 `
 
@@ -121,4 +129,8 @@ export const Button = styled.button`
   border-radius: 20px;
   padding: 19px auto;
   border: none;
+`
+
+export const ErrorMessage = styled.p`
+  color: #e44449;
 `

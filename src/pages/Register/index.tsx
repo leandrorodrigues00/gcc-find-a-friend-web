@@ -1,3 +1,7 @@
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
   Wrapper,
   Container,
@@ -7,13 +11,51 @@ import {
   InputWrapper,
   Buttons,
   Button,
+  ErrorMessage,
 } from './styles'
 
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
 
 export function Register() {
-  function handleRegisterOrganization() {
-    // TO dO
+  const schemaRegister = z
+    .object({
+      name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
+      email: z.string().email({ message: 'Endereço de e-mail inválidoo' }),
+      cep: z.string().regex(/^\d{5}-\d{3}$/, 'CEP incorreto'),
+      address: z
+        .string()
+        .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
+      contact: z
+        .string()
+        .regex(
+          /^\+55\d{10}$/,
+          'Insira um número de contato válido, começando com +55',
+        ),
+      password: z
+        .string()
+        .min(6, 'Por favor, insira uma senha com pelo menos 6caracteres'),
+      confirmPassword: z
+        .string()
+        .min(6, 'Por favor, insira uma senha com pelo menos 6caracteres'),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: 'As senhas não coincidem',
+      path: ['confirmPassword'],
+    })
+
+  type RegisterForm = z.infer<typeof schemaRegister>
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<RegisterForm>({
+    resolver: zodResolver(schemaRegister),
+  })
+
+  function handleRegisterOrganization(data: RegisterForm) {
+    console.log(data)
   }
 
   function handleRenderMapLocation() {
@@ -29,58 +71,101 @@ export function Register() {
         </Card>
         <FormWrapper>
           <h1>Cadastre sua organização</h1>
-          <Form>
+          <Form onSubmit={handleSubmit(handleRegisterOrganization)}>
+            <label htmlFor="name">Nome do responsável</label>
+            <div>
+              <InputWrapper>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="John Doe"
+                  {...register('name', { required: true })}
+                />
+              </InputWrapper>
+              <ErrorMessage>{errors.name?.message}</ErrorMessage>
+            </div>
+
             <label htmlFor="email">Email</label>
-            <InputWrapper>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="mayk@email.com"
-              />
-            </InputWrapper>
+            <div>
+              <InputWrapper>
+                <input
+                  type="text"
+                  id="email"
+                  placeholder="mayk@email.com"
+                  {...register('email', { required: true })}
+                />
+              </InputWrapper>
+              <ErrorMessage>{errors.email?.message}</ErrorMessage>
+            </div>
+
+            <label htmlFor="cep">CEP</label>
+            <div>
+              <InputWrapper>
+                <input
+                  type="text"
+                  id="cep"
+                  placeholder="13254-000"
+                  {...register('cep', { required: true })}
+                />
+              </InputWrapper>
+              <ErrorMessage>{errors.cep?.message}</ErrorMessage>
+            </div>
 
             <label htmlFor="address">Endereço</label>
-            <InputWrapper>
-              <input
-                type="text"
-                name="address"
-                id="address"
-                placeholder="Rua do Meio, 1825"
-              />
-            </InputWrapper>
+
+            <div>
+              <InputWrapper>
+                <input
+                  type="text"
+                  id="address"
+                  {...register('address', { required: true })}
+                  placeholder="Rua do Meio, 1825"
+                />
+              </InputWrapper>
+              <ErrorMessage>{errors.address?.message}</ErrorMessage>
+            </div>
 
             <label htmlFor="contact">Whatsapp</label>
-            <InputWrapper>
-              <input
-                type="text"
-                name="contact"
-                id="contact"
-                placeholder="99 99999 9999"
-              />
-            </InputWrapper>
+            <div>
+              <InputWrapper>
+                <input
+                  type="text"
+                  id="contact"
+                  {...register('contact', { required: true })}
+                  placeholder="99 99999 9999"
+                />
+              </InputWrapper>
+              <ErrorMessage>{errors.contact?.message}</ErrorMessage>
+            </div>
 
             <label htmlFor="password">Senha</label>
-            <InputWrapper>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Senha"
-              />
-              <img onClick={() => {}} src={passwordEye} alt="" />
-            </InputWrapper>
+            <div>
+              <InputWrapper>
+                <input
+                  type="password"
+                  id="password"
+                  {...register('password', { required: true })}
+                  placeholder="Senha"
+                />
+                <img onClick={() => {}} src={passwordEye} alt="" />
+              </InputWrapper>
+              <ErrorMessage>{errors.password?.message}</ErrorMessage>
+            </div>
 
             <label htmlFor="confirmPassword">Confirmar senha</label>
-            <InputWrapper>
-              <input
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Confirme sua senha"
-              />
-              <img onClick={() => {}} src={passwordEye} alt="" />
-            </InputWrapper>
+
+            <div>
+              <InputWrapper>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  {...register('confirmPassword', { required: true })}
+                  placeholder="Confirme sua senha"
+                />
+                <img onClick={() => {}} src={passwordEye} alt="" />
+              </InputWrapper>
+              <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+            </div>
 
             <Buttons>
               <Button type="submit" onClick={() => {}} className="primary">
