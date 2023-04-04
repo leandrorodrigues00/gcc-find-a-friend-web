@@ -1,8 +1,8 @@
-import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Select } from '@/components/Select'
-import { LocationContext } from '@/context/LocationContext'
+import { usePlace } from '@/context/LocationContext'
 
 import logo from '../../assets/icons/logo.svg'
 import Dogs from '../../assets/images/heroDogs.svg'
@@ -20,7 +20,7 @@ export function Home() {
   const navigate = useNavigate()
 
   const { statesList, citiesList, setFormValues, formValues, isFetching } =
-    useContext(LocationContext)
+    usePlace()
 
   const handleChangeState = useCallback(
     (stateValue: string) => {

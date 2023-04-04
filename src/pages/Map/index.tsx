@@ -11,12 +11,12 @@ import {
   HeaderSelect,
   Display,
 } from './styles'
-import { useContext } from 'react'
-import { LocationContext } from '@/context/LocationContext'
+
+import { usePlace } from '@/context/LocationContext'
 import { Link } from 'react-router-dom'
 
 export function Map() {
-  const { filteredAnimalsCity } = useContext(LocationContext)
+  const { filteredAnimalsCity } = usePlace()
 
   function handleFilterByPetType() {
     // TO DO

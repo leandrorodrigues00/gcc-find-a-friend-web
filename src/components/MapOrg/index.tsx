@@ -1,9 +1,9 @@
-import { LocationContext } from '@/context/LocationContext'
-import { useContext } from 'react'
+import { usePlace } from '@/context/LocationContext'
+
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 
 export function MapOrg() {
-  const { orgCoordinates } = useContext(LocationContext)
+  const { orgCoordinates } = usePlace()
 
   const latitudeNumber = Number(orgCoordinates?.latitude)
   const longitudeNumber = Number(orgCoordinates?.longitude)

@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Container, InnerContainer } from './styles'
 
 import { CardPetDetails } from '@/components/CardPetDetails'
-import { LocationContext } from '@/context/LocationContext'
+import { usePlace } from '@/context/LocationContext'
 
 import logoMap from '../../assets/icons/logo-mapPage.svg'
 import chevronLeft from '../../assets/icons/chevron-left.svg'
@@ -75,7 +75,7 @@ export function PetDetails() {
 
   const navigate = useNavigate()
   const { id } = useParams()
-  const { setOrgCoordinates, fetchData } = useContext(LocationContext)
+  const { setOrgCoordinates, fetchData } = usePlace()
 
   useEffect(() => {
     async function handlePetData() {

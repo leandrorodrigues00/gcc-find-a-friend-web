@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { API_BASE_URL } from '@/config'
 import { PetsApiProps } from '@/components/Aside'
 import { CoordinatesMapProps } from '@/pages/PetDetails'
@@ -55,6 +61,10 @@ interface LocationContextType {
 
 interface CartContextProviderProps {
   children: ReactNode
+}
+
+export function usePlace() {
+  return useContext(LocationContext)
 }
 
 export const LocationContext = createContext({} as LocationContextType)

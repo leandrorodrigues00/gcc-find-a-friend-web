@@ -1,7 +1,7 @@
 import logo from '@/assets/icons/logo-mapPage.svg'
 import search from '@/assets/icons/search.svg'
-import { LocationContext } from '@/context/LocationContext'
-import { ChangeEvent, useCallback, useContext, useEffect } from 'react'
+import { usePlace } from '@/context/LocationContext'
+import { ChangeEvent, useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Select } from '../Select'
 
@@ -108,7 +108,7 @@ export function Aside() {
     setFilteredAnimalsCity,
     filteredAnimalsCity,
     fetchData,
-  } = useContext(LocationContext)
+  } = usePlace()
 
   const location = useLocation()
   const params = new URLSearchParams(location.search)

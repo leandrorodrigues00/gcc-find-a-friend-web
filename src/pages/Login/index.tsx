@@ -18,8 +18,25 @@ import {
   ErrorMessage,
 } from './styles'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useAuth } from '@/context/AuthContext'
+
+interface LoginResponse {
+  token: string
+  org: {
+    id: string
+    nome: string
+    email: string
+    address: string
+    cep: string
+    whatsappNumber: string
+  }
+}
 
 export function Login() {
+  const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
+
   const schemaLogin = z.object({
     email: z.string().email({ message: 'E-mail incorreto' }),
     password: z.string().min(5, { message: 'Minimo de 5 digitos para senha' }),
@@ -35,9 +52,9 @@ export function Login() {
     resolver: zodResolver(schemaLogin),
   })
 
-  const navigate = useNavigate()
-
-  async function sendLoginRequest(data: LoginForm) {
+  async function sendLoginRequest(
+    data: LoginForm,
+  ): Promise<LoginResponse | null> {
     const apiUrl = `${API_BASE_URL}/auth/sessions`
 
     const requestBody = {
@@ -56,7 +73,6 @@ export function Login() {
 
       if (response.status === 401) {
         setError('root.serverError', {
-          type: '401',
           message: 'Credenciais inválidas',
         })
       }
@@ -78,9 +94,15 @@ export function Login() {
     }
   }
 
+  const { setToken, isAuthenticated } = useAuth()
+  console.log(isAuthenticated)
+
   async function handleLogin(data: LoginForm) {
     const response = await sendLoginRequest(data)
-    console.log(response)
+    if (response && response.token) {
+      setToken(response.token)
+      // navigate('/userProfile')
+    }
   }
 
   function handleRegisterOrganization() {
@@ -116,12 +138,19 @@ export function Login() {
             <div>
               <InputWrapper>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   placeholder="Senha"
                   {...register('password', { required: true })}
                 />
-                <img onClick={() => {}} src={passwordEye} alt="" />
+                <img
+                  onClick={() => {
+                    setShowPassword(!showPassword)
+                  }}
+                  src={passwordEye}
+                  alt=""
+                  id="password-icon"
+                />
               </InputWrapper>
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
             </div>
