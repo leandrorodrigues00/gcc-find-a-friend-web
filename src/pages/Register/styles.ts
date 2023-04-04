@@ -135,4 +135,8 @@ export const ErrorMessage = styled.p`
   color: #e44449;
 `
 
-export const MapContainer = styled.div``
+export const MapContainer = styled.div`
+  > div {
+    height: 200px;
+  }
+`

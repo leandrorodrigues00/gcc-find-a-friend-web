@@ -56,27 +56,36 @@ export function Register() {
     register,
     handleSubmit,
     setError,
+    setValue,
     watch,
+    clearErrors,
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(schemaRegister),
   })
 
-  function handleRegisterOrganization(data: RegisterForm) {
-    console.log(data.cep)
-  }
-
-  const { fetchData, setOrgCoordinates } = usePlace()
+  const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
   const watchCep = watch('cep')
+
+  function handleRegisterOrganization(data: RegisterForm) {
+    console.log(data)
+  }
 
   async function handleRenderMapLocation() {
     const data = await fetchData<CoordinatesMapApiResponse>(
       `${API_BASE_URL}/location/coordinates/${watchCep}`,
     )
-    if (!data) return
-
-    console.log(data.coordinates)
-    setOrgCoordinates(data.coordinates)
+    if (!data && !errors.cep) {
+      setError('cep', {
+        message: 'Alerta! cep não localizado, continuar mesmo assim ?',
+      })
+    } else {
+      if (data) {
+        clearErrors('cep')
+        setOrgCoordinates(data.coordinates)
+        setValue('address', data.address)
+      }
+    }
   }
 
   return (
@@ -143,9 +152,11 @@ export function Register() {
               <ErrorMessage>{errors.address?.message}</ErrorMessage>
             </div>
 
-            <MapContainer>
-              <MapOrg />
-            </MapContainer>
+            {orgCoordinates && (
+              <MapContainer>
+                <MapOrg />
+              </MapContainer>
+            )}
 
             <label htmlFor="contact">Whatsapp</label>
             <div>
