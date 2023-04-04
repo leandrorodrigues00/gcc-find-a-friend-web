@@ -41,7 +41,8 @@ export interface CoordinatesMapProps {
   longitude: string
 }
 
-interface CoordinatesMapApiResponse {
+export interface CoordinatesMapApiResponse {
+  address: string
   coordinates: CoordinatesMapProps
 }
 

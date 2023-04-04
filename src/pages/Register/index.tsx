@@ -12,9 +12,14 @@ import {
   Buttons,
   Button,
   ErrorMessage,
+  MapContainer,
 } from './styles'
 
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
+import { usePlace } from '@/context/LocationContext'
+import { CoordinatesMapApiResponse } from '../PetDetails'
+import { API_BASE_URL } from '@/config'
+import { MapOrg } from '@/components/MapOrg'
 
 export function Register() {
   const schemaRegister = z
@@ -51,17 +56,27 @@ export function Register() {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(schemaRegister),
   })
 
   function handleRegisterOrganization(data: RegisterForm) {
-    console.log(data)
+    console.log(data.cep)
   }
 
-  function handleRenderMapLocation() {
-    // TO DO
+  const { fetchData, setOrgCoordinates } = usePlace()
+  const watchCep = watch('cep')
+
+  async function handleRenderMapLocation() {
+    const data = await fetchData<CoordinatesMapApiResponse>(
+      `${API_BASE_URL}/location/coordinates/${watchCep}`,
+    )
+    if (!data) return
+
+    console.log(data.coordinates)
+    setOrgCoordinates(data.coordinates)
   }
 
   return (
@@ -108,6 +123,7 @@ export function Register() {
                   id="cep"
                   placeholder="13254-000"
                   {...register('cep', { required: true })}
+                  onBlur={handleRenderMapLocation}
                 />
               </InputWrapper>
               <ErrorMessage>{errors.cep?.message}</ErrorMessage>
@@ -126,6 +142,10 @@ export function Register() {
               </InputWrapper>
               <ErrorMessage>{errors.address?.message}</ErrorMessage>
             </div>
+
+            <MapContainer>
+              <MapOrg />
+            </MapContainer>
 
             <label htmlFor="contact">Whatsapp</label>
             <div>

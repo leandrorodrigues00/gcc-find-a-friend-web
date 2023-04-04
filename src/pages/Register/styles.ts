@@ -134,3 +134,5 @@ export const Button = styled.button`
 export const ErrorMessage = styled.p`
   color: #e44449;
 `
+
+export const MapContainer = styled.div``
