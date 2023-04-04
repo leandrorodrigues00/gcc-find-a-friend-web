@@ -79,7 +79,7 @@ export function Login() {
 
       if (!response.ok) {
         throw new Error(
-          `Error making request to ${apiUrl}. Method: POST. Status code: ${response.status}.`,
+          `Error making request to ${apiUrl}. Status code: ${response.status}.`,
         )
       } else {
         const json = await response.json()

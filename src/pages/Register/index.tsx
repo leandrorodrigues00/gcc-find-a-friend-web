@@ -20,8 +20,10 @@ import { usePlace } from '@/context/LocationContext'
 import { CoordinatesMapApiResponse } from '../PetDetails'
 import { API_BASE_URL } from '@/config'
 import { MapOrg } from '@/components/MapOrg'
+import { useState } from 'react'
 
 export function Register() {
+  const [showPassword, setShowPassword] = useState(false)
   const schemaRegister = z
     .object({
       name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
@@ -32,7 +34,7 @@ export function Register() {
       address: z
         .string()
         .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
-      contact: z
+      whatsappNumber: z
         .string()
         .regex(
           /^\+55\d{11}$/,
@@ -41,13 +43,13 @@ export function Register() {
       password: z
         .string()
         .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
-      confirmPassword: z
+      passwordConfirm: z
         .string()
         .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.password === data.passwordConfirm, {
       message: 'As senhas não coincidem',
-      path: ['confirmPassword'],
+      path: ['passwordConfirm'],
     })
 
   type RegisterForm = z.infer<typeof schemaRegister>
@@ -67,24 +69,58 @@ export function Register() {
   const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
   const watchCep = watch('cep')
 
-  function handleRegisterOrganization(data: RegisterForm) {
-    console.log(data)
+  async function handleRegisterOrganization(data: RegisterForm) {
+    const apiUrl = `${API_BASE_URL}/orgs`
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        const responseBody: { error: string } = await response.json()
+
+        console.log(responseBody)
+        setError('root.serverError', {
+          message: responseBody.error || 'Unknown error',
+        })
+        return
+      }
+
+      console.log('Org Cadastrada ' + response.status)
+    } catch (error) {
+      if (error instanceof Error)
+        console.error(
+          `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
+        )
+      return null
+    }
   }
 
   async function handleRenderMapLocation() {
-    const data = await fetchData<CoordinatesMapApiResponse>(
-      `${API_BASE_URL}/location/coordinates/${watchCep}`,
-    )
-    if (!data && !errors.cep) {
-      setError('cep', {
-        message: 'Alerta! cep não localizado, continuar mesmo assim ?',
-      })
-    } else {
-      if (data) {
-        clearErrors('cep')
-        setOrgCoordinates(data.coordinates)
-        setValue('address', data.address)
+    const apiUrl = `${API_BASE_URL}/location/coordinates/${watchCep}`
+
+    try {
+      const data = await fetchData<CoordinatesMapApiResponse>(apiUrl)
+
+      if (!data && !errors.cep) {
+        setError('cep', {
+          message:
+            'Atenção! cep não localizado, deseja continuar mesmo assim ?',
+        })
+      } else {
+        if (data) {
+          clearErrors('cep')
+          setOrgCoordinates(data.coordinates)
+          setValue('address', data.address)
+        }
       }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -158,52 +194,65 @@ export function Register() {
               </MapContainer>
             )}
 
-            <label htmlFor="contact">Whatsapp</label>
+            <label htmlFor="whatsappNumber">Whatsapp</label>
             <div>
               <InputWrapper>
                 <input
                   type="text"
                   id="contact"
-                  {...register('contact', { required: true })}
+                  {...register('whatsappNumber', { required: true })}
                   placeholder="99 99999 9999"
                 />
               </InputWrapper>
-              <ErrorMessage>{errors.contact?.message}</ErrorMessage>
+              <ErrorMessage>{errors.whatsappNumber?.message}</ErrorMessage>
             </div>
 
             <label htmlFor="password">Senha</label>
             <div>
               <InputWrapper>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   {...register('password', { required: true })}
                   placeholder="Senha"
                 />
-                <img onClick={() => {}} src={passwordEye} alt="" />
+                <img
+                  onClick={() => {
+                    setShowPassword(!showPassword)
+                  }}
+                  src={passwordEye}
+                  alt=""
+                />
               </InputWrapper>
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
             </div>
 
-            <label htmlFor="confirmPassword">Confirmar senha</label>
+            <label htmlFor="passwordConfirm">Confirmar senha</label>
 
             <div>
               <InputWrapper>
                 <input
-                  type="password"
-                  id="confirmPassword"
-                  {...register('confirmPassword', { required: true })}
+                  type={showPassword ? 'text' : 'password'}
+                  id="passwordConfirm"
+                  {...register('passwordConfirm', { required: true })}
                   placeholder="Confirme sua senha"
                 />
-                <img onClick={() => {}} src={passwordEye} alt="" />
+                <img
+                  onClick={() => {
+                    setShowPassword(!showPassword)
+                  }}
+                  src={passwordEye}
+                  alt=""
+                />
               </InputWrapper>
-              <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+              <ErrorMessage>{errors.passwordConfirm?.message}</ErrorMessage>
             </div>
 
             <Buttons>
               <Button type="submit" onClick={() => {}} className="primary">
                 Cadastrar
               </Button>
+              <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
             </Buttons>
           </Form>
         </FormWrapper>

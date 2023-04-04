@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `
 
 export const Container = styled.main`
-  max-width: 1112px;
+  max-width: 69.5rem;
   width: 100%;
   /* height: 100%; */
   display: flex;
@@ -20,8 +20,8 @@ export const Container = styled.main`
 `
 
 export const Card = styled.div`
-  width: 488px;
-  height: 661px;
+  width: 30.5rem;
+  height: 41.312rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,27 +34,27 @@ export const Card = styled.div`
 
   background-color: #f15156;
   border-radius: 20px;
-  padding: 107px 52px 39px;
+  padding: 6.687rem 3.25rem 2.437rem;
 
   .logo {
-    width: 174px;
+    width: 10.875rem;
   }
 `
 
 export const FormWrapper = styled.div`
-  width: 488px;
-  height: 661px;
+  width: 30.5rem;
+  height: 41.312rem;
   display: block;
   overflow-y: auto;
   padding-right: 10px;
 
   h1 {
-    font-size: 54px;
+    font-size: 3.375rem;
     color: #0d3b66;
     line-height: 90%;
     letter-spacing: -2px;
     text-align: center;
-    margin-bottom: 101px;
+    margin-bottom: 6.312rem;
   }
 `
 
@@ -64,7 +64,7 @@ export const InputWrapper = styled.div`
   background-color: #f5f8fa;
   border: 1px solid #d3e2e5;
   border-radius: 10px;
-  padding: 18px;
+  padding: 1.125rem;
 
   .no-margin {
     margin-bottom: 0;
@@ -74,23 +74,27 @@ export const InputWrapper = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
 
   label {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     color: #0d3b66;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
   }
 
   input {
     width: 100%;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
     color: #0d3b66;
     background-color: transparent;
     border: none;
     outline: none;
+
+    &::placeholder {
+      color: #c6c6c6;
+    }
   }
 
   img {
@@ -98,7 +102,7 @@ export const Form = styled.form`
   }
 
   > div {
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
   }
 `
 
@@ -106,8 +110,9 @@ export const Buttons = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 21px;
-  margin-top: 61px;
+  gap: 0.937rem;
+  margin-top: 3.812rem;
+  margin-bottom: 0.12rem;
 
   .primary {
     color: #ffffff;
@@ -121,13 +126,13 @@ export const Buttons = styled.div`
 `
 export const Button = styled.button`
   width: 100%;
-  height: 72px;
+  height: 4.5rem;
 
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 800;
   text-align: center;
   border-radius: 20px;
-  padding: 19px auto;
+  padding: 1.187rem auto;
   border: none;
 `
 
@@ -137,6 +142,6 @@ export const ErrorMessage = styled.p`
 
 export const MapContainer = styled.div`
   > div {
-    height: 200px;
+    height: 12.5rem;
   }
 `
