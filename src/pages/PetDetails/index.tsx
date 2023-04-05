@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Container, InnerContainer } from './styles'
 
-import { CardPetDetails } from '@/components/CardPetDetails'
 import { usePlace } from '@/context/LocationContext'
+import { API_BASE_URL } from '@/config'
+import { CardPetDetails } from '@/components/CardPetDetails'
 
 import logoMap from '../../assets/icons/logo-mapPage.svg'
 import chevronLeft from '../../assets/icons/chevron-left.svg'
-import { API_BASE_URL } from '@/config'
+import { Container, InnerContainer } from './styles'
 
 export interface PetDetailsProps {
   id: string

@@ -1,7 +1,14 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { usePlace } from '@/context/LocationContext'
+import { API_BASE_URL } from '@/config'
+import { CoordinatesMapApiResponse } from '../PetDetails'
+import { MapOrg } from '@/components/MapOrg'
+
+import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
 import {
   Wrapper,
   Container,
@@ -15,15 +22,10 @@ import {
   MapContainer,
 } from './styles'
 
-import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
-import { usePlace } from '@/context/LocationContext'
-import { CoordinatesMapApiResponse } from '../PetDetails'
-import { API_BASE_URL } from '@/config'
-import { MapOrg } from '@/components/MapOrg'
-import { useState } from 'react'
-
 export function Register() {
   const [showPassword, setShowPassword] = useState(false)
+  const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
+
   const schemaRegister = z
     .object({
       name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
@@ -66,7 +68,6 @@ export function Register() {
     resolver: zodResolver(schemaRegister),
   })
 
-  const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
   const watchCep = watch('cep')
 
   async function handleRegisterOrganization(data: RegisterForm) {
@@ -83,8 +84,6 @@ export function Register() {
 
       if (!response.ok) {
         const responseBody: { error: string } = await response.json()
-
-        console.log(responseBody)
         setError('root.serverError', {
           message: responseBody.error || 'Unknown error',
         })

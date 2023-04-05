@@ -16,7 +16,7 @@ import {
   emptyEclipse,
   logoDetails,
   whatsappIcon,
-  whatsappIconWhite,
+  whatsappIconwhite,
   alerta,
 } from '../../assets/icons/index'
 
@@ -187,7 +187,7 @@ export function CardPetDetails({
           href={`https://wa.me/${org.whatsappNumber}`}
           target="_blank"
         >
-          <img src={whatsappIconWhite} alt="" />
+          <img src={whatsappIconwhite} alt="" />
           Entrar em contato
         </ContactButton>
       </InnerContent>
