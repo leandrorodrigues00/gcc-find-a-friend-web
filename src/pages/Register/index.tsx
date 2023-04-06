@@ -30,18 +30,17 @@ export function Register() {
     .object({
       name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
       email: z.string().email({ message: 'insira um e-mail válido' }),
-      cep: z
-        .string()
-        .regex(/^\d{5}-\d{3}$/, 'insira um CEP válido no formato: 12345-678'),
+      cep: z.string().regex(/^\d{5}(-?\d{3})$/, 'insira um CEP válido'),
       address: z
         .string()
         .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
       whatsappNumber: z
         .string()
         .regex(
-          /^\+55\d{11}$/,
-          'Insira um numero valido, com código internaciona e DDD, ex: +5511987654321',
-        ),
+          /^([1-9]{2})9[0-9]{8}$/,
+          'formato invalido, inserir ddd + número, ex: 11987654321',
+        )
+        .transform((whatsappNumber) => '+55' + whatsappNumber),
       password: z
         .string()
         .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
@@ -71,33 +70,34 @@ export function Register() {
   const watchCep = watch('cep')
 
   async function handleRegisterOrganization(data: RegisterForm) {
-    const apiUrl = `${API_BASE_URL}/orgs`
+    console.log(data)
+    // const apiUrl = `${API_BASE_URL}/orgs`
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+    // try {
+    //   const response = await fetch(apiUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   })
 
-      if (!response.ok) {
-        const responseBody: { error: string } = await response.json()
-        setError('root.serverError', {
-          message: responseBody.error || 'Unknown error',
-        })
-        return
-      }
+    //   if (!response.ok) {
+    //     const responseBody: { error: string } = await response.json()
+    //     setError('root.serverError', {
+    //       message: responseBody.error || 'Unknown error',
+    //     })
+    //     return
+    //   }
 
-      console.log('Org Cadastrada ' + response.status)
-    } catch (error) {
-      if (error instanceof Error)
-        console.error(
-          `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
-        )
-      return null
-    }
+    //   console.log('Org Cadastrada ' + response.status)
+    // } catch (error) {
+    //   if (error instanceof Error)
+    //     console.error(
+    //       `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
+    //     )
+    //   return null
+    // }
   }
 
   async function handleRenderMapLocation() {

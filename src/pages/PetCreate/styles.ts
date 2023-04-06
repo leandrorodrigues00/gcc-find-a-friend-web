@@ -37,6 +37,7 @@ export const InnerContainer = styled.div`
   > header {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 1.937rem;
     background: #0d3b66;
     padding: 1.75rem 0;
 

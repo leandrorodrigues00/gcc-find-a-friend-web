@@ -1,4 +1,4 @@
-import { Container, DetailsContainer, InnerContainer } from './styles'
+import { CardPetCreate } from '@/components/CardPetCreate'
 
 import {
   logoDetails,
@@ -6,6 +6,7 @@ import {
   chevronLeft,
   logoutIcon,
 } from '../../assets/icons/index'
+import { Container, DetailsContainer, InnerContainer } from './styles'
 
 export function PetCreate() {
   return (
@@ -32,6 +33,8 @@ export function PetCreate() {
             <img src={logoutIcon} alt="" />
           </button>
         </header>
+
+        <CardPetCreate />
       </InnerContainer>
     </Container>
   )
