@@ -1,3 +1,4 @@
+import { ImageUploader } from '../ImageUploader'
 import {
   AddElementButtonContainer,
   AdoptionRequirementsContainer,
@@ -5,45 +6,9 @@ import {
   Container,
   DescriptionLabel,
   FormPetInformation,
-  ImagesContainer,
-  SelectedImagensContainer,
 } from './styles'
 
-import { uploadIcon, fileIcon, xSquare } from '../../assets/icons/index'
-
 export function CardPetCreate() {
-  // const [fileNames, setFileNames] = useState([])
-
-  // const handleFileInputChange = (event) => {
-  //   const newFiles = event.target.files
-  //   if (newFiles.length > 0) {
-  //     const newFileNames = [...fileNames]
-  //     for (
-  //       let i = 0;
-  //       i < Math.min(newFiles.length, 6 - newFileNames.length);
-  //       i++
-  //     ) {
-  //       newFileNames.push(newFiles[i].name)
-  //     }
-  //     setFileNames(newFileNames)
-  //   }
-  // }
-
-  // const handleDrop = (event) => {
-  //   event.preventDefault()
-  //   const newFiles = event.dataTransfer.files
-  //   if (newFiles.length > 0) {
-  //     const newFileNames = [...fileNames]
-  //     for (
-  //       let i = 0;
-  //       i < Math.min(newFiles.length, 6 - newFileNames.length);
-  //       i++
-  //     ) {
-  //       newFileNames.push(newFiles[i].name)
-  //     }
-  //     setFileNames(newFileNames)
-  //   }
-  // }
   return (
     <Container>
       <header>
@@ -74,36 +39,7 @@ export function CardPetCreate() {
         <label htmlFor="ambient">Ambiente</label>
         <input type="text" id="ambient" placeholder="" />
 
-        <label htmlFor="images">Fotos</label>
-        <ImagesContainer>
-          <input
-            type="file"
-            id="images"
-            placeholder=""
-            multiple
-            accept="image/*"
-            max="6"
-          />
-
-          <label
-            htmlFor="images"
-            onDragOver={(event) => event.preventDefault()}
-          >
-            <img src={uploadIcon} alt="" />
-            Arraste e solte o arquivo
-          </label>
-        </ImagesContainer>
-
-        <SelectedImagensContainer>
-          <div>
-            <img src={fileIcon} alt="" />
-            <span>{'fileName'}</span>
-          </div>
-
-          <img src={xSquare} alt="" />
-        </SelectedImagensContainer>
-
-        <AddElementButtonContainer>+</AddElementButtonContainer>
+        <ImageUploader />
 
         <AdoptionRequirementsContainer>
           <h2>Requesitos para adoção</h2>
