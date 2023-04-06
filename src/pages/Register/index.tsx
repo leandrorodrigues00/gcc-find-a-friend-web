@@ -30,7 +30,7 @@ export function Register() {
     .object({
       name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
       email: z.string().email({ message: 'insira um e-mail válido' }),
-      cep: z.string().regex(/^\d{5}(-?\d{3})$/, 'insira um CEP válido'),
+      cep: z.string().regex(/^(\d{5})-?(\d{3})$/, 'insira um CEP válido'),
       address: z
         .string()
         .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
@@ -70,34 +70,33 @@ export function Register() {
   const watchCep = watch('cep')
 
   async function handleRegisterOrganization(data: RegisterForm) {
-    console.log(data)
-    // const apiUrl = `${API_BASE_URL}/orgs`
+    const apiUrl = `${API_BASE_URL}/orgs`
 
-    // try {
-    //   const response = await fetch(apiUrl, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   })
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-    //   if (!response.ok) {
-    //     const responseBody: { error: string } = await response.json()
-    //     setError('root.serverError', {
-    //       message: responseBody.error || 'Unknown error',
-    //     })
-    //     return
-    //   }
+      if (!response.ok) {
+        const responseBody: { error: string } = await response.json()
+        setError('root.serverError', {
+          message: responseBody.error || 'Unknown error',
+        })
+        return
+      }
 
-    //   console.log('Org Cadastrada ' + response.status)
-    // } catch (error) {
-    //   if (error instanceof Error)
-    //     console.error(
-    //       `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
-    //     )
-    //   return null
-    // }
+      console.log('Org Cadastrada ' + response.status)
+    } catch (error) {
+      if (error instanceof Error)
+        console.error(
+          `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
+        )
+      return null
+    }
   }
 
   async function handleRenderMapLocation() {
