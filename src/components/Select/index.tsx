@@ -7,23 +7,32 @@ import {
   FilterInputOption,
   FilterWrapper,
 } from './styles'
+import { UseFormRegisterReturn } from 'react-hook-form'
 
 type SelectProps = ComponentProps<typeof FilterInput> & {
   label?: string
-  name: string
+  name?: string
+  register?: UseFormRegisterReturn
   options: {
     value: string | number
     label: string
   }[]
 }
 
-export function Select({ label, name, options, value, ...rest }: SelectProps) {
+export function Select({
+  label,
+  name,
+  register,
+  options,
+  value,
+  ...rest
+}: SelectProps) {
   return (
     <Filter>
       {label && <FilterLabel htmlFor={name}>{label}</FilterLabel>}
 
       <FilterWrapper>
-        <FilterInput name={name} id={name} {...rest}>
+        <FilterInput name={name} id={name} {...rest} {...register}>
           <FilterInputOption value="" disabled selected>
             Selecione
           </FilterInputOption>

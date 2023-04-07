@@ -41,6 +41,33 @@ export const FormPetInformation = styled.form`
     outline: none;
   }
 
+  select {
+    width: 100%;
+    background: #f5f8fa;
+    border: 1px solid #d3e2e5;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0d3b66;
+
+    option {
+      background-color: #c8c8c8;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #0d3b66;
+    }
+  }
+
+  > div {
+    > div {
+      img {
+        filter: invert(1);
+        margin-top: -9px;
+      }
+    }
+  }
+
   input {
     height: 4rem;
   }

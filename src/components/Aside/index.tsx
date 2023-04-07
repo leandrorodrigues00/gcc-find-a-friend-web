@@ -15,7 +15,7 @@ import {
 } from './styles'
 import { API_BASE_URL } from '@/config'
 
-const ageOptions = [
+export const ageOptions = [
   {
     label: 'Filhote',
     value: 'cub',
@@ -29,7 +29,7 @@ const ageOptions = [
     value: 'elderly',
   },
 ]
-const energyOptions = [
+export const energyOptions = [
   {
     label: 'Muito baixa',
     value: 1,
@@ -51,7 +51,7 @@ const energyOptions = [
     value: 5,
   },
 ]
-const sizeOptions = [
+export const sizeOptions = [
   {
     label: 'Pequenino',
     value: 'small',
@@ -65,7 +65,7 @@ const sizeOptions = [
     value: 'big',
   },
 ]
-const independencyOptions = [
+export const independencyOptions = [
   {
     label: 'Baixo',
     value: 'low',
