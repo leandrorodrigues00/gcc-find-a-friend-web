@@ -34,7 +34,7 @@ export const FormPetInformation = styled.form`
     background: #f5f8fa;
     border: 1px solid #d3e2e5;
     border-radius: 10px;
-    margin-bottom: 1.5rem;
+
     padding: 1.125rem;
     font-size: 1.125rem;
     font-weight: 600;
@@ -46,7 +46,7 @@ export const FormPetInformation = styled.form`
     background: #f5f8fa;
     border: 1px solid #d3e2e5;
     border-radius: 10px;
-    margin-bottom: 1.5rem;
+
     font-size: 1.125rem;
     font-weight: 600;
     color: #0d3b66;
@@ -128,4 +128,13 @@ export const ButtonConfirm = styled.button`
   background: #f4d35e;
   border-radius: 20px;
   border: none;
+`
+
+export const ErrorMessage = styled.p`
+  color: #e44449;
+  margin-top: 4px;
+`
+
+export const InputWrapper = styled.div`
+  margin-bottom: 1.5rem;
 `
