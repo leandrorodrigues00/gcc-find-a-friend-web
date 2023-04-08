@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, FormProvider } from 'react-hook-form'
 import {
   ageOptions,
   energyOptions,
@@ -15,10 +15,12 @@ import {
   DescriptionLabel,
   ErrorMessage,
   FormPetInformation,
+  InputRequirements,
   InputWrapper,
 } from './styles'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { xSquare } from '../../assets/icons/index'
 
 export function CardPetCreate() {
   const schemaPetCreate = z.object({
@@ -30,6 +32,9 @@ export function CardPetCreate() {
     size: z.string().nonempty('Selecione o porte'),
     energy: z.string().nonempty('Selecione o nivel de Energia'),
     independence: z.string().nonempty('Selecione o nivel de independência'),
+
+    images: z.array(z.instanceof(File)),
+
     adoptionRequirements: z
       .array(
         z.object({
@@ -43,16 +48,18 @@ export function CardPetCreate() {
 
   type PetCreateForm = z.infer<typeof schemaPetCreate>
 
+  const methodsUseForm = useForm<PetCreateForm>({
+    resolver: zodResolver(schemaPetCreate),
+  })
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<PetCreateForm>({
-    resolver: zodResolver(schemaPetCreate),
-  })
+  } = methodsUseForm
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'adoptionRequirements',
   })
@@ -61,131 +68,164 @@ export function CardPetCreate() {
     append({ requirements: '' })
   }
 
-  function handleRegisterPet(data: PetCreateForm) {
+  async function handleRegisterPet(data: PetCreateForm) {
+    // const formData = new FormData()
+
+    // for (let i = 0; i < data.images.length; i++) {
+    //   formData.append('images', data.images[i])
+    // }
+
+    // formData.append('name', data.name)
+    // formData.append('description', data.description)
+
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`)
+    // }
+
     console.log(data)
   }
+
   return (
     <Container>
       <header>
         <h1>Adicione um pet</h1>
       </header>
 
-      <FormPetInformation onSubmit={handleSubmit(handleRegisterPet)}>
-        <label htmlFor="name">Nome</label>
-        <InputWrapper>
-          <input
-            type="text"
-            id="name"
-            {...register('name', { required: true })}
-          />
-          <ErrorMessage>{errors.name?.message}</ErrorMessage>
-        </InputWrapper>
+      <FormProvider {...methodsUseForm}>
+        <FormPetInformation onSubmit={handleSubmit(handleRegisterPet)}>
+          <label htmlFor="name">Nome</label>
+          <InputWrapper>
+            <input
+              type="text"
+              id="name"
+              {...register('name', { required: true })}
+            />
+            <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <DescriptionLabel htmlFor="description">
-          Sobre <span>Máximo de 300 catacteres</span>
-        </DescriptionLabel>
+          <DescriptionLabel htmlFor="description">
+            Sobre <span>Máximo de 300 catacteres</span>
+          </DescriptionLabel>
 
-        <InputWrapper>
-          <textarea
-            id="description"
-            placeholder=""
-            maxLength={300}
-            {...register('description', { required: true })}
-          />
-          <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        </InputWrapper>
+          <InputWrapper>
+            <textarea
+              id="description"
+              placeholder=""
+              maxLength={300}
+              {...register('description', { required: true })}
+            />
+            <ErrorMessage>{errors.description?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <label htmlFor="age">Idade</label>
+          <label htmlFor="age">Idade</label>
 
-        <InputWrapper>
-          <Select
-            options={ageOptions}
-            register={register('age', { required: true })}
-          />
-          <ErrorMessage>{errors.age?.message}</ErrorMessage>
-        </InputWrapper>
+          <InputWrapper>
+            <Select
+              options={ageOptions}
+              register={register('age', { required: true })}
+            />
+            <ErrorMessage>{errors.age?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <label htmlFor="size">Porte</label>
+          <label htmlFor="size">Porte</label>
 
-        <InputWrapper>
-          <Select
-            options={sizeOptions}
-            register={register('size', { required: true })}
-          />
-          <ErrorMessage>{errors.size?.message}</ErrorMessage>
-        </InputWrapper>
+          <InputWrapper>
+            <Select
+              options={sizeOptions}
+              register={register('size', { required: true })}
+            />
+            <ErrorMessage>{errors.size?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <label htmlFor="energy">Nível de energia</label>
+          <label htmlFor="energy">Nível de energia</label>
 
-        <InputWrapper>
-          <Select
-            options={energyOptions}
-            register={register('energy', { required: true })}
-          />
-          <ErrorMessage>{errors.energy?.message}</ErrorMessage>
-        </InputWrapper>
+          <InputWrapper>
+            <Select
+              options={energyOptions}
+              register={register('energy', { required: true })}
+            />
+            <ErrorMessage>{errors.energy?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <label htmlFor="independence">Nível de independência</label>
+          <label htmlFor="independence">Nível de independência</label>
 
-        <InputWrapper>
-          <Select
-            options={independencyOptions}
-            register={register('independence', { required: true })}
-          />
-          <ErrorMessage>{errors.independence?.message}</ErrorMessage>
-        </InputWrapper>
+          <InputWrapper>
+            <Select
+              options={independencyOptions}
+              register={register('independence', { required: true })}
+            />
+            <ErrorMessage>{errors.independence?.message}</ErrorMessage>
+          </InputWrapper>
 
-        <label htmlFor="ambient">Ambiente</label>
-        <InputWrapper>
-          <input type="text" id="ambient" placeholder="" />
-        </InputWrapper>
-        <ImageUploader />
+          <label htmlFor="ambient">Ambiente</label>
+          <InputWrapper>
+            <input type="text" id="ambient" placeholder="" />
+          </InputWrapper>
 
-        <AdoptionRequirementsContainer>
-          <h2>Requesitos para adoção</h2>
+          <ImageUploader />
 
-          <label htmlFor="adoptionRequirements">Requisito</label>
-          <input
-            type="text"
-            id="adoptionRequirements"
-            placeholder="Defina um requisito"
-            {...register(`adoptionRequirements.${0}.requirements`)}
-          />
-          <ErrorMessage>
-            {errors.adoptionRequirements?.[0]?.requirements?.message}
-          </ErrorMessage>
+          <ErrorMessage>{errors.images?.message}</ErrorMessage>
 
-          {fields.map((field, index) => {
-            if (index === 0) {
-              return null
-            }
-            return (
-              <div key={field.id}>
-                <input
-                  type="text"
-                  id="adoptionRequirements"
-                  placeholder="Defina um requisito"
-                  {...register(`adoptionRequirements.${index}.requirements`)}
-                />
+          <AdoptionRequirementsContainer>
+            <h2>Requesitos para adoção</h2>
 
-                <ErrorMessage>
-                  {errors.adoptionRequirements?.[index]?.requirements?.message}
-                </ErrorMessage>
-              </div>
-            )
-          })}
+            <label htmlFor="adoptionRequirements">Requisito</label>
+            <InputRequirements>
+              <input
+                type="text"
+                id="adoptionRequirements"
+                placeholder="Defina um requisito"
+                {...register(`adoptionRequirements.${0}.requirements`)}
+              />
+              <ErrorMessage>
+                {errors.adoptionRequirements?.[0]?.requirements?.message}
+              </ErrorMessage>
+            </InputRequirements>
 
-          <AddElementButtonContainer type="button" onClick={addNewRequirements}>
-            +
-          </AddElementButtonContainer>
+            {fields.map((field, index) => {
+              if (index === 0) {
+                return null
+              }
+              return (
+                <InputRequirements key={field.id}>
+                  <div>
+                    <input
+                      type="text"
+                      id="adoptionRequirements"
+                      placeholder="Defina um requisito"
+                      {...register(
+                        `adoptionRequirements.${index}.requirements`,
+                      )}
+                    />
 
-          <ErrorMessage>{errors.adoptionRequirements?.message}</ErrorMessage>
+                    <img src={xSquare} alt="" onClick={() => remove(index)} />
+                  </div>
 
-          <ButtonConfirm type="submit" onClick={() => {}}>
-            Confirmar
-          </ButtonConfirm>
-        </AdoptionRequirementsContainer>
-      </FormPetInformation>
+                  <ErrorMessage>
+                    {
+                      errors.adoptionRequirements?.[index]?.requirements
+                        ?.message
+                    }
+                  </ErrorMessage>
+                </InputRequirements>
+              )
+            })}
+
+            <AddElementButtonContainer
+              type="button"
+              onClick={addNewRequirements}
+            >
+              +
+            </AddElementButtonContainer>
+
+            <ErrorMessage>{errors.adoptionRequirements?.message}</ErrorMessage>
+
+            <ButtonConfirm type="submit" onClick={() => {}}>
+              Confirmar
+            </ButtonConfirm>
+          </AdoptionRequirementsContainer>
+        </FormPetInformation>
+      </FormProvider>
     </Container>
   )
 }

@@ -35,7 +35,8 @@ export const FormPetInformation = styled.form`
     border: 1px solid #d3e2e5;
     border-radius: 10px;
 
-    padding: 1.125rem;
+    padding: 1.125rem 2.375rem 1.125rem 1.125rem;
+
     font-size: 1.125rem;
     font-weight: 600;
     outline: none;
@@ -56,15 +57,6 @@ export const FormPetInformation = styled.form`
       font-size: 1.125rem;
       font-weight: 600;
       color: #0d3b66;
-    }
-  }
-
-  > div {
-    > div {
-      img {
-        filter: invert(1);
-        margin-top: -9px;
-      }
     }
   }
 
@@ -137,4 +129,29 @@ export const ErrorMessage = styled.p`
 
 export const InputWrapper = styled.div`
   margin-bottom: 1.5rem;
+
+  > div {
+    img {
+      filter: invert(1);
+    }
+  }
+`
+
+export const InputRequirements = styled.div`
+  margin-bottom: 0.75rem;
+
+  > div {
+    position: relative;
+
+    > img {
+      position: absolute;
+      right: 10px;
+      bottom: 17px;
+      padding: 4px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 `

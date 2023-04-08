@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
 export const ImagesContainer = styled.div`
-  input {
-    display: none;
-  }
   label {
     display: flex;
     flex-direction: column;

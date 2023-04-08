@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { uploadIcon, fileIcon, xSquare } from '../../assets/icons/index'
 
 import {
@@ -6,62 +6,39 @@ import {
   ImagesContainer,
   SelectedImagensContainer,
 } from './styles'
+import { useFormContext } from 'react-hook-form'
 
 export function ImageUploader() {
-  const [fileNames, setFileNames] = useState<string[]>([])
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [files, setFiles] = useState<File[]>([])
+  const { setValue } = useFormContext()
 
-  const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newFiles = event.target.files
-    if (newFiles && newFiles.length > 0) {
-      const newFileNames = addFileNames(newFiles)
-      setFileNames(newFileNames)
-    }
-  }
 
-  const addFileNames = (newFiles: FileList) => {
-    const newFileNames = [...fileNames]
-    for (
-      let i = 0;
-      i < Math.min(newFiles.length, 6 - newFileNames.length);
-      i++
-    ) {
-      const file = newFiles[i]
-      // if (file.size <= 10485760) {
-      newFileNames.push(file.name)
-      // }
-    }
-    return newFileNames
-  }
+    if (newFiles) {
+      const fileAlreadyExists = Array.from(newFiles).some((file) =>
+        files.some(
+          (existingFile) =>
+            existingFile.name === file.name && existingFile.size === file.size,
+        ),
+      )
 
-  const handleFileDrop = (event: React.DragEvent<HTMLLabelElement>) => {
-    event.preventDefault()
-    const newFiles = event.dataTransfer.files
-    if (newFiles.length > 0) {
-      const newFileNames = [...fileNames]
-      for (
-        let i = 0;
-        i < Math.min(newFiles.length, 6 - newFileNames.length);
-        i++
-      ) {
-        newFileNames.push(newFiles[i].name)
+      if (!fileAlreadyExists) {
+        setFiles((prevFiles) => [...prevFiles, ...newFiles])
+      } else {
+        console.log('Uma ou mais imagens já foram adicionadas.')
       }
-      setFileNames(newFileNames)
     }
   }
-
-  const removeFileName = (index: number) => {
-    const newFileNames = [...fileNames]
-    newFileNames.splice(index, 1)
-    setFileNames(newFileNames)
+  const handleFileRemove = (fileName: string) => {
+    setFiles((prevFiles) =>
+      prevFiles.filter((prevFile) => prevFile.name !== fileName),
+    )
   }
 
-  const handleAddImage = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
-  }
+  useEffect(() => {
+    setValue('images', files)
+  }, [files, setValue])
 
   return (
     <>
@@ -69,38 +46,41 @@ export function ImageUploader() {
       <ImagesContainer>
         <input
           type="file"
-          ref={fileInputRef}
           id="images"
-          onChange={handleFileInputChange}
           accept="image/*"
           max="6"
+          multiple
+          name="images"
+          onChange={handleChange}
         />
 
-        <label
-          htmlFor="images"
-          onDragOver={(event) => event.preventDefault()}
-          onDrop={handleFileDrop}
-        >
+        <label htmlFor="images" onDragOver={(event) => event.preventDefault()}>
           <img src={uploadIcon} alt="" />
           Arraste e solte o arquivo
         </label>
       </ImagesContainer>
 
-      {fileNames.map((fileName, index) => (
-        <SelectedImagensContainer key={index}>
-          <div>
-            <img src={fileIcon} alt="" />
-            {fileName}
-          </div>
-          <img src={xSquare} alt="" onClick={() => removeFileName(index)} />
-        </SelectedImagensContainer>
-      ))}
-
-      {fileNames.length >= 6 ? null : (
-        <AddElementButtonContainer onClick={handleAddImage}>
-          +
-        </AddElementButtonContainer>
+      {files.length > 0 && (
+        <div>
+          <ul>
+            {files.map((file, index) => (
+              <SelectedImagensContainer key={index}>
+                <div>
+                  <img src={fileIcon} alt="" />
+                  {file.name}
+                </div>
+                <img
+                  src={xSquare}
+                  alt=""
+                  onClick={() => handleFileRemove(file.name)}
+                />
+              </SelectedImagensContainer>
+            ))}
+          </ul>
+        </div>
       )}
+
+      <AddElementButtonContainer>+</AddElementButtonContainer>
     </>
   )
 }
