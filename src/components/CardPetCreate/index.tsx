@@ -22,32 +22,34 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { xSquare } from '../../assets/icons/index'
 
+const schemaPetCreate = z.object({
+  name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
+  description: z
+    .string()
+    .min(5, 'Faça uma breve descrição do pet com pelo menos 5 caracteres'),
+  age: z.string().nonempty('Selecione uma idade'),
+  size: z.string().nonempty('Selecione o porte'),
+  energy: z.string().nonempty('Selecione o nivel de Energia'),
+  independence: z.string().nonempty('Selecione o nivel de independência'),
+
+  images: z
+    .array(z.instanceof(File))
+    .max(6, 'Máximo de 6 imagens permitidas')
+    .min(1, 'Pelo menos 1 imagem deve ser selecionada'),
+  adoptionRequirements: z
+    .array(
+      z.object({
+        requirements: z
+          .string()
+          .min(5, 'insira um requisito com pelo menos 5 caracteres'),
+      }),
+    )
+    .min(1, 'É preciso informar no minimo 1 requisito'),
+})
+
+type PetCreateForm = z.infer<typeof schemaPetCreate>
+
 export function CardPetCreate() {
-  const schemaPetCreate = z.object({
-    name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
-    description: z
-      .string()
-      .min(5, 'Faça uma breve descrição do pet com pelo menos 5 caracteres'),
-    age: z.string().nonempty('Selecione uma idade'),
-    size: z.string().nonempty('Selecione o porte'),
-    energy: z.string().nonempty('Selecione o nivel de Energia'),
-    independence: z.string().nonempty('Selecione o nivel de independência'),
-
-    images: z.array(z.instanceof(File)),
-
-    adoptionRequirements: z
-      .array(
-        z.object({
-          requirements: z
-            .string()
-            .min(5, 'insira um requisito com pelo menos 5 caracteres'),
-        }),
-      )
-      .min(1, 'É preciso informar no minimo 1 requisito'),
-  })
-
-  type PetCreateForm = z.infer<typeof schemaPetCreate>
-
   const methodsUseForm = useForm<PetCreateForm>({
     resolver: zodResolver(schemaPetCreate),
   })
