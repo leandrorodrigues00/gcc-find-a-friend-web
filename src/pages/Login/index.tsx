@@ -33,15 +33,17 @@ interface LoginResponse {
   }
 }
 
+const schemaLogin = z.object({
+  email: z.string().email({ message: 'E-mail incorreto' }),
+  password: z.string().min(5, { message: 'Minimo de 5 digitos para senha' }),
+})
+type LoginForm = z.infer<typeof schemaLogin>
+
 export function Login() {
   const [showPassword, setShowPassword] = useState(false)
+  const { setToken, isAuthenticated } = useAuth()
   const navigate = useNavigate()
-
-  const schemaLogin = z.object({
-    email: z.string().email({ message: 'E-mail incorreto' }),
-    password: z.string().min(5, { message: 'Minimo de 5 digitos para senha' }),
-  })
-  type LoginForm = z.infer<typeof schemaLogin>
+  console.log(isAuthenticated)
 
   const {
     register,
@@ -93,9 +95,6 @@ export function Login() {
       return null
     }
   }
-
-  const { setToken, isAuthenticated } = useAuth()
-  console.log(isAuthenticated)
 
   async function handleLogin(data: LoginForm) {
     const response = await sendLoginRequest(data)

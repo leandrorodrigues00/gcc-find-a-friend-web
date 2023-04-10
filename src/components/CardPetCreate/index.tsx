@@ -21,9 +21,12 @@ import {
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { xSquare } from '../../assets/icons/index'
+import { API_BASE_URL } from '@/config'
+import { useAuth } from '@/context/AuthContext'
 
 const schemaPetCreate = z.object({
   name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
+  type: z.string().nonempty('Selecione uma espécie'),
   description: z
     .string()
     .min(5, 'Faça uma breve descrição do pet com pelo menos 5 caracteres'),
@@ -49,16 +52,29 @@ const schemaPetCreate = z.object({
 
 type PetCreateForm = z.infer<typeof schemaPetCreate>
 
+const petSpecies = [
+  {
+    label: 'Cachorro',
+    value: 'dog',
+  },
+  {
+    label: 'Gato',
+    value: 'cat',
+  },
+]
+
 export function CardPetCreate() {
   const methodsUseForm = useForm<PetCreateForm>({
     resolver: zodResolver(schemaPetCreate),
   })
+  const { token } = useAuth()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    setError,
   } = methodsUseForm
 
   const { fields, append, remove } = useFieldArray({
@@ -70,21 +86,62 @@ export function CardPetCreate() {
     append({ requirements: '' })
   }
 
-  async function handleRegisterPet(data: PetCreateForm) {
-    // const formData = new FormData()
+  async function formatPetFormData(data: PetCreateForm) {
+    const formData = new FormData()
 
-    // for (let i = 0; i < data.images.length; i++) {
-    //   formData.append('images', data.images[i])
-    // }
+    formData.append('name', data.name)
+    formData.append('age', data.age)
+    formData.append('description', data.description)
+    formData.append('energy', data.energy)
+    formData.append('independence', data.independence)
+    formData.append('size', data.size)
+    formData.append('type', data.type)
+    formData.append(
+      'adoptionRequirements',
+      JSON.stringify(
+        data.adoptionRequirements.map((item) => item.requirements),
+      ),
+    )
+    for (let i = 0; i < data.images.length; i++) {
+      formData.append('images', data.images[i])
+    }
 
-    // formData.append('name', data.name)
-    // formData.append('description', data.description)
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`)
+    }
 
-    // for (const [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`)
-    // }
+    registerPet(formData)
+  }
 
-    console.log(data)
+  async function registerPet(formData: FormData) {
+    const apiUrl = `${API_BASE_URL}/pets`
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const responseBody: { error: string } = await response.json()
+        setError('root.serverError', {
+          message: responseBody.error || 'Unknown error',
+        })
+        return
+      }
+
+      console.log('Org Cadastrada ' + response.status)
+    } catch (error) {
+      if (error instanceof Error)
+        console.error(
+          `An error occurred while making the request to ${apiUrl}. Error message:  ${error.message}`,
+        )
+      return null
+    }
   }
 
   return (
@@ -94,7 +151,7 @@ export function CardPetCreate() {
       </header>
 
       <FormProvider {...methodsUseForm}>
-        <FormPetInformation onSubmit={handleSubmit(handleRegisterPet)}>
+        <FormPetInformation onSubmit={handleSubmit(formatPetFormData)}>
           <label htmlFor="name">Nome</label>
           <InputWrapper>
             <input
@@ -103,6 +160,16 @@ export function CardPetCreate() {
               {...register('name', { required: true })}
             />
             <ErrorMessage>{errors.name?.message}</ErrorMessage>
+          </InputWrapper>
+
+          <label htmlFor="size">Espécie</label>
+
+          <InputWrapper>
+            <Select
+              options={petSpecies}
+              register={register('type', { required: true })}
+            />
+            <ErrorMessage>{errors.type?.message}</ErrorMessage>
           </InputWrapper>
 
           <DescriptionLabel htmlFor="description">
@@ -226,6 +293,7 @@ export function CardPetCreate() {
               Confirmar
             </ButtonConfirm>
           </AdoptionRequirementsContainer>
+          <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
         </FormPetInformation>
       </FormProvider>
     </Container>
