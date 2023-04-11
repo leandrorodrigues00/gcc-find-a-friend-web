@@ -42,7 +42,7 @@ export function PetCreate() {
             <img src={logoDetails} alt="" />
             <div>
               <p>Seu Cãopanheiro</p>
-              <p>Rua do meio, 123 , Boa viagem, Recife - PE </p>
+              {/* <p>Rua do meio, 123 , Boa viagem, Recife - PE </p> */}
             </div>
           </DetailsContainer>
 

@@ -85,6 +85,7 @@ export function Login() {
         )
       } else {
         const json = await response.json()
+        console.log(json)
         return json
       }
     } catch (error) {
