@@ -1,4 +1,7 @@
 import { useForm, useFieldArray, FormProvider } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
   ageOptions,
   energyOptions,
@@ -7,6 +10,11 @@ import {
 } from '../Aside'
 import { ImageUploader } from '../ImageUploader'
 import { Select } from '../Select'
+import { API_BASE_URL } from '@/config'
+import { useAuth } from '@/context/AuthContext'
+import { Toastify } from '../Toastify'
+
+import { xSquare } from '../../assets/icons/index'
 import {
   AddElementButtonContainer,
   AdoptionRequirementsContainer,
@@ -18,12 +26,6 @@ import {
   InputRequirements,
   InputWrapper,
 } from './styles'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { xSquare } from '../../assets/icons/index'
-import { API_BASE_URL } from '@/config'
-import { useAuth } from '@/context/AuthContext'
-import { Toastify } from '../Toastify'
 
 const schemaPetCreate = z.object({
   name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
@@ -139,7 +141,7 @@ export function CardPetCreate() {
         return
       }
 
-      Toastify({ message: 'PET Cadastrado', type: 'success' })
+      Toastify({ message: 'Pet Cadastrado', type: 'success' })
     } catch (error) {
       if (error instanceof Error)
         console.error(

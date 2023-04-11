@@ -1,5 +1,5 @@
-import { useFormContext } from 'react-hook-form'
 import { ChangeEvent, DragEvent, useEffect, useRef, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 
 import { uploadIcon, fileIcon, xSquare } from '../../assets/icons/index'
 import {

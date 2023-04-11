@@ -1,9 +1,12 @@
-import logo from '@/assets/icons/logo-mapPage.svg'
-import search from '@/assets/icons/search.svg'
-import { usePlace } from '@/context/LocationContext'
 import { ChangeEvent, useCallback, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { usePlace } from '@/context/LocationContext'
+import { API_BASE_URL } from '@/config'
 import { Select } from '../Select'
+
+import logo from '@/assets/icons/logo-mapPage.svg'
+import search from '@/assets/icons/search.svg'
 
 import {
   Container,
@@ -13,7 +16,6 @@ import {
   ContentHeader,
   ContentFilters,
 } from './styles'
-import { API_BASE_URL } from '@/config'
 
 export const ageOptions = [
   {

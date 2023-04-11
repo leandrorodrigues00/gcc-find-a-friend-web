@@ -1,6 +1,6 @@
-import { usePlace } from '@/context/LocationContext'
-
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+
+import { usePlace } from '@/context/LocationContext'
 
 export function MapOrg() {
   const { orgCoordinates } = usePlace()

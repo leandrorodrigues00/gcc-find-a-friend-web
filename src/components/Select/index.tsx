@@ -1,5 +1,7 @@
-import chevron from '@/assets/icons/chevron-bottom.svg'
 import { ComponentProps } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
+
+import chevron from '@/assets/icons/chevron-bottom.svg'
 import {
   Filter,
   FilterLabel,
@@ -7,7 +9,6 @@ import {
   FilterInputOption,
   FilterWrapper,
 } from './styles'
-import { UseFormRegisterReturn } from 'react-hook-form'
 
 type SelectProps = ComponentProps<typeof FilterInput> & {
   label?: string
