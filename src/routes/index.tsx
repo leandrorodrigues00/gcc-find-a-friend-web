@@ -11,14 +11,12 @@ import { useAuth } from '@/context/AuthContext'
 export function Router() {
   const PrivateRoute = ({ children }: { children: ReactNode }) => {
     const { isAuthenticated } = useAuth()
-    console.log(isAuthenticated)
 
     return isAuthenticated ? <Navigate to="/" /> : <>{children}</>
   }
 
-  const PrivateRoute2 = ({ children }: { children: ReactNode }) => {
+  const PrivatePetCreateRoute = ({ children }: { children: ReactNode }) => {
     const { isAuthenticated } = useAuth()
-    console.log(isAuthenticated)
 
     return isAuthenticated ? <>{children}</> : <Navigate to="/" />
   }
@@ -46,9 +44,9 @@ export function Router() {
       <Route
         path="/pet-create"
         element={
-          <PrivateRoute2>
+          <PrivatePetCreateRoute>
             <PetCreate />
-          </PrivateRoute2>
+          </PrivatePetCreateRoute>
         }
       />
     </Routes>

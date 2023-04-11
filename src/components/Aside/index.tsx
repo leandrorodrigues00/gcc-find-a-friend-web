@@ -147,7 +147,6 @@ export function Aside({ filters, handleChangeFilterPet }: AsideProps) {
     )
 
     if (!data) return
-    console.log(`${API_BASE_URL}/pets/${formValues.city}?${searchParams}`)
     setFilteredAnimalsCity(data.pets)
   }
 

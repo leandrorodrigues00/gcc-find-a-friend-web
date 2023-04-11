@@ -20,7 +20,6 @@ import {
   Button,
   ErrorMessage,
 } from './styles'
-import { usePlace } from '@/context/LocationContext'
 
 export interface LoginResponse {
   org: {
@@ -43,7 +42,6 @@ type LoginForm = z.infer<typeof schemaLogin>
 export function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const { setToken } = useAuth()
-  const { setOrgDetails } = usePlace()
 
   const navigate = useNavigate()
 
@@ -88,7 +86,7 @@ export function Login() {
       } else {
         const json: LoginResponse = await response.json()
 
-        setOrgDetails(json)
+        localStorage.setItem('@findAFriend:orgAddress', JSON.stringify(json))
         return json
       }
     } catch (error) {

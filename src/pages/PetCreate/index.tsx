@@ -10,13 +10,25 @@ import {
   logoutIcon,
 } from '../../assets/icons/index'
 import { Container, DetailsContainer, InnerContainer } from './styles'
-import { usePlace } from '@/context/LocationContext'
+import { LoginResponse } from '../Login'
+
+function getOrgData() {
+  const orgString = localStorage.getItem('@findAFriend:orgAddress')
+  if (orgString) {
+    const {
+      org: { nome, address, cep },
+    }: LoginResponse = JSON.parse(orgString)
+    return { nome, address, cep }
+  } else {
+    return { nome: 'Seu Cãopanheiro', address: '*********', cep: '**********' }
+  }
+}
 
 export function PetCreate() {
   const { setToken } = useAuth()
   const navigate = useNavigate()
 
-  const { orgDetails } = usePlace()
+  const { nome, address, cep } = getOrgData()
 
   function handleLogout() {
     setToken(null)
@@ -44,9 +56,9 @@ export function PetCreate() {
           <DetailsContainer>
             <img src={logoDetails} alt="" />
             <div>
-              <p>{orgDetails?.org.nome}</p>
+              <p>{nome}</p>
               <p>
-                {orgDetails?.org.address} - {orgDetails?.org.cep}
+                {address} - {cep}
               </p>
             </div>
           </DetailsContainer>

@@ -8,7 +8,6 @@ import React, {
 import { API_BASE_URL } from '@/config'
 import { PetsApiProps } from '@/components/Aside'
 import { CoordinatesMapProps } from '@/pages/PetDetails'
-import { LoginResponse } from '@/pages/Login'
 
 interface StatesApiProps {
   id: number
@@ -50,7 +49,6 @@ interface LocationContextType {
   isFetching: boolean
   formValues: FormValues
   filteredAnimalsCity?: PetsApiProps[]
-  orgDetails?: LoginResponse | null
 
   orgCoordinates: CoordinatesMapProps | null
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>
@@ -59,7 +57,7 @@ interface LocationContextType {
   setOrgCoordinates: React.Dispatch<
     React.SetStateAction<CoordinatesMapProps | null>
   >
-  setOrgDetails: React.Dispatch<React.SetStateAction<LoginResponse | null>>
+
   fetchData: <T>(url: string) => Promise<T | null>
 }
 
@@ -83,7 +81,6 @@ export function LocationProvider({ children }: CartContextProviderProps) {
   })
   const [orgCoordinates, setOrgCoordinates] =
     useState<CoordinatesMapProps | null>(null)
-  const [orgDetails, setOrgDetails] = useState<LoginResponse | null>(null)
   const [filteredAnimalsCity, setFilteredAnimalsCity] = useState<
     PetsApiProps[]
   >([])
@@ -162,8 +159,6 @@ export function LocationProvider({ children }: CartContextProviderProps) {
         setFilteredAnimalsCity,
         orgCoordinates,
         setOrgCoordinates,
-        orgDetails,
-        setOrgDetails,
         fetchData,
       }}
     >

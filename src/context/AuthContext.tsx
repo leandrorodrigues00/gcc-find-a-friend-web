@@ -38,7 +38,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function refreshAuthToken() {
     const apiUrl = `${API_BASE_URL}/auth/refresh-token`
-    console.log(`Bearer ${localStorage.getItem('token')}`)
 
     try {
       const response = await fetch(apiUrl, {
