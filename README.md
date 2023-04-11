@@ -17,7 +17,12 @@
 
 ## 👩‍💻 About the project
 
-O Green Chain Challenge é um projeto desenvolvido pela [Rocketseat](https://rocketseat.com.br/) especialmente para a comunidade com desafios que simulam situações reais que, você dev, vai encontrar no mercado de trabalho! Teremos por aqui empresas fictícias com diversos perfis, entregas por sprints e muitos desafios. Ta preparado? 👀
+The Green Chain Challenge is a project developed by Rocketseat for the community, with challenges that simulate real situations that you, the developer, will find in the job market!
+
+ We will have fictitious companies with different profiles, deliveries by sprints and many challenges. Are you ready? 👀
+
+
+/** To do - describe project functionality **/
 
 ## 🔖 Layout
 
