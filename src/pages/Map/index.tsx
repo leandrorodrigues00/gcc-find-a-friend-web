@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { usePlace } from '@/context/LocationContext'
 import { Aside } from '~/Aside'
@@ -14,9 +14,11 @@ import {
   Header,
   HeaderSelect,
   Display,
+  LoginButtonContainer,
 } from './styles'
 
 export function Map() {
+  const navigate = useNavigate()
   const [filters, setFilters] = useState({
     age: '',
     energy: '',
@@ -24,6 +26,10 @@ export function Map() {
     independence: '',
     type: 'all',
   })
+
+  function handleNavigate() {
+    navigate(`/login`)
+  }
 
   function handleChangeFilterPet(event: ChangeEvent<HTMLSelectElement>) {
     const { name, value } = event.target
@@ -40,6 +46,13 @@ export function Map() {
       <Aside filters={filters} handleChangeFilterPet={handleChangeFilterPet} />
 
       <Content>
+        <LoginButtonContainer>
+          <p>
+            Cadastre-se ou faça <span onClick={handleNavigate}>login aqui</span>
+            para ajudar seu pet a encontrar um novo lar!
+          </p>
+        </LoginButtonContainer>
+
         <Header>
           <p>
             Encontre <span>{filteredAnimalsCity?.length} amigos</span> na sua

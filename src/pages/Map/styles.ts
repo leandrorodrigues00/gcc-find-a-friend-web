@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   flex: 1;
   background-color: #fdeced;
-  padding: 9.625rem 2rem 3.125rem;
+  padding: 5.625rem 2rem 3.125rem;
 
   height: 100vh;
   overflow-y: scroll;
@@ -60,4 +60,19 @@ export const Display = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(17.5rem, 1fr));
   grid-gap: 2rem;
+`
+
+export const LoginButtonContainer = styled.div`
+  p {
+    color: #0d3b66;
+    text-align: right;
+    padding-bottom: 4rem;
+
+    span {
+      font-weight: bolder;
+      padding: 4px;
+      color: #f15156;
+      cursor: pointer;
+    }
+  }
 `
