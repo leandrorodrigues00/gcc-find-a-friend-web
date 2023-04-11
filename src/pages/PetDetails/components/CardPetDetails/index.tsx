@@ -18,7 +18,7 @@ import {
   whatsappIcon,
   whatsappIconwhite,
   alerta,
-} from '../../assets/icons/index'
+} from '../../../../assets/icons/index'
 
 import {
   AddressContainer,

@@ -7,14 +7,15 @@ import {
   energyOptions,
   independencyOptions,
   sizeOptions,
-} from '../Aside'
-import { ImageUploader } from '../ImageUploader'
-import { Select } from '../Select'
+} from '../../../../components/Aside'
+
+import { Select } from '../../../../components/Select'
 import { API_BASE_URL } from '@/config'
 import { useAuth } from '@/context/AuthContext'
-import { Toastify } from '../Toastify'
+import { Toastify } from '../../../../components/Toastify'
+import { ImageUploader } from '../ImageUploader'
 
-import { xSquare } from '../../assets/icons/index'
+import { xSquare } from '../../../../assets/icons/index'
 import {
   AddElementButtonContainer,
   AdoptionRequirementsContainer,

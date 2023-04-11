@@ -1,4 +1,7 @@
-import { CardPetCreate } from '@/components/CardPetCreate'
+import { useNavigate } from 'react-router-dom'
+
+import { useAuth } from '@/context/AuthContext'
+import { CardPetCreate } from '@/pages/PetCreate/components/CardPetCreate'
 
 import {
   logoDetails,
@@ -7,8 +10,6 @@ import {
   logoutIcon,
 } from '../../assets/icons/index'
 import { Container, DetailsContainer, InnerContainer } from './styles'
-import { useAuth } from '@/context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 
 export function PetCreate() {
   const { setToken } = useAuth()

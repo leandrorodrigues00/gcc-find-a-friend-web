@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { usePlace } from '@/context/LocationContext'
 import { API_BASE_URL } from '@/config'
 import { CoordinatesMapApiResponse } from '../PetDetails'
-import { MapOrg } from '@/components/MapOrg'
+import { MapOrg } from '@/pages/PetDetails/components/MapOrg'
 
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
 import {

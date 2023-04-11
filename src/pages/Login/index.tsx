@@ -1,7 +1,10 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useAuth } from '@/context/AuthContext'
 import { API_BASE_URL } from '@/config'
 
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
@@ -17,9 +20,6 @@ import {
   Button,
   ErrorMessage,
 } from './styles'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { useAuth } from '@/context/AuthContext'
 
 interface LoginResponse {
   token: string
