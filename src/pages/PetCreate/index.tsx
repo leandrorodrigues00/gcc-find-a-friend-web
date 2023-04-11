@@ -10,10 +10,13 @@ import {
   logoutIcon,
 } from '../../assets/icons/index'
 import { Container, DetailsContainer, InnerContainer } from './styles'
+import { usePlace } from '@/context/LocationContext'
 
 export function PetCreate() {
   const { setToken } = useAuth()
   const navigate = useNavigate()
+
+  const { orgDetails } = usePlace()
 
   function handleLogout() {
     setToken(null)
@@ -41,8 +44,10 @@ export function PetCreate() {
           <DetailsContainer>
             <img src={logoDetails} alt="" />
             <div>
-              <p>Seu Cãopanheiro</p>
-              {/* <p>Rua do meio, 123 , Boa viagem, Recife - PE </p> */}
+              <p>{orgDetails?.org.nome}</p>
+              <p>
+                {orgDetails?.org.address} - {orgDetails?.org.cep}
+              </p>
             </div>
           </DetailsContainer>
 

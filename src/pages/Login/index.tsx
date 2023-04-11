@@ -20,17 +20,18 @@ import {
   Button,
   ErrorMessage,
 } from './styles'
+import { usePlace } from '@/context/LocationContext'
 
-interface LoginResponse {
-  token: string
+export interface LoginResponse {
   org: {
-    id: string
-    nome: string
-    email: string
     address: string
     cep: string
+    email: string
+    id: string
+    nome: string
     whatsappNumber: string
   }
+  token: string
 }
 
 const schemaLogin = z.object({
@@ -41,9 +42,10 @@ type LoginForm = z.infer<typeof schemaLogin>
 
 export function Login() {
   const [showPassword, setShowPassword] = useState(false)
-  const { setToken, isAuthenticated } = useAuth()
+  const { setToken } = useAuth()
+  const { setOrgDetails } = usePlace()
+
   const navigate = useNavigate()
-  console.log(isAuthenticated)
 
   const {
     register,
@@ -84,8 +86,9 @@ export function Login() {
           `Error making request to ${apiUrl}. Status code: ${response.status}.`,
         )
       } else {
-        const json = await response.json()
-        console.log(json)
+        const json: LoginResponse = await response.json()
+
+        setOrgDetails(json)
         return json
       }
     } catch (error) {
