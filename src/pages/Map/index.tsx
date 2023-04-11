@@ -1,3 +1,7 @@
+import { ChangeEvent, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import { usePlace } from '@/context/LocationContext'
 import { Aside } from '~/Aside'
 import { Card } from '~/Card'
 
@@ -12,19 +16,28 @@ import {
   Display,
 } from './styles'
 
-import { usePlace } from '@/context/LocationContext'
-import { Link } from 'react-router-dom'
-
 export function Map() {
-  const { filteredAnimalsCity } = usePlace()
+  const [filters, setFilters] = useState({
+    age: '',
+    energy: '',
+    size: '',
+    independence: '',
+    type: 'all',
+  })
 
-  function handleFilterByPetType() {
-    // TO DO
+  function handleChangeFilterPet(event: ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = event.target
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }))
   }
+
+  const { filteredAnimalsCity } = usePlace()
 
   return (
     <Container>
-      <Aside />
+      <Aside filters={filters} handleChangeFilterPet={handleChangeFilterPet} />
 
       <Content>
         <Header>
@@ -33,10 +46,15 @@ export function Map() {
             cidade
           </p>
           <SelectWrapper>
-            <HeaderSelect name="size" id="size">
+            <HeaderSelect
+              id="type"
+              name="type"
+              value={filters.type}
+              onChange={handleChangeFilterPet}
+            >
               <option value="all">Gatos e Cachorros</option>
-              <option value="cats">Gatos</option>
-              <option value="dogs">Cachorros</option>
+              <option value="cat">Gatos</option>
+              <option value="dog">Cachorros</option>
             </HeaderSelect>
             <img src={chevron} alt="" />
           </SelectWrapper>

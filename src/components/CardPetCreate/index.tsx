@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { xSquare } from '../../assets/icons/index'
 import { API_BASE_URL } from '@/config'
 import { useAuth } from '@/context/AuthContext'
+import { Toastify } from '../Toastify'
 
 const schemaPetCreate = z.object({
   name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
@@ -34,6 +35,7 @@ const schemaPetCreate = z.object({
   size: z.string().nonempty('Selecione o porte'),
   energy: z.string().nonempty('Selecione o nivel de Energia'),
   independence: z.string().nonempty('Selecione o nivel de independência'),
+  petHabitat: z.string().nonempty('Selecione o tamanho do ambiente'),
 
   images: z
     .array(z.instanceof(File))
@@ -60,6 +62,13 @@ const petSpecies = [
   {
     label: 'Gato',
     value: 'cat',
+  },
+]
+
+const ambiente = [
+  {
+    label: 'Ambiente amplo',
+    value: 'Amplo',
   },
 ]
 
@@ -106,10 +115,6 @@ export function CardPetCreate() {
       formData.append('images', data.images[i])
     }
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`)
-    }
-
     registerPet(formData)
   }
 
@@ -120,9 +125,9 @@ export function CardPetCreate() {
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
         },
+        credentials: 'include',
         body: formData,
       })
 
@@ -134,7 +139,7 @@ export function CardPetCreate() {
         return
       }
 
-      console.log('Org Cadastrada ' + response.status)
+      Toastify({ message: 'PET Cadastrado', type: 'success' })
     } catch (error) {
       if (error instanceof Error)
         console.error(
@@ -228,7 +233,11 @@ export function CardPetCreate() {
 
           <label htmlFor="ambient">Ambiente</label>
           <InputWrapper>
-            <input type="text" id="ambient" placeholder="" />
+            <Select
+              options={ambiente}
+              register={register('petHabitat', { required: true })}
+            />
+            <ErrorMessage>{errors.petHabitat?.message}</ErrorMessage>
           </InputWrapper>
 
           <ImageUploader />

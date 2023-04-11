@@ -134,6 +134,11 @@ export const Button = styled.button`
   border-radius: 20px;
   padding: 1.187rem auto;
   border: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `
 
 export const ErrorMessage = styled.p`

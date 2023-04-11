@@ -7,15 +7,31 @@ import {
   logoutIcon,
 } from '../../assets/icons/index'
 import { Container, DetailsContainer, InnerContainer } from './styles'
+import { useAuth } from '@/context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export function PetCreate() {
+  const { setToken } = useAuth()
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    setToken(null)
+  }
+
+  function NavigateBackToMap() {
+    navigate('/map')
+  }
   return (
     <Container>
       <aside>
         <img src={logoMapPage} alt="" />
 
         <button>
-          <img src={chevronLeft} alt="Back to previous page" />
+          <img
+            src={chevronLeft}
+            onClick={NavigateBackToMap}
+            alt="Back to previous page"
+          />
         </button>
       </aside>
 
@@ -29,8 +45,8 @@ export function PetCreate() {
             </div>
           </DetailsContainer>
 
-          <button>
-            <img src={logoutIcon} alt="" />
+          <button onClick={handleLogout}>
+            <img src={logoutIcon} alt="botão para realizar logout" />
           </button>
         </header>
 

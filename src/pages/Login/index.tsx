@@ -100,7 +100,7 @@ export function Login() {
     const response = await sendLoginRequest(data)
     if (response && response.token) {
       setToken(response.token)
-      // navigate('/userProfile')
+      navigate('/pet-create')
     }
   }
 

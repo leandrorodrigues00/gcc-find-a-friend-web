@@ -99,7 +99,20 @@ export interface PetsApiResponse {
   pets: PetsApiProps[]
 }
 
-export function Aside() {
+interface Filters {
+  age: string
+  energy: string
+  size: string
+  independence: string
+  type: string
+}
+
+interface AsideProps {
+  filters: Filters
+  handleChangeFilterPet: (event: ChangeEvent<HTMLSelectElement>) => void
+}
+
+export function Aside({ filters, handleChangeFilterPet }: AsideProps) {
   const {
     statesList,
     citiesList,
@@ -114,18 +127,27 @@ export function Aside() {
   const params = new URLSearchParams(location.search)
   const cityParams = params.get('city')
 
+  function buildSearchParams(filters: Filters) {
+    const searchParams = new URLSearchParams()
+    if (filters.age) searchParams.append('age', filters.age)
+    if (filters.energy) searchParams.append('energy', filters.energy)
+    if (filters.size) searchParams.append('size', filters.size)
+    if (filters.independence)
+      searchParams.append('independence', filters.independence)
+    if (filters.type) searchParams.append('type', filters.type)
+    return searchParams
+  }
+
   async function handleSearchPets() {
+    const searchParams = buildSearchParams(filters)
     const data = await fetchData<PetsApiResponse>(
-      `${API_BASE_URL}/pets/${formValues.city}`,
+      `${API_BASE_URL}/pets/${formValues.city}?${searchParams}`,
     )
 
     if (!data) return
+    console.log(`${API_BASE_URL}/pets/${formValues.city}?${searchParams}`)
     setFilteredAnimalsCity(data.pets)
   }
-
-  // function handleChangeSearchFilters() {
-  //   // TO DO
-  // }
 
   const handleChangeState = useCallback(
     (stateValue: string) => {
@@ -202,20 +224,36 @@ export function Aside() {
       <AsideContent>
         <ContentHeader>Filtros</ContentHeader>
         <ContentFilters>
-          <Select name="age" label="Idade" options={ageOptions} />
+          <Select
+            name="age"
+            label="Idade"
+            options={ageOptions}
+            value={filters.age}
+            onChange={handleChangeFilterPet}
+          />
 
           <Select
             name="energy"
             label="Nível de energia"
             options={energyOptions}
+            value={filters.energy}
+            onChange={handleChangeFilterPet}
           />
 
-          <Select name="size" label="Porte do animal" options={sizeOptions} />
+          <Select
+            name="size"
+            label="Porte do animal"
+            options={sizeOptions}
+            value={filters.size}
+            onChange={handleChangeFilterPet}
+          />
 
           <Select
-            name="independency"
+            name="independence"
             label="Nível de independência"
             options={independencyOptions}
+            value={filters.independence}
+            onChange={handleChangeFilterPet}
           />
         </ContentFilters>
       </AsideContent>

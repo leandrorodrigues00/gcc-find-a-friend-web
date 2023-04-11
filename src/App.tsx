@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import GlobalStyles from './styles/global'
 import { LocationProvider } from './context/LocationContext'
 import { AuthProvider } from './context/AuthContext'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <LocationProvider>
           <AuthProvider>
+            <ToastContainer />
             <Router />
           </AuthProvider>
         </LocationProvider>

@@ -21,39 +21,43 @@ import {
   ErrorMessage,
   MapContainer,
 } from './styles'
+import { useNavigate } from 'react-router-dom'
+import { Toastify } from '@/components/Toastify'
+
+const schemaRegister = z
+  .object({
+    name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
+    email: z.string().email({ message: 'insira um e-mail válido' }),
+    cep: z.string().regex(/^(\d{5})-?(\d{3})$/, 'insira um CEP válido'),
+    address: z
+      .string()
+      .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
+    whatsappNumber: z
+      .string()
+      .regex(
+        /^([1-9]{2})9[0-9]{8}$/,
+        'formato invalido, inserir ddd + número, ex: 11987654321',
+      )
+      .transform((whatsappNumber) => '+55' + whatsappNumber),
+    password: z
+      .string()
+      .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
+    passwordConfirm: z
+      .string()
+      .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'As senhas não coincidem',
+    path: ['passwordConfirm'],
+  })
+
+type RegisterForm = z.infer<typeof schemaRegister>
 
 export function Register() {
+  const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
-
-  const schemaRegister = z
-    .object({
-      name: z.string().min(5, 'insira um nome com pelo menos 5 caracteres'),
-      email: z.string().email({ message: 'insira um e-mail válido' }),
-      cep: z.string().regex(/^(\d{5})-?(\d{3})$/, 'insira um CEP válido'),
-      address: z
-        .string()
-        .min(5, 'Insira um endereço com pelo menos 5 caracteres'),
-      whatsappNumber: z
-        .string()
-        .regex(
-          /^([1-9]{2})9[0-9]{8}$/,
-          'formato invalido, inserir ddd + número, ex: 11987654321',
-        )
-        .transform((whatsappNumber) => '+55' + whatsappNumber),
-      password: z
-        .string()
-        .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
-      passwordConfirm: z
-        .string()
-        .min(6, 'Por favor, insira uma senha com pelo menos 6 caracteres'),
-    })
-    .refine((data) => data.password === data.passwordConfirm, {
-      message: 'As senhas não coincidem',
-      path: ['passwordConfirm'],
-    })
-
-  type RegisterForm = z.infer<typeof schemaRegister>
+  const navigate = useNavigate()
 
   const {
     register,
@@ -89,7 +93,7 @@ export function Register() {
         return
       }
 
-      console.log('Org Cadastrada ' + response.status)
+      NavigateToLogin()
     } catch (error) {
       if (error instanceof Error)
         console.error(
@@ -120,6 +124,19 @@ export function Register() {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  function NavigateToLogin() {
+    setIsLoading(true)
+    Toastify({
+      message:
+        'Seu cadastro está sendo concluído! Em breve você será redirecionado para a tela de login.',
+      type: 'success',
+    })
+    setTimeout(() => {
+      navigate('/login')
+      setIsLoading(false)
+    }, 6000) // 5 seconds
   }
 
   return (
@@ -247,8 +264,13 @@ export function Register() {
             </div>
 
             <Buttons>
-              <Button type="submit" onClick={() => {}} className="primary">
-                Cadastrar
+              <Button
+                type="submit"
+                onClick={() => {}}
+                className="primary"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Cadastrando...' : 'Cadastrar'}
               </Button>
               <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
             </Buttons>
