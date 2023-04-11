@@ -16,6 +16,7 @@ import {
   Display,
   LoginButtonContainer,
 } from './styles'
+import { useAuth } from '@/context/AuthContext'
 
 export function Map() {
   const navigate = useNavigate()
@@ -27,9 +28,7 @@ export function Map() {
     type: 'all',
   })
 
-  function handleNavigate() {
-    navigate(`/login`)
-  }
+  const { isAuthenticated } = useAuth()
 
   function handleChangeFilterPet(event: ChangeEvent<HTMLSelectElement>) {
     const { name, value } = event.target
@@ -47,10 +46,18 @@ export function Map() {
 
       <Content>
         <LoginButtonContainer>
-          <p>
-            Cadastre-se ou faça <span onClick={handleNavigate}>login aqui</span>
-            para ajudar seu pet a encontrar um novo lar!
-          </p>
+          {isAuthenticated ? (
+            <p>
+              Cadastrar um novo pet ?
+              <span onClick={() => navigate(`/pet-create`)}>clique aqui</span>
+            </p>
+          ) : (
+            <p>
+              Cadastre-se ou faça{' '}
+              <span onClick={() => navigate(`/login`)}>login aqui</span>
+              para ajudar seu pet a encontrar um novo lar!
+            </p>
+          )}
         </LoginButtonContainer>
 
         <Header>
