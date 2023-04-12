@@ -24,8 +24,6 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 
 **Note:** In order to use the application, you'll need to run both the server and the web application. Before launching the web app, make sure to install the API by following the steps provided in this repository:[Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api), the api already has a small database with pets registered for the city of São Paulo.
 
-obs: Como dados de testes, deixamos uma pequena base de dados com pets cadastrados para a cidade de São Paulo.
-
 ## 🖥 Project Demonstration
 
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend1.gif)
