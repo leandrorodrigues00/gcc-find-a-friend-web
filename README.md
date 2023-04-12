@@ -24,12 +24,8 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 
 ## 🖥 Project Demonstration
 
-Watch the video below to see the project in action:
-
-![Alt Text](./docs/FindAFriend1.gif)
-![Alt Text](./docs/FindAFriend2.gif)
-
-![meu_video](./docs/FindAFriend.mp4)
+![GIF OF THE PROJECT RUNNING](./docs/FindAFriend1.gif)
+![GIF OF THE PROJECT RUNNING](./docs/FindAFriend2.gif)
 
 ## 🔖 Layout
 
