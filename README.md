@@ -26,10 +26,10 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 
 Watch the video below to see the project in action:
 
-<video width="320" height="240" controls>
-<source src="./docs/FindAFriend.mp4" type="video/mp4">
-Your browser does not support the video element.
-</video>
+![Alt Text](./docs/FindAFriend1.gif)
+![Alt Text](./docs/FindAFriend2.gif)
+
+![meu_video](./docs/FindAFriend.mp4)
 
 ## 🔖 Layout
 
