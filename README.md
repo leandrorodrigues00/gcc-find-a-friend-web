@@ -12,12 +12,24 @@
 <p align="center">
  
  
-<img alt="project preview" src="./src/assets/site-preview.png" width="75%"   >  
+<img alt="project preview" src="./docs/site-preview.png" width="75%"   >  
 </p>
 
 ## 👩‍💻 About the project
 
-O Green Chain Challenge é um projeto desenvolvido pela [Rocketseat](https://rocketseat.com.br/) especialmente para a comunidade com desafios que simulam situações reais que, você dev, vai encontrar no mercado de trabalho! Teremos por aqui empresas fictícias com diversos perfis, entregas por sprints e muitos desafios. Ta preparado? 👀
+The Green Chain Challenge is a project developed by [Rocketseat](https://rocketseat.com.br/) for the community, with challenges that simulate real situations that you, the developer, will find in the job market!
+
+The "Find a Friend" project was created to streamline the pet adoption process. The platform allows users to locate dogs and cats available for adoption within their city, while providing customizable search filters based on preferred age, energy level, independence and size.
+In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption.
+
+## 🖥 Project Demonstration
+
+Watch the video below to see the project in action:
+
+<video width="320" height="240" controls>
+<source src="./docs/FindAFriend.mp4" type="video/mp4">
+Your browser does not support the video element.
+</video>
 
 ## 🔖 Layout
 
