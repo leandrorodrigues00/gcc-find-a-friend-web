@@ -20,7 +20,8 @@
 The Green Chain Challenge is a project developed by [Rocketseat](https://rocketseat.com.br/) for the community, with challenges that simulate real situations that you, the developer, will find in the job market!
 
 The "Find a Friend" project was created to streamline the pet adoption process. The platform allows users to locate dogs and cats available for adoption within their city, while providing customizable search filters based on preferred age, energy level, independence and size.
-In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption.
+
+In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption,which is accomplished through a login page and a route for authentication on the server, as well as a refresh token strategy.
 
 **Note:** In order to use the application, you'll need to run both the server and the web application. Before launching the web app, make sure to install the API by following the steps provided in this repository:[Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api), the api already has a small database with pets registered for the city of São Paulo.
 
