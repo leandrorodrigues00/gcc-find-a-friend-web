@@ -25,6 +25,9 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 ## 🖥 Project Demonstration
 
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend1.gif)
+
+<br/>
+
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend2.gif)
 
 ## 🔖 Layout
@@ -48,7 +51,6 @@ You can view the project layout through the links below:
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/) or [NPM](https://www.npmjs.com/) _(examples are with NPM)_
-- [MySQL](https://www.mysql.com/) or [Docker](https://hub.docker.com/_/mysql) container with a MySQL server instance
 
 **Clone the project and access the folder**
 
