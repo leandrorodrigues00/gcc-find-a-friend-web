@@ -7,9 +7,13 @@ export const Container = styled.div`
 `
 
 export const Hero = styled.main`
-  padding-top: 7.75rem;
+  padding: 7.75rem 0.625rem 0.625rem;
   max-width: 90rem;
   margin: 0 auto;
+
+  @media (max-width: 585px) {
+    padding-top: 3rem;
+  }
 `
 
 export const Introduction = styled.div`
@@ -26,6 +30,28 @@ export const Introduction = styled.div`
     letter-spacing: -0.02em;
     max-width: 30.43rem;
   }
+
+  img {
+    width: 100%;
+  }
+
+  @media (max-width: 1030px) {
+    p {
+      font-size: 3rem;
+    }
+
+    > div {
+      width: 50%;
+      min-width: 18.75rem;
+    }
+  }
+
+  @media (max-width: 585px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 1.875rem;
+  }
 `
 
 export const FooterHero = styled.footer`
@@ -37,6 +63,16 @@ export const FooterHero = styled.footer`
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 2.125rem;
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 3.75rem;
+
+    p {
+      text-align: center;
+    }
   }
 `
 
@@ -93,5 +129,10 @@ export const SelectInputs = styled.div`
       opacity: 0.8;
       transition: all 0.2s ease-in-out;
     }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
   }
 `
