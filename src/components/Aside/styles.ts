@@ -2,13 +2,25 @@ import styled from 'styled-components'
 
 export const Container = styled.aside`
   width: 24.5rem;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f15156;
+
+  @media (max-width: 1050px) {
+    width: 17rem;
+  }
+
+  @media (max-width: 545px) {
+    width: 9.062rem;
+  }
 `
 
 export const AsideHeader = styled.div`
-  height: 15.062rem;
+  height: 15rem;
   background-color: #e44449;
+
+  @media (max-width: 545px) {
+    height: 18.562rem;
+  }
 
   img {
     width: 2.812rem;
@@ -20,12 +32,26 @@ export const AsideHeader = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.625rem;
+
+    @media (max-width: 1050px) {
+      padding: 5.062rem 1rem 1.625rem;
+    }
+
+    @media (max-width: 545px) {
+      padding: 0.625rem;
+    }
   }
 `
 
 export const HeaderInput = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(67px, 1fr) 3fr 1fr;
   gap: 0.75rem;
+
+  @media (max-width: 545px) {
+    display: flex;
+    flex-direction: column;
+  }
 
   > div:nth-child(1) {
     max-width: 4.187rem;
@@ -83,6 +109,10 @@ export const AsideContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2.187rem 3.5rem;
+
+  @media (max-width: 545px) {
+    padding: 0.625rem 0.312rem;
+  }
 `
 
 export const ContentHeader = styled.h1`
