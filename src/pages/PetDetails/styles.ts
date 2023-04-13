@@ -27,6 +27,10 @@ export const Container = styled.div`
       height: 3rem;
       border-radius: 15px;
     }
+
+    @media (max-width: 836px) {
+      padding: 2rem 0.625rem;
+    }
   }
 `
 
@@ -42,5 +46,9 @@ export const InnerContainer = styled.div`
     text-align: center;
     color: #8fa7b3;
     margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 836px) {
+    width: auto;
   }
 `

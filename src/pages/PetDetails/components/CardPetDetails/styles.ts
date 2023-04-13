@@ -5,6 +5,11 @@ export const Container = styled.div`
   color: #0d3b66;
   background: #fff;
   border-radius: 20px;
+  margin: 0 10px;
+
+  @media (max-width: 836px) {
+    width: auto;
+  }
 
   header {
     img {
@@ -43,7 +48,7 @@ export const Container = styled.div`
 `
 
 export const InnerContent = styled.div`
-  padding: 4.375rem;
+  padding: 70px;
 
   header {
     h1 {
@@ -51,6 +56,10 @@ export const InnerContent = styled.div`
       font-size: 3.375rem;
       line-height: 90%;
       text-align: start;
+
+      @media (max-width: 480px) {
+        font-size: 30px;
+      }
     }
 
     p {
@@ -61,12 +70,24 @@ export const InnerContent = styled.div`
       margin-top: 1.625rem;
     }
   }
+
+  @media (max-width: 836px) {
+    padding: 1.875rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.875rem 1.25rem;
+  }
 `
 
 export const PetFeatures = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 0.875rem;
+
+  @media (max-width: 836px) {
+    grid-template-columns: 1fr;
+  }
 
   > div {
     display: flex;
@@ -135,6 +156,12 @@ export const AddressContainer = styled.div`
     border-top: 1px solid #d3e2e5;
     padding-top: 3.125rem;
 
+    @media (max-width: 410px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     > div {
       p:first-child {
         font-weight: Bold;
@@ -151,6 +178,10 @@ export const AddressContainer = styled.div`
 
     img {
       align-self: flex-start;
+
+      @media (max-width: 410px) {
+        align-self: center;
+      }
     }
   }
 `
