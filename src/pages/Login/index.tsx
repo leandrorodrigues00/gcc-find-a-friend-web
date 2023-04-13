@@ -115,7 +115,7 @@ export function Login() {
       <Container>
         <Card>
           <img src={logoHorizontal} className="logo" alt="" />
-          <img src={lineOfDogs} alt="" />
+          <img src={lineOfDogs} className="dogsImage" alt="" />
         </Card>
         <FormWrapper>
           <h1>Boas-vindas!</h1>
