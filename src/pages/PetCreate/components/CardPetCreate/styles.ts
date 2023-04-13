@@ -16,6 +16,15 @@ export const Container = styled.div`
       line-height: 90%;
     }
   }
+
+  @media (max-width: 650px) {
+    padding: 4rem 2rem 5rem;
+    header {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  }
 `
 
 export const FormPetInformation = styled.form`

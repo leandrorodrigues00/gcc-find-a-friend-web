@@ -27,19 +27,25 @@ export const Container = styled.div`
       height: 3rem;
       border-radius: 15px;
     }
+
+    @media (max-width: 650px) {
+      padding: 2rem 0.3125rem;
+    }
   }
 `
 export const InnerContainer = styled.div`
   max-width: 44rem;
   width: 100%;
   margin: 2.5rem auto;
+  padding: 0 10px;
 
   > header {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-bottom: 1.937rem;
     background: #0d3b66;
-    padding: 1.75rem 0;
+    padding: 1.75rem 0.625rem;
 
     border: 1px solid #ffffff;
     border-radius: 20px;
@@ -63,8 +69,12 @@ export const DetailsContainer = styled.div`
     margin-left: 1.125rem;
     p:first-child {
       font-weight: 700;
-      font-size: 1.875rem;
+      font-size: 30px;
       line-height: 90%;
+
+      @media (max-width: 430px) {
+        font-size: 20px;
+      }
     }
 
     p:nth-child(2) {
