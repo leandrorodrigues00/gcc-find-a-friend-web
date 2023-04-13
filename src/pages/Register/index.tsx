@@ -144,7 +144,7 @@ export function Register() {
       <Container>
         <Card>
           <img src={logoHorizontal} className="logo" alt="" />
-          <img src={lineOfDogs} alt="" />
+          <img src={lineOfDogs} className="dogsImage" alt="" />
         </Card>
         <FormWrapper>
           <h1>Cadastre sua organização</h1>

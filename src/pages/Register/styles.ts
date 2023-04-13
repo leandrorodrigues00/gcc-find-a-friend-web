@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;
@@ -17,6 +17,13 @@ export const Container = styled.main`
   justify-content: space-between;
   margin: 0 auto;
   position: relative;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.625rem;
+  }
 `
 
 export const Card = styled.div`
@@ -39,6 +46,20 @@ export const Card = styled.div`
   .logo {
     width: 10.875rem;
   }
+
+  .dogsImage {
+    width: 100%;
+  }
+
+  @media (max-width: 700px) {
+    max-width: 30.5rem;
+    width: 100%;
+    height: auto;
+    margin-top: 0.625rem;
+    gap: 0.937rem;
+    padding: 3.125rem 3.25rem 2.437rem;
+    position: initial;
+  }
 `
 
 export const FormWrapper = styled.div`
@@ -46,7 +67,7 @@ export const FormWrapper = styled.div`
   height: 41.312rem;
   display: block;
   overflow-y: auto;
-  padding-right: 10px;
+  padding: 0 0.75rem;
 
   h1 {
     font-size: 3.375rem;
@@ -55,6 +76,14 @@ export const FormWrapper = styled.div`
     letter-spacing: -2px;
     text-align: center;
     margin-bottom: 6.312rem;
+  }
+
+  @media (max-width: 700px) {
+    max-width: 30.5rem;
+    width: 100%;
+    padding: 1.875rem 1.875rem 0.3125rem;
+    overflow-y: hidden;
+    height: auto;
   }
 `
 
