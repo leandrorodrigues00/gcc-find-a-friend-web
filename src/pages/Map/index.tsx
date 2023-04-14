@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { usePlace } from '@/context/LocationContext'
 import { Aside } from '~/Aside'
-import { Card } from '~/Card'
+import { Card } from '~/CardPets'
 
 import chevron from '@/assets/icons/chevron-bottom-blue.svg'
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -14,15 +14,15 @@ import {
   Container,
   Card,
   FormWrapper,
-  Form,
   InputWrapper,
   Buttons,
   Button,
-  ErrorMessage,
   MapContainer,
+  FormComponent,
 } from './styles'
 import { useNavigate } from 'react-router-dom'
 import { Toastify } from '@/components/Toastify'
+import { Form } from '@/components/Form'
 
 const schemaRegister = z
   .object({
@@ -59,17 +59,18 @@ export function Register() {
   const { fetchData, setOrgCoordinates, orgCoordinates } = usePlace()
   const navigate = useNavigate()
 
+  const useFormRegister = useForm<RegisterForm>({
+    resolver: zodResolver(schemaRegister),
+  })
+
   const {
-    register,
     handleSubmit,
     setError,
     setValue,
     watch,
     clearErrors,
     formState: { errors },
-  } = useForm<RegisterForm>({
-    resolver: zodResolver(schemaRegister),
-  })
+  } = useFormRegister
 
   const watchCep = watch('cep')
 
@@ -146,136 +147,123 @@ export function Register() {
           <img src={logoHorizontal} className="logo" alt="" />
           <img src={lineOfDogs} className="dogsImage" alt="" />
         </Card>
-        <FormWrapper>
-          <h1>Cadastre sua organização</h1>
-          <Form onSubmit={handleSubmit(handleRegisterOrganization)}>
-            <label htmlFor="name">Nome do responsável</label>
-            <div>
-              <InputWrapper>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="John Doe"
-                  {...register('name', { required: true })}
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.name?.message}</ErrorMessage>
-            </div>
 
-            <label htmlFor="email">Email</label>
-            <div>
-              <InputWrapper>
-                <input
-                  type="text"
-                  id="email"
-                  placeholder="mayk@email.com"
-                  {...register('email', { required: true })}
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.email?.message}</ErrorMessage>
-            </div>
+        <FormProvider {...useFormRegister}>
+          <FormWrapper>
+            <h1>Cadastre sua organização</h1>
+            <FormComponent onSubmit={handleSubmit(handleRegisterOrganization)}>
+              <Form.Label htmlFor="name">Nome do responsável</Form.Label>
+              <div>
+                <InputWrapper>
+                  <Form.Input name="name" placeholder="John Doe" />
+                </InputWrapper>
+                <Form.ErrorMessage field="name" />
+              </div>
 
-            <label htmlFor="cep">CEP</label>
-            <div>
-              <InputWrapper>
-                <input
-                  type="text"
-                  id="cep"
-                  placeholder="13254-000"
-                  {...register('cep', { required: true })}
-                  onBlur={handleRenderMapLocation}
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.cep?.message}</ErrorMessage>
-            </div>
+              <Form.Label htmlFor="email">Email</Form.Label>
+              <div>
+                <InputWrapper>
+                  <Form.Input name="email" placeholder="mayk@email.com" />
+                </InputWrapper>
+                <Form.ErrorMessage field="email" />
+              </div>
 
-            <label htmlFor="address">Endereço</label>
+              <Form.Label htmlFor="cep">CEP</Form.Label>
+              <div>
+                <InputWrapper>
+                  <Form.Input
+                    name="cep"
+                    placeholder="13254-000"
+                    onBlur={handleRenderMapLocation}
+                  />
+                </InputWrapper>
+                <Form.ErrorMessage field="cep" />
+              </div>
 
-            <div>
-              <InputWrapper>
-                <input
-                  type="text"
-                  id="address"
-                  {...register('address', { required: true })}
-                  placeholder="Rua do Meio, 1825"
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.address?.message}</ErrorMessage>
-            </div>
+              <Form.Label htmlFor="address">Endereço</Form.Label>
 
-            {orgCoordinates && (
-              <MapContainer>
-                <MapOrg />
-              </MapContainer>
-            )}
+              <div>
+                <InputWrapper>
+                  <Form.Input
+                    name="address"
+                    placeholder="Rua do Meio, 1825"
+                    onBlur={handleRenderMapLocation}
+                  />
+                </InputWrapper>
+                <Form.ErrorMessage field="address" />
+              </div>
 
-            <label htmlFor="whatsappNumber">Whatsapp</label>
-            <div>
-              <InputWrapper>
-                <input
-                  type="text"
-                  id="contact"
-                  {...register('whatsappNumber', { required: true })}
-                  placeholder="99 99999 9999"
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.whatsappNumber?.message}</ErrorMessage>
-            </div>
+              {orgCoordinates && (
+                <MapContainer>
+                  <MapOrg />
+                </MapContainer>
+              )}
 
-            <label htmlFor="password">Senha</label>
-            <div>
-              <InputWrapper>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  {...register('password', { required: true })}
-                  placeholder="Senha"
-                />
-                <img
-                  onClick={() => {
-                    setShowPassword(!showPassword)
-                  }}
-                  src={passwordEye}
-                  alt=""
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.password?.message}</ErrorMessage>
-            </div>
+              <Form.Label htmlFor="whatsappNumber">Whatsapp</Form.Label>
+              <div>
+                <InputWrapper>
+                  <Form.Input
+                    name="whatsappNumber"
+                    placeholder="99 99999 9999"
+                  />
+                </InputWrapper>
+                <Form.ErrorMessage field="whatsappNumber" />
+              </div>
 
-            <label htmlFor="passwordConfirm">Confirmar senha</label>
+              <Form.Label htmlFor="password">Senha</Form.Label>
+              <div>
+                <InputWrapper>
+                  <Form.Input
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Senha"
+                  />
+                  <img
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                    src={passwordEye}
+                    alt=""
+                  />
+                </InputWrapper>
+                <Form.ErrorMessage field="password" />
+              </div>
 
-            <div>
-              <InputWrapper>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="passwordConfirm"
-                  {...register('passwordConfirm', { required: true })}
-                  placeholder="Confirme sua senha"
-                />
-                <img
-                  onClick={() => {
-                    setShowPassword(!showPassword)
-                  }}
-                  src={passwordEye}
-                  alt=""
-                />
-              </InputWrapper>
-              <ErrorMessage>{errors.passwordConfirm?.message}</ErrorMessage>
-            </div>
+              <Form.Label htmlFor="passwordConfirm">Confirmar senha</Form.Label>
 
-            <Buttons>
-              <Button
-                type="submit"
-                onClick={() => {}}
-                className="primary"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Cadastrando...' : 'Cadastrar'}
-              </Button>
-              <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
-            </Buttons>
-          </Form>
-        </FormWrapper>
+              <div>
+                <InputWrapper>
+                  <Form.Input
+                    name="passwordConfirm"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Confirme sua senha"
+                  />
+
+                  <img
+                    onClick={() => {
+                      setShowPassword(!showPassword)
+                    }}
+                    src={passwordEye}
+                    alt=""
+                  />
+                </InputWrapper>
+                <Form.ErrorMessage field="passwordConfirm" />
+              </div>
+
+              <Buttons>
+                <Button
+                  type="submit"
+                  onClick={() => {}}
+                  className="primary"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Cadastrando...' : 'Cadastrar'}
+                </Button>
+                <Form.ErrorMessage field="root.serverError" />
+              </Buttons>
+            </FormComponent>
+          </FormWrapper>
+        </FormProvider>
       </Container>
     </Wrapper>
   )

@@ -9,7 +9,7 @@ import {
   sizeOptions,
 } from '../../../../components/Aside'
 
-import { Select } from '../../../../components/Select'
+import { Select } from '../../../../components/Form/Select'
 import { API_BASE_URL } from '@/config'
 import { useAuth } from '@/context/AuthContext'
 import { Toastify } from '../../../../components/Toastify'

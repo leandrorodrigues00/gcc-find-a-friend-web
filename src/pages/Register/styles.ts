@@ -100,7 +100,7 @@ export const InputWrapper = styled.div`
   }
 `
 
-export const Form = styled.form`
+export const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -168,10 +168,6 @@ export const Button = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
-`
-
-export const ErrorMessage = styled.p`
-  color: #e44449;
 `
 
 export const MapContainer = styled.div`

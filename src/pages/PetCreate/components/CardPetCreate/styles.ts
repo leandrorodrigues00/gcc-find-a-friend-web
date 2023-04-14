@@ -33,7 +33,7 @@ export const FormPetInformation = styled.form`
 
   label {
     font-weight: 600;
-    line-height: 22px;
+    line-height: 1.375rem;
     margin-bottom: 0.5rem;
   }
 

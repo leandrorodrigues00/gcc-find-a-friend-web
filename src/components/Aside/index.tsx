@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { usePlace } from '@/context/LocationContext'
 import { API_BASE_URL } from '@/config'
-import { Select } from '../Select'
+import { Select } from '../Form/Select'
 
 import logo from '@/assets/icons/logo-mapPage.svg'
 import search from '@/assets/icons/search.svg'

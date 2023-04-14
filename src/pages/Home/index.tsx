@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Select } from '@/components/Select'
+import { Select } from '@/components/Form/Select'
 import { usePlace } from '@/context/LocationContext'
 
 import logo from '../../assets/icons/logo.svg'
