@@ -86,7 +86,7 @@ export const InputWrapper = styled.div`
   padding: 1.125rem;
 `
 
-export const Form = styled.form`
+export const FormComponent = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.937rem;
@@ -96,20 +96,6 @@ export const Form = styled.form`
     font-weight: 600;
     color: #0d3b66;
     margin-bottom: 0.5rem;
-  }
-
-  input {
-    width: 100%;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #0d3b66;
-    background-color: transparent;
-    border: none;
-    outline: none;
-
-    &::placeholder {
-      color: #c6c6c6;
-    }
   }
 
   img {
@@ -144,8 +130,4 @@ export const Button = styled.button`
   border-radius: 20px;
   padding: 1.187rem auto;
   border: none;
-`
-
-export const ErrorMessage = styled.p`
-  color: #e44449;
 `

@@ -2,11 +2,14 @@ import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router-dom'
 
-import { usePlace } from '@/context/LocationContext'
 import { API_BASE_URL } from '@/config'
+import { usePlace } from '@/context/LocationContext'
 import { CoordinatesMapApiResponse } from '../PetDetails'
 import { MapOrg } from '@/pages/PetDetails/components/MapOrg'
+import { Toastify } from '@/components/Toastify'
+import { Form } from '@/components/Form'
 
 import { lineOfDogs, logoHorizontal, passwordEye } from '@/assets/icons'
 import {
@@ -20,9 +23,6 @@ import {
   MapContainer,
   FormComponent,
 } from './styles'
-import { useNavigate } from 'react-router-dom'
-import { Toastify } from '@/components/Toastify'
-import { Form } from '@/components/Form'
 
 const schemaRegister = z
   .object({
