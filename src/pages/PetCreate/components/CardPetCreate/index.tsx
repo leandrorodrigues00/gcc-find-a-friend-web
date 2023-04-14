@@ -22,11 +22,11 @@ import {
   ButtonConfirm,
   Container,
   DescriptionLabel,
-  ErrorMessage,
   FormPetInformation,
   InputRequirements,
   InputWrapper,
 } from './styles'
+import { Form } from '@/components/Form'
 
 const schemaPetCreate = z.object({
   name: z.string().min(2, 'insira um nome com pelo menos 2 caracteres'),
@@ -76,18 +76,13 @@ const ambiente = [
 ]
 
 export function CardPetCreate() {
+  const { token } = useAuth()
+
   const methodsUseForm = useForm<PetCreateForm>({
     resolver: zodResolver(schemaPetCreate),
   })
-  const { token } = useAuth()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-    setError,
-  } = methodsUseForm
+  const { register, handleSubmit, control, setError } = methodsUseForm
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -160,24 +155,19 @@ export function CardPetCreate() {
 
       <FormProvider {...methodsUseForm}>
         <FormPetInformation onSubmit={handleSubmit(formatPetFormData)}>
-          <label htmlFor="name">Nome</label>
+          <Form.Label htmlFor="name">Nome</Form.Label>
           <InputWrapper>
-            <input
-              type="text"
-              id="name"
-              {...register('name', { required: true })}
-            />
-            <ErrorMessage>{errors.name?.message}</ErrorMessage>
+            <Form.Input name="name" />
+            <Form.ErrorMessage field="name" />
           </InputWrapper>
 
-          <label htmlFor="size">Espécie</label>
-
+          <Form.Label htmlFor="size">Espécie</Form.Label>
           <InputWrapper>
             <Select
               options={petSpecies}
               register={register('type', { required: true })}
             />
-            <ErrorMessage>{errors.type?.message}</ErrorMessage>
+            <Form.ErrorMessage field="type" />
           </InputWrapper>
 
           <DescriptionLabel htmlFor="description">
@@ -185,109 +175,98 @@ export function CardPetCreate() {
           </DescriptionLabel>
 
           <InputWrapper>
-            <textarea
-              id="description"
-              placeholder=""
-              maxLength={300}
-              {...register('description', { required: true })}
-            />
-            <ErrorMessage>{errors.description?.message}</ErrorMessage>
+            <Form.Textarea name="description" maxLength={300} />
+
+            <Form.ErrorMessage field="description" />
           </InputWrapper>
 
-          <label htmlFor="age">Idade</label>
+          <Form.Label htmlFor="age">Idade</Form.Label>
 
           <InputWrapper>
             <Select
               options={ageOptions}
               register={register('age', { required: true })}
             />
-            <ErrorMessage>{errors.age?.message}</ErrorMessage>
+            <Form.ErrorMessage field="age" />
           </InputWrapper>
 
-          <label htmlFor="size">Porte</label>
+          <Form.Label htmlFor="size">Porte</Form.Label>
 
           <InputWrapper>
             <Select
               options={sizeOptions}
               register={register('size', { required: true })}
             />
-            <ErrorMessage>{errors.size?.message}</ErrorMessage>
+            <Form.ErrorMessage field="size" />
           </InputWrapper>
 
-          <label htmlFor="energy">Nível de energia</label>
+          <Form.Label htmlFor="energy">Nível de energia</Form.Label>
 
           <InputWrapper>
             <Select
               options={energyOptions}
               register={register('energy', { required: true })}
             />
-            <ErrorMessage>{errors.energy?.message}</ErrorMessage>
+            <Form.ErrorMessage field="energy" />
           </InputWrapper>
 
-          <label htmlFor="independence">Nível de independência</label>
+          <Form.Label htmlFor="independence">Nível de independência</Form.Label>
 
           <InputWrapper>
             <Select
               options={independencyOptions}
               register={register('independence', { required: true })}
             />
-            <ErrorMessage>{errors.independence?.message}</ErrorMessage>
+            <Form.ErrorMessage field="independence" />
           </InputWrapper>
 
-          <label htmlFor="ambient">Ambiente</label>
+          <Form.Label htmlFor="ambient">Ambiente</Form.Label>
+
           <InputWrapper>
             <Select
               options={ambiente}
               register={register('petHabitat', { required: true })}
             />
-            <ErrorMessage>{errors.petHabitat?.message}</ErrorMessage>
+            <Form.ErrorMessage field="petHabitat" />
           </InputWrapper>
 
           <ImageUploader />
 
-          <ErrorMessage>{errors.images?.message}</ErrorMessage>
+          <Form.ErrorMessage field="images" />
 
           <AdoptionRequirementsContainer>
             <h2>Requesitos para adoção</h2>
 
-            <label htmlFor="adoptionRequirements">Requisito</label>
+            <Form.Label htmlFor="adoptionRequirements">Requisito</Form.Label>
+
             <InputRequirements>
-              <input
-                type="text"
-                id="adoptionRequirements"
+              <Form.Input
+                name={`adoptionRequirements.${0}.requirements`}
                 placeholder="Defina um requisito"
-                {...register(`adoptionRequirements.${0}.requirements`)}
               />
-              <ErrorMessage>
-                {errors.adoptionRequirements?.[0]?.requirements?.message}
-              </ErrorMessage>
+
+              <Form.ErrorMessage
+                field={`adoptionRequirements.${0}.requirements`}
+              />
             </InputRequirements>
 
             {fields.map((field, index) => {
+              const fieldName = `adoptionRequirements.${index}.requirements`
               if (index === 0) {
                 return null
               }
               return (
                 <InputRequirements key={field.id}>
                   <div>
-                    <input
-                      type="text"
-                      id="adoptionRequirements"
+                    <Form.Input
+                      name={fieldName}
                       placeholder="Defina um requisito"
-                      {...register(
-                        `adoptionRequirements.${index}.requirements`,
-                      )}
                     />
 
                     <img src={xSquare} alt="" onClick={() => remove(index)} />
                   </div>
 
-                  <ErrorMessage>
-                    {
-                      errors.adoptionRequirements?.[index]?.requirements
-                        ?.message
-                    }
-                  </ErrorMessage>
+                  <Form.ErrorMessage field={fieldName} />
                 </InputRequirements>
               )
             })}
@@ -299,13 +278,12 @@ export function CardPetCreate() {
               +
             </AddElementButtonContainer>
 
-            <ErrorMessage>{errors.adoptionRequirements?.message}</ErrorMessage>
-
             <ButtonConfirm type="submit" onClick={() => {}}>
               Confirmar
             </ButtonConfirm>
           </AdoptionRequirementsContainer>
-          <ErrorMessage>{errors.root?.serverError.message}</ErrorMessage>
+
+          <Form.ErrorMessage field="root.serverError" />
         </FormPetInformation>
       </FormProvider>
     </Container>

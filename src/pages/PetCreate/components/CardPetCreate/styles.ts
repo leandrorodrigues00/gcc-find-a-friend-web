@@ -131,11 +131,6 @@ export const ButtonConfirm = styled.button`
   border: none;
 `
 
-export const ErrorMessage = styled.p`
-  color: #e44449;
-  margin-top: 4px;
-`
-
 export const InputWrapper = styled.div`
   margin-bottom: 1.5rem;
 
