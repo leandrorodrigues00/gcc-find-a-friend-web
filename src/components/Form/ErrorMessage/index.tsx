@@ -32,8 +32,6 @@ export function ErrorMessage({ field }: ErrorMessageProps) {
   }
 
   return (
-    <ErrorMessageStyles className="text-xs text-red-500 mt-1">
-      {fieldError.message?.toString()}
-    </ErrorMessageStyles>
+    <ErrorMessageStyles>{fieldError.message?.toString()}</ErrorMessageStyles>
   )
 }
