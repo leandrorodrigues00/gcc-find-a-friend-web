@@ -96,7 +96,7 @@ export function Home() {
             />
 
             <button onClick={handleSearchPets}>
-              <img src={search} alt="" />
+              <img src={search} alt="Botão para pesquisar pets" />
             </button>
           </SelectInputs>
         </FooterHero>

@@ -104,7 +104,7 @@ export function CardPetDetails({
 
   return (
     <Container>
-      <header>
+      <header aria-label={`Banner promocional ${name}`}>
         <img src={selectedImage} alt={`Foto do pet: ${name}`} />
       </header>
       <div>
