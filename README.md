@@ -20,11 +20,17 @@
 The Green Chain Challenge is a project developed by [Rocketseat](https://rocketseat.com.br/) for the community, with challenges that simulate real situations that you, the developer, will find in the job market!
 
 The "Find a Friend" project was created to streamline the pet adoption process. The platform allows users to locate dogs and cats available for adoption within their city, while providing customizable search filters based on preferred age, energy level, independence and size.
-In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption.
+
+In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption,which is accomplished through a login page and a route for authentication on the server, as well as a refresh token strategy.
+
+**Note:** In order to use the application, you'll need to run both the server and the web application. Before launching the web app, make sure to install the API by following the steps provided in this repository:[Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api), the api already has a small database with pets registered for the city of São Paulo.
 
 ## 🖥 Project Demonstration
 
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend1.gif)
+
+<br/>
+
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend2.gif)
 
 ## 🔖 Layout
@@ -46,9 +52,9 @@ You can view the project layout through the links below:
 
 ### Requirements
 
+- [Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api). (Click on the link if you don't already have the API set up and running.)
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/) or [NPM](https://www.npmjs.com/) _(examples are with NPM)_
-- [MySQL](https://www.mysql.com/) or [Docker](https://hub.docker.com/_/mysql) container with a MySQL server instance
 
 **Clone the project and access the folder**
 
