@@ -23,7 +23,7 @@ The "Find a Friend" project was created to streamline the pet adoption process. 
 
 In addition, it also includes a dedicated section for animal welfare organizations to register their pets for adoption,which is accomplished through a login page and a route for authentication on the server, as well as a refresh token strategy.
 
-**Note:** In order to use the application, you'll need to run both the server and the web application. Before launching the web app, make sure to install the API by following the steps provided in this repository:[Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api), the api already has a small database with pets registered for the city of São Paulo.
+**Note:** In order to use the application, you'll need to run both the server and the web application. Before launching the web app, make sure to install the API by following the steps provided in this repository:[Find A Friend API](https://github.com/leandrorodrigues00/gcc-find-a-friend-api). 
 
 ## 🖥 Project Demonstration
 
@@ -32,6 +32,14 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 <br/>
 
 ![GIF OF THE PROJECT RUNNING](./docs/FindAFriend2.gif)
+
+[click here, see closer](https://gcc-find-a-friend-web-cs.vercel.app/) 😉 - (The site already has some pets registered for the city: SP - São Paulo.)
+
+
+**Note:**
+The web project has been deployed on Vercel, while the API has been deployed on RENDER. However, it is important to note that the free plan offered by RENDER has some limitations, including restrictions on memory and CPU usage. Additionally, the PostgreSQL database used in the deployment expires in 90 days and is automatically deleted, which means that the entire deployment process must be repeated.
+
+If you encounter any issues while accessing the website, it is because I have not yet repeated the deployment process. As an alternative, you can download the web project and API and run them locally on your machine, which will work without any problems!
 
 ## 🔖 Layout
 
