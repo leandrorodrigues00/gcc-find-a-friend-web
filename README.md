@@ -37,7 +37,7 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 
 
 **Note:**
-The PostgreSQL database and api used in the deployment on [Render](https://render.com/), expires in 90 days and is automatically deleted, which means that the entire deployment process must be repeated. Any errors found on the site can be attributed to this expiration.
+The PostgreSQL database and api used in the deployment on [Render](https://render.com/), expires in 90 days and is automatically deleted, which means that the entire deployment process must be repeated. If you find errors on the site it is due to this expiration.
 
 ## 🔖 Layout
 
