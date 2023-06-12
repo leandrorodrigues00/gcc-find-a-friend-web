@@ -37,9 +37,7 @@ In addition, it also includes a dedicated section for animal welfare organizatio
 
 
 **Note:**
-The web project has been deployed on [Vercel](https://vercel.com/), while the API has been deployed on [Render](https://render.com/). However, it is important to note that the free plan offered by Render has some limitations, including restrictions on memory and CPU usage. Additionally, the PostgreSQL database used in the deployment expires in 90 days and is automatically deleted, which means that the entire deployment process must be repeated.
-
-If you encounter any issues while accessing the website, it is because I have not yet repeated the deployment process. As an alternative, you can download the web project and API and run them locally on your machine, which will work without any problems!
+The PostgreSQL database and api used in the deployment on [Render](https://render.com/), expires in 90 days and is automatically deleted, which means that the entire deployment process must be repeated. Any errors found on the site can be attributed to this expiration.
 
 ## 🔖 Layout
 
